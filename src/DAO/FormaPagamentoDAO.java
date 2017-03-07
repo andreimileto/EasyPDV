@@ -11,4 +11,7 @@ package DAO;
  */
 public class FormaPagamentoDAO {
     
+    public void salvar(){
+        
+    }
 }
