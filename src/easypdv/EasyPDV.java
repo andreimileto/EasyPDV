@@ -5,6 +5,9 @@
  */
 package easypdv;
 
+import DAO.ConexaoDB;
+import tela.TelaPrincipal;
+
 /**
  *
  * @author Mileto
@@ -15,7 +18,10 @@ public class EasyPDV {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ConexaoDB.abrirConexao();
+        TelaPrincipal tela = new TelaPrincipal();
+        tela.setVisible(true);
+        
     }
     
 }
