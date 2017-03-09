@@ -16,28 +16,40 @@ import javax.swing.JOptionPane;
  */
 public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdgCadastroFormaPagamento
-     */
+    FormaPagamento formaPagamento = new FormaPagamento();
+
     public JdgCadastroFormaPagamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarFormasPagamento();
-        
+        verificarCadastroSelecionado();
+
     }
-    
-     private void listarFormasPagamento(){
-        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
-        ArrayList<FormaPagamento> formas = fpDAO.consultar();
+
+    private void verificarCadastroSelecionado() {
         
-        for (int i = 0; i <formas.size() ; i++) {
-            tblFormaPagamento.setValueAt(formas.get(i).getId());
-//            jTextArea1.append(formas.get(i).getId()+"\n"
-//            + formas.get(i).getDescricao()+"\n"+
-//                    formas.get(i).getSituacao()+"\n");
+        if (formaPagamento.getId() > 0) {
+            
+            listarFormaPagamentoSelecionado();
+            tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
+            tfdDescricao.setText(formaPagamento.getDescricao());
+            if (formaPagamento.getSituacao() == 'T') {
+             rbtAtivo.setSelected(true);
+
+            }else{
+                rbtAtivo.setSelected(false);
+            }
             
         }
-     }
+    }
+
+    private void listarFormaPagamentoSelecionado() {
+        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
+
+        ArrayList<FormaPagamento> formas = fpDAO.consultarEspecifico(formaPagamento.getId());
+
+        formaPagamento.setDescricao(formas.get(0).getDescricao());
+        formaPagamento.setSituacao(formas.get(0).getSituacao());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,19 +60,17 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         btnSalvar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tfdCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tfdDescricao = new javax.swing.JTextField();
         rbtAtivo = new javax.swing.JRadioButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblFormaPagamento = new javax.swing.JTable();
+        tfdDescricao = new javax.swing.JTextField();
+        tfdCodigo = new javax.swing.JTextField();
+        btnLocalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Forma pagamento - EasyPDV");
@@ -85,9 +95,10 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
 
         jLabel1.setText("Código");
 
-        tfdCodigo.setEnabled(false);
-
         jLabel2.setText("Descrição");
+
+        rbtAtivo.setSelected(true);
+        rbtAtivo.setText("Ativo");
 
         tfdDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,119 +106,65 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             }
         });
 
-        rbtAtivo.setSelected(true);
-        rbtAtivo.setText("Ativo");
+        tfdCodigo.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtAtivo)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(173, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtAtivo)
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Cadastro", jPanel3);
-
-        tblFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Código", "Descrição", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblFormaPagamento);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Consulta", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(95, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnLocalizar)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addComponent(jTabbedPane2)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtAtivo)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbtAtivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSair)
-                    .addComponent(btnSalvar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalvar)
+                        .addComponent(btnLocalizar)))
                 .addGap(11, 11, 11))
         );
 
@@ -216,23 +173,27 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        FormaPagamento formaPagamento = new FormaPagamento();
+
         formaPagamento.setDescricao(tfdDescricao.getText());
+
         if (rbtAtivo.isSelected()) {
             formaPagamento.setSituacao('T');
-        }else{
+        } else {
             formaPagamento.setSituacao('F');
         }
-        
+
         FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
+
         if (formaPagamentoDAO.salvar(formaPagamento)) {
+            tfdCodigo.setText("");
             tfdDescricao.setText("");
             tfdDescricao.requestFocus();
+
             JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
         }
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -242,6 +203,14 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     private void tfdDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfdDescricaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdDescricaoActionPerformed
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        JdgListaFormaPagamento listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
+        listaFormaPagamento.setVisible(true);
+
+        verificarCadastroSelecionado();
+
+    }//GEN-LAST:event_btnLocalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,22 +255,16 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JRadioButton rbtAtivo;
-    private javax.swing.JTable tblFormaPagamento;
     private javax.swing.JTextField tfdCodigo;
     private javax.swing.JTextField tfdDescricao;
-    private javax.swing.JTextField tfdDescricao1;
     // End of variables declaration//GEN-END:variables
 }

@@ -118,7 +118,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void imnFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnFormaPagamentoActionPerformed
         
-        JdgCadastroFormaPagamento cadastroFormaPagamento = new JdgCadastroFormaPagamento(this, rootPaneCheckingEnabled);
+        JdgCadastroFormaPagamento cadastroFormaPagamento = new JdgCadastroFormaPagamento(this, true);
         
         cadastroFormaPagamento.setVisible(true);
         
