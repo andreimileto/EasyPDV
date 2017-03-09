@@ -7,6 +7,7 @@ package tela;
 
 import DAO.FormaPagamentoDAO;
 import entidade.FormaPagamento;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -16,13 +17,15 @@ import java.util.ArrayList;
 public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
     FormaPagamento fp;
-    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal,FormaPagamento fp) {
+
+    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal, FormaPagamento fp) {
         super(parent, modal);
         initComponents();
         this.fp = fp;
         listarFormasPagamento();
     }
-      public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal) {
+
+    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarFormasPagamento();
@@ -37,7 +40,11 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
             tblFormaPagamento.setValueAt(formas.get(i).getId(), i, 0);
             tblFormaPagamento.setValueAt(formas.get(i).getDescricao(), i, 1);
-            tblFormaPagamento.setValueAt(formas.get(i).getSituacao(), i, 2);
+            if (formas.get(i).getAtivo() == 'T') {
+                tblFormaPagamento.setValueAt("Ativo", i, 2);
+            } else {
+                tblFormaPagamento.setValueAt("Inativo", i, 2);
+            }
 
         }
     }
@@ -160,7 +167,35 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             new String [] {
                 "Id", "Descrição", "Ativo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblFormaPagamentoAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFormaPagamentoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblFormaPagamentoMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblFormaPagamentoMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblFormaPagamento);
 
         jLabel1.setText("Lista Forma de pagamento");
@@ -173,6 +208,11 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,11 +253,44 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        System.out.println(tblFormaPagamento.getSelectedRow()+1);
-        FormaPagamento fp = new FormaPagamento();
-        this.fp.setId(tblFormaPagamento.getSelectedRow()+1);
-        dispose();
+        selecionado();
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+
+        if (e.getClickCount() > 1) {
+            selecionado();
+        }
+    }
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void tblFormaPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseClicked
+
+    }//GEN-LAST:event_tblFormaPagamentoMouseClicked
+
+    private void tblFormaPagamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMousePressed
+
+    }//GEN-LAST:event_tblFormaPagamentoMousePressed
+
+    private void tblFormaPagamentoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblFormaPagamentoAncestorAdded
+
+    }//GEN-LAST:event_tblFormaPagamentoAncestorAdded
+
+    private void tblFormaPagamentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseEntered
+
+    }//GEN-LAST:event_tblFormaPagamentoMouseEntered
+
+    private void selecionado() {
+        FormaPagamento fp = new FormaPagamento();
+        //pega a linha selecionada
+        int row = tblFormaPagamento.getSelectedRow();
+
+        //seta o ID do objeto da linha selecionada
+        this.fp.setId(Integer.parseInt(tblFormaPagamento.getValueAt(row, 0).toString()));
+        dispose();
+    }
 
     /**
      * @param args the command line arguments

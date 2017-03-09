@@ -18,25 +18,25 @@ import javax.swing.JOptionPane;
 public class Senha extends javax.swing.JFrame {
     
     
-   private int count;
-   private Banco banco;
-   private Movimentacao movimentacao;
-   private BancoDAO clienteDAO;
-   private ConexaoDB conexaoDB;
-   private UsuarioDAO usuarioDAO;
-   private MovimentacaoDAO movimentacaoDAO;
+//   private int count;
+//   private Banco banco;
+//   private Movimentacao movimentacao;
+//   private BancoDAO clienteDAO;
+//   private ConexaoDB conexaoDB;
+//   private UsuarioDAO usuarioDAO;
+//   private MovimentacaoDAO movimentacaoDAO;
 
-    public Senha(Banco banco, Movimentacao movimentacao,BancoDAO clienteDAO,ConexaoDB conexaoDB,UsuarioDAO usuarioDAO,MovimentacaoDAO movimentacaoDAO) {
-        initComponents();
-        this.banco = banco;
-        this.movimentacao = movimentacao;
-        this.clienteDAO = clienteDAO;
-        this.usuarioDAO = usuarioDAO;
-        this.movimentacaoDAO = movimentacaoDAO;
-        count = 0;
-        
-      
-    }
+//    public Senha(Banco banco, Movimentacao movimentacao,BancoDAO clienteDAO,ConexaoDB conexaoDB,UsuarioDAO usuarioDAO,MovimentacaoDAO movimentacaoDAO) {
+//        initComponents();
+//        this.banco = banco;
+//        this.movimentacao = movimentacao;
+//        this.clienteDAO = clienteDAO;
+//        this.usuarioDAO = usuarioDAO;
+//        this.movimentacaoDAO = movimentacaoDAO;
+//        count = 0;
+//        
+//      
+//    }
 
     public Senha() {
        initComponents();
@@ -154,35 +154,35 @@ private void habilitarBotao(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        count++;
-       try {
-           if (tfUsuario.getText().equals(usuarioDAO.verificarUsuario())
-                   && pfSenha.getText().equals(usuarioDAO.verificarSenha())
-                   ) {
-               try {
-                   usuarioDAO.verificarSenha();
-               } catch (Exception e) {
-                   e.printStackTrace();
-               }
-               Janela j = new Janela(conexaoDB,banco,movimentacao,clienteDAO, movimentacaoDAO);
-               j.setVisible(true);
-               // agenda.salvar();
-               dispose();
-           }else{
-               if (count == 3) {
-                   JOptionPane.showMessageDialog(rootPane, "Seu sistema será encerrado por diversas falhas de login");
-                   dispose();
-               }else{
-                   
-                   JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreta");
-                   tfUsuario.setText("");
-                   pfSenha.setText("");
-                   
-               }
-           }
-       } catch (SQLException ex) {
-           Logger.getLogger(Senha.class.getName()).log(Level.SEVERE, null, ex);
-       }
+//        count++;
+//       try {
+//           if (tfUsuario.getText().equals(usuarioDAO.verificarUsuario())
+//                   && pfSenha.getText().equals(usuarioDAO.verificarSenha())
+//                   ) {
+//               try {
+//                   usuarioDAO.verificarSenha();
+//               } catch (Exception e) {
+//                   e.printStackTrace();
+//               }
+//               Janela j = new Janela(conexaoDB,banco,movimentacao,clienteDAO, movimentacaoDAO);
+//               j.setVisible(true);
+//               // agenda.salvar();
+//               dispose();
+//           }else{
+//               if (count == 3) {
+//                   JOptionPane.showMessageDialog(rootPane, "Seu sistema será encerrado por diversas falhas de login");
+//                   dispose();
+//               }else{
+//                   
+//                   JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreta");
+//                   tfUsuario.setText("");
+//                   pfSenha.setText("");
+//                   
+//               }
+//           }
+//       } catch (SQLException ex) {
+//           Logger.getLogger(Senha.class.getName()).log(Level.SEVERE, null, ex);
+//       }
         
     }//GEN-LAST:event_btLoginActionPerformed
 

@@ -32,7 +32,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             listarFormaPagamentoSelecionado();
             tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
             tfdDescricao.setText(formaPagamento.getDescricao());
-            if (formaPagamento.getSituacao() == 'T') {
+            if (formaPagamento.getAtivo() == 'T') {
              rbtAtivo.setSelected(true);
 
             }else{
@@ -48,7 +48,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         ArrayList<FormaPagamento> formas = fpDAO.consultarEspecifico(formaPagamento.getId());
 
         formaPagamento.setDescricao(formas.get(0).getDescricao());
-        formaPagamento.setSituacao(formas.get(0).getSituacao());
+        formaPagamento.setAtivo(formas.get(0).getAtivo());
     }
 
     /**
@@ -177,18 +177,19 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         formaPagamento.setDescricao(tfdDescricao.getText());
 
         if (rbtAtivo.isSelected()) {
-            formaPagamento.setSituacao('T');
+            formaPagamento.setAtivo('T');
         } else {
-            formaPagamento.setSituacao('F');
+            formaPagamento.setAtivo('F');
         }
 
         FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
 
         if (formaPagamentoDAO.salvar(formaPagamento)) {
+            
             tfdCodigo.setText("");
             tfdDescricao.setText("");
             tfdDescricao.requestFocus();
-
+           formaPagamento.setId(0);
             JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");

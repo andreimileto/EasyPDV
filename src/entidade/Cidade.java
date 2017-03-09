@@ -7,11 +7,12 @@ package entidade;
 
 /**
  *
- * @author Mileto
+ * @author pc05
  */
-public class FormaPagamento {
+public class Cidade {
+
     private int id;
-    private String descricao;
+    private String nome;
     private char ativo;
 
     public int getId() {
@@ -22,20 +23,20 @@ public class FormaPagamento {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public char getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(char situacao) {
-        this.ativo = situacao;
+    public void setAtivo(char ativo) {
+        this.ativo = ativo;
     }
-    
+
 }
