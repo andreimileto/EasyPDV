@@ -12,7 +12,7 @@ package entidade;
 public class Cidade {
 
     private int id;
-    private String nome;
+    private String descricao;
     private char ativo;
 
     public int getId() {
@@ -23,12 +23,12 @@ public class Cidade {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public char getAtivo() {

@@ -5,6 +5,7 @@
  */
 package tela;
 
+import DAO.CidadeDAO;
 import DAO.FormaPagamentoDAO;
 import entidade.Cidade;
 import entidade.FormaPagamento;
@@ -33,18 +34,19 @@ public class JdgListaCidade extends javax.swing.JDialog {
     }
 
     private void listarCidades() {
-        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
+        CidadeDAO cidadeDAO = new CidadeDAO();
 
-        ArrayList<FormaPagamento> formas = fpDAO.consultar();
+        ArrayList<Cidade> cidades = cidadeDAO.consultar();
 
-        for (int i = 0; i < formas.size(); i++) {
+        for (int i = 0; i < cidades.size(); i++) {
 
-            tblFormaPagamento.setValueAt(formas.get(i).getId(), i, 0);
-            tblFormaPagamento.setValueAt(formas.get(i).getDescricao(), i, 1);
-            if (formas.get(i).getAtivo() == 'T') {
-                tblFormaPagamento.setValueAt("Ativo", i, 2);
+            tblCidades.setValueAt(cidades.get(i).getId(), i, 0);
+            tblCidades.setValueAt(cidades.get(i).getDescricao(), i, 1);
+            if (cidades.get(i).getAtivo() == 'T') {
+                tblCidades.setValueAt("Ativo", i, 2);
+                
             } else {
-                tblFormaPagamento.setValueAt("Inativo", i, 2);
+                tblCidades.setValueAt("Inativo", i, 2);
             }
 
         }
@@ -55,14 +57,14 @@ public class JdgListaCidade extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFormaPagamento = new javax.swing.JTable();
+        tblCidades = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tblFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
+        tblCidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -177,27 +179,27 @@ public class JdgListaCidade extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tblCidades.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tblFormaPagamentoAncestorAdded(evt);
+                tblCidadesAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblCidades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblFormaPagamentoMouseClicked(evt);
+                tblCidadesMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tblFormaPagamentoMouseEntered(evt);
+                tblCidadesMouseEntered(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblFormaPagamentoMousePressed(evt);
+                tblCidadesMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblFormaPagamento);
+        jScrollPane1.setViewportView(tblCidades);
 
         jLabel1.setText("Lista Forma de pagamento");
 
@@ -267,29 +269,37 @@ public class JdgListaCidade extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void tblFormaPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseClicked
+    private void tblCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseClicked
 
-    }//GEN-LAST:event_tblFormaPagamentoMouseClicked
+    }//GEN-LAST:event_tblCidadesMouseClicked
 
-    private void tblFormaPagamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMousePressed
+    private void tblCidadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMousePressed
 
-    }//GEN-LAST:event_tblFormaPagamentoMousePressed
+    }//GEN-LAST:event_tblCidadesMousePressed
 
-    private void tblFormaPagamentoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblFormaPagamentoAncestorAdded
+    private void tblCidadesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblCidadesAncestorAdded
 
-    }//GEN-LAST:event_tblFormaPagamentoAncestorAdded
+    }//GEN-LAST:event_tblCidadesAncestorAdded
 
-    private void tblFormaPagamentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseEntered
+    private void tblCidadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseEntered
 
-    }//GEN-LAST:event_tblFormaPagamentoMouseEntered
-
+    }//GEN-LAST:event_tblCidadesMouseEntered
+    
+    //retorna item selecionado na taleba
     private void selecionado() {
-        FormaPagamento fp = new FormaPagamento();
+        Cidade cidade = new Cidade();
         //pega a linha selecionada
-        int row = tblFormaPagamento.getSelectedRow();
+        int row = tblCidades.getSelectedRow();
 
         //seta o ID do objeto da linha selecionada
-        this.cidade.setId(Integer.parseInt(tblFormaPagamento.getValueAt(row, 0).toString()));
+        this.cidade.setId(Integer.parseInt(tblCidades.getValueAt(row, 0).toString()));
+        this.cidade.setDescricao(tblCidades.getValueAt(row, 1).toString());
+        if (tblCidades.getValueAt(row, 2).toString().equals("Ativo")) {
+            this.cidade.setAtivo('T');
+        }else{
+            this.cidade.setAtivo('F');
+        }
+        
         dispose();
     }
 
@@ -341,6 +351,6 @@ public class JdgListaCidade extends javax.swing.JDialog {
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblFormaPagamento;
+    private javax.swing.JTable tblCidades;
     // End of variables declaration//GEN-END:variables
 }

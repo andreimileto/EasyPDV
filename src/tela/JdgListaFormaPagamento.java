@@ -9,6 +9,7 @@ import DAO.FormaPagamentoDAO;
 import entidade.FormaPagamento;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,11 +32,14 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         listarFormasPagamento();
     }
 
+    
     private void listarFormasPagamento() {
         FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
 
         ArrayList<FormaPagamento> formas = fpDAO.consultar();
-
+      
+        
+                
         for (int i = 0; i < formas.size(); i++) {
 
             tblFormaPagamento.setValueAt(formas.get(i).getId(), i, 0);
@@ -289,6 +293,12 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
         //seta o ID do objeto da linha selecionada
         this.fp.setId(Integer.parseInt(tblFormaPagamento.getValueAt(row, 0).toString()));
+        this.fp.setDescricao(tblFormaPagamento.getValueAt(row, 1).toString());
+         if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Ativo")) {
+            this.fp.setAtivo('T');
+        }else{
+            this.fp.setAtivo('F');
+        }
         dispose();
     }
 

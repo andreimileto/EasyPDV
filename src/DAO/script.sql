@@ -7,7 +7,7 @@ create table usuario(id serial,
                      );
 
 CREATE TABLE cidade(id serial,
-                    nome varchar(100) not null,
+                    descricao varchar(100) not null,
                     ativo char(1) not null,
                    constraint pkcidade primary key(id)
 );
@@ -56,17 +56,20 @@ CREATE TABLE mercadoria(id serial ,
 );              
 
 CREATE TABLE faturamento(id serial,
-                         id_cliente serial not null,
+                         id_cliente int not null,
 		id_forma_pagamento int not null,
+                        id_empresa int not null,
                          numero_pedido int not null,
                          data_emissao timestamp not null,
                          fase char(1) not null,
                          desconto decimal(7,2),
-		valor_total decimal (7,2) not null,		
-		parcelas int not null,
+                         valor_total decimal (7,2) not null,		
+                         parcelas int not null,
                          constraint pkfaturamento primary key (id),
                          CONSTRAINT fkid_clientefaturamento foreign key(id_cliente)
                          references cliente,
+                         constraint fkid_empresafaturamento foreign key(id_empresa)
+                         references empresa,
 		constraint fkid_forma_pagamento foreign key (id_forma_pagamento)
 		references forma_pagamento
                          );

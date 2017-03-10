@@ -35,8 +35,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        imnCidades = new javax.swing.JMenuItem();
+        imnMercadoria = new javax.swing.JMenuItem();
         imnFormaPagamento = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -46,7 +46,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Easy PDV");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,13 +64,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1.setText("Clientes");
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Cidades");
-        jMenu1.add(jMenuItem2);
+        imnCidades.setText("Cidades");
+        imnCidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnCidadesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imnCidades);
 
-        jMenuItem3.setText("Mercadorias");
-        jMenu1.add(jMenuItem3);
+        imnMercadoria.setText("Mercadorias");
+        imnMercadoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnMercadoriaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imnMercadoria);
 
-        imnFormaPagamento.setText("Forma de pagamento");
+        imnFormaPagamento.setText("Formas de pagamento");
         imnFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 imnFormaPagamentoActionPerformed(evt);
@@ -124,6 +134,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_imnFormaPagamentoActionPerformed
 
+    private void imnCidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnCidadesActionPerformed
+        JdgCadastroCidade cidade = new JdgCadastroCidade(this, true);
+        cidade.setVisible(true);
+    }//GEN-LAST:event_imnCidadesActionPerformed
+
+    private void imnMercadoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnMercadoriaActionPerformed
+        JdgCadastroMercadoria mercadoria = new JdgCadastroMercadoria(this,true);
+        mercadoria.setVisible(true);
+    }//GEN-LAST:event_imnMercadoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,14 +180,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem imnCidades;
     private javax.swing.JMenuItem imnFormaPagamento;
+    private javax.swing.JMenuItem imnMercadoria;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;

@@ -62,25 +62,5 @@ public class FormaPagamentoDAO {
         return formasPagamento;
     }
     
-     public ArrayList<FormaPagamento> consultarEspecifico(int id) {
-        ArrayList<FormaPagamento> formaPagamento = new ArrayList<>();
-
-        try {
-            Statement st = ConexaoDB.conexao.createStatement();
-            String sql = "select * from  forma_pagamento where id ="+id;
-            
-            ResultSet resultado = st.executeQuery(sql);
-            while (resultado.next()) {
-                FormaPagamento fp = new FormaPagamento();
-                fp.setId(resultado.getInt("id"));
-                fp.setDescricao(resultado.getString("descricao"));
-                fp.setAtivo(resultado.getString("ativo").charAt(0));
-                formaPagamento.add(fp);
-            }
-        } catch (Exception e) {
-            System.out.println("Erro ao consultar Forma de pagamento " + e);
-        }
-
-        return formaPagamento;
-    }
+    
 }

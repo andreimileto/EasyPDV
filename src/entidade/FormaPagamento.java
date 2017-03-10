@@ -34,8 +34,8 @@ public class FormaPagamento {
         return ativo;
     }
 
-    public void setAtivo(char situacao) {
-        this.ativo = situacao;
+    public void setAtivo(char descricao) {
+        this.ativo = descricao;
     }
     
 }

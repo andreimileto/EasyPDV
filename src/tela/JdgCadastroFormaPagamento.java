@@ -29,7 +29,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         
         if (formaPagamento.getId() > 0) {
             
-            listarFormaPagamentoSelecionado();
+            
             tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
             tfdDescricao.setText(formaPagamento.getDescricao());
             if (formaPagamento.getAtivo() == 'T') {
@@ -42,14 +42,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         }
     }
 
-    private void listarFormaPagamentoSelecionado() {
-        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
-
-        ArrayList<FormaPagamento> formas = fpDAO.consultarEspecifico(formaPagamento.getId());
-
-        formaPagamento.setDescricao(formas.get(0).getDescricao());
-        formaPagamento.setAtivo(formas.get(0).getAtivo());
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,7 +166,9 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
+        if (tfdDescricao.getText().length() <= 150) {
+            
+        
         formaPagamento.setDescricao(tfdDescricao.getText());
 
         if (rbtAtivo.isSelected()) {
@@ -194,7 +189,11 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
         }
-
+        }else{
+            tfdDescricao.setText("");
+            tfdDescricao.requestFocus();
+            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150");
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
