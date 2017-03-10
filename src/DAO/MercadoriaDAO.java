@@ -22,14 +22,16 @@ public class MercadoriaDAO {
             //executeupdate = insert,update, delete
             //query = select
             if(merc.getId() == 0){
+                
             String sql = "INSERT INTO mercadoria VALUES ("
                     + "DEFAULT," + "'" + merc.getReferencia() + "',"
                     + "'" + merc.getDescricao() + "',"
                     + merc.getEstoque() + ","
                     + merc.getPrecoCusto() + ","
                     + merc.getPrecoVenda() + ","
-                    + "'" + merc.getAtivo() + "',"                   
+                    + "'" + merc.getAtivo()+"'"                   
                     + ")";
+            System.out.println(sql);
             int resultado = st.executeUpdate(sql);
             }else{
                  String sql = "UPDATE forma_pagamento set descricao='"+merc.getReferencia()

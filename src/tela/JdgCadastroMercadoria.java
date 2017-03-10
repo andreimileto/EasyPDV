@@ -6,6 +6,7 @@
 package tela;
 
 import DAO.CidadeDAO;
+import DAO.MercadoriaDAO;
 import entidade.Mercadoria;
 import javax.swing.JOptionPane;
 
@@ -65,9 +66,9 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         jLabel6.setText("Preço de venda:");
 
-        tfdPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        tfdPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        tfdPrecoCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        tfdPrecoCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +90,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         jLabel7.setForeground(new java.awt.Color(0, 0, 255));
         jLabel7.setText("Cadastro de Mercadoria");
 
-        tfdEstoque.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tfdEstoque.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         rbtAtivo.setText("Ativo");
 
@@ -204,20 +205,20 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             mercadoria.setPrecoVenda(Double.parseDouble(tfdPrecoVenda.getText()));
 
             if (rbtAtivo.isSelected()) {
-                cidade.setAtivo('T');
+                mercadoria.setAtivo('T');
             } else {
-                cidade.setAtivo('F');
+                mercadoria.setAtivo('F');
             }
 
-            CidadeDAO cidadeDAO = new CidadeDAO();
+            MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
 
-            if (cidadeDAO.salvar(cidade)) {
+            if (mercadoriaDAO.salvar(mercadoria)) {
 
                 tfdCodigo.setText("");
                 tfdDescricao.setText("");
                 tfdDescricao.requestFocus();
-                cidade.setId(0);
-                JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
+                mercadoria.setId(0);
+                JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
             }
