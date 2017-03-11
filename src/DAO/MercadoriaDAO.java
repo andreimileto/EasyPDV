@@ -65,8 +65,8 @@ public class MercadoriaDAO {
                 merc.setReferencia(resultado.getString("referencia"));
                 merc.setDescricao(resultado.getString("descricao"));
                 merc.setEstoque(resultado.getDouble("estoque"));
-                merc.setPrecoCusto(resultado.getDouble("precoCusto"));
-                merc.setPrecoVenda(resultado.getDouble("precoVenda"));
+                merc.setPrecoCusto(resultado.getDouble("preco_custo"));
+                merc.setPrecoVenda(resultado.getDouble("preco_venda"));
                 merc.setAtivo(resultado.getString("ativo").charAt(0));
                 mercadorias.add(merc);
             }

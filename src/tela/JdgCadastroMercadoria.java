@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
  * @author Mileto
  */
 public class JdgCadastroMercadoria extends javax.swing.JDialog {
- 
+
     Mercadoria mercadoria = new Mercadoria();
-    
+
     public JdgCadastroMercadoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        atualizarCampos();
     }
 
     /**
@@ -66,9 +67,9 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         jLabel6.setText("Preço de venda:");
 
-        tfdPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfdPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
-        tfdPrecoCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        tfdPrecoCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,13 +86,19 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         });
 
         btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 255));
         jLabel7.setText("Cadastro de Mercadoria");
 
-        tfdEstoque.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        tfdEstoque.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
+        rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,38 +203,90 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-//        if (tfdDescricao.getText().length() <= 150) {
+        if (validarCampos()) {
 
             mercadoria.setDescricao(tfdDescricao.getText());
-            mercadoria.setReferencia(tfdReferencia.getText());
-            mercadoria.setEstoque(Double.parseDouble(tfdEstoque.getText()));
-            mercadoria.setPrecoCusto(Double.parseDouble(tfdPrecoCusto.getText()));
-            mercadoria.setPrecoVenda(Double.parseDouble(tfdPrecoVenda.getText()));
 
-            if (rbtAtivo.isSelected()) {
-                mercadoria.setAtivo('T');
-            } else {
-                mercadoria.setAtivo('F');
+            if (tfdReferencia.getText().length() <= 45) {
+                mercadoria.setReferencia(tfdReferencia.getText());
+
+                if (Double.parseDouble(tfdEstoque.getText().replace(',', '.')) >= 0.00) {
+                    mercadoria.setEstoque(Double.parseDouble(tfdEstoque.getText().replace(',', '.')));
+
+                    if (Double.parseDouble(tfdPrecoCusto.getText().replace(',', '.')) > 0) {
+                        mercadoria.setPrecoCusto(Double.parseDouble(tfdPrecoCusto.getText().replace(',', '.')));
+
+                        if (Double.parseDouble(tfdPrecoVenda.getText().replace(',', '.')) > Double.parseDouble(tfdPrecoCusto.getText().replace(',', '.'))) {
+                            mercadoria.setPrecoVenda(Double.parseDouble(tfdPrecoVenda.getText().replace(',', '.')));
+
+                            if (rbtAtivo.isSelected()) {
+                                mercadoria.setAtivo('T');
+                            } else {
+                                mercadoria.setAtivo('F');
+                            }
+
+                            MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
+
+                            if (mercadoriaDAO.salvar(mercadoria)) {
+                                atualizarCampos();
+                                JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
+                            }
+
+                        }
+                    }
+                }
             }
-
-            MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
-
-            if (mercadoriaDAO.salvar(mercadoria)) {
-
-                tfdCodigo.setText("");
-                tfdDescricao.setText("");
-                tfdDescricao.requestFocus();
-                mercadoria.setId(0);
-                JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
-            }
-//        } else {
-//            tfdDescricao.setText("");
-//            tfdDescricao.requestFocus();
-//            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150");
-//        }
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos");
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        JdgListaMercadorias mercadorias = new JdgListaMercadorias(null,true,mercadoria);
+        mercadorias.setVisible(true);
+    }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void atualizarCampos() {
+        tfdCodigo.setText("");
+        tfdDescricao.setText("");
+        tfdEstoque.setText("0");
+        tfdPrecoCusto.setText("0");
+        tfdPrecoVenda.setText("0");
+        tfdReferencia.setText("");
+        tfdReferencia.requestFocus();
+    }
+
+    private boolean validarCampos() {
+        boolean ok = true;
+        if (tfdDescricao.getText().length() > 150) {
+            ok = false;
+
+        }
+        if (tfdReferencia.getText().length() > 45) {
+            ok = false;
+
+        }
+        if (tfdEstoque.getText().equals("")
+                || Double.parseDouble(tfdEstoque.getText().replace(",", "."))<=0.00) {
+            ok = false;
+
+        }
+        if ( tfdPrecoCusto.getText().equals("") 
+            || Double.parseDouble(tfdPrecoCusto.getText().replace(",", "."))<=0.00){
+            ok = false;
+
+        }
+        if (tfdPrecoVenda.getText().equals("")
+                || Double.parseDouble(tfdPrecoVenda.getText().replace(",", "."))<=0.00
+                || Double.parseDouble(tfdPrecoVenda.getText().replace(",", "."))<
+                 Double.parseDouble(tfdPrecoCusto.getText().replace(",", "."))) {
+            ok = false;
+        }
+        return ok;
+
+    }
 
     /**
      * @param args the command line arguments
