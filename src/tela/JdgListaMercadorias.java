@@ -27,20 +27,20 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.merc = merc;
+        popularComboBox();
         listarMercadorias();
     }
 
     public JdgListaMercadorias(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarMercadorias();
+
     }
 
-    
-    private void listarMercadorias() {
-         try {
+    private void listarMercadoriasEspecificas() {
+        try {
             //setar para tabela modelo de dados
-            tblMercadorias.setModel(this.obterDadosParaJTable());
+            tblMercadorias.setModel(this.obterDadosEspecificoTabela());
             tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(10);
             tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(170);
@@ -52,9 +52,63 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
     }
-      public DefaultTableModel obterDadosParaJTable() throws Exception {
+
+    private void popularComboBox() {
+
+        cbxStatus.addItem("Todos");
+        cbxStatus.addItem("Ativos");
+        cbxStatus.addItem("Inativos");
+    }
+
+    private DefaultTableModel obterDadosEspecificoTabela() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        MercadoriaDAO mercDAO = new MercadoriaDAO();
+        ArrayList<Mercadoria> mercs = mercDAO.consultarEspecifico(merc);
+        for (int i = 0; i < mercs.size(); i++) {
+            //popular tabela
+            String result = "";
+            if (String.valueOf(mercs.get(i).getAtivo()).equalsIgnoreCase("T")) {
+                result = "Ativo";
+            } else {
+                result = "Inativo";
+            }
+            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
+                mercs.get(i).getReferencia(),
+                mercs.get(i).getDescricao(),
+                String.valueOf(mercs.get(i).getEstoque()),
+                String.valueOf(mercs.get(i).getPrecoCusto()),
+                String.valueOf(mercs.get(i).getPrecoVenda()),
+                result
+            });
+        }
+//retorna o modelo
+        return dtm;
+    }
+
+    private void listarMercadorias() {
+        try {
+            //setar para tabela modelo de dados
+            tblMercadorias.setModel(this.obterDadosParaTabelaCompleto());
+            tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(170);
+            tblMercadorias.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(6).setPreferredWidth(0);
+
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private DefaultTableModel obterDadosParaTabelaCompleto() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -70,7 +124,6 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         dtm.addColumn("CUSTO");
         dtm.addColumn("VENDA");
         dtm.addColumn("STATUS");
-
 
         for (int i = 0; i < mercs.size(); i++) {
             //popular tabela
@@ -263,9 +316,18 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             }
         });
 
-        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxStatusActionPerformed(evt);
+            }
+        });
 
         btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Status:");
 
@@ -359,6 +421,37 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
     }//GEN-LAST:event_tblMercadoriasMouseEntered
 
+    private void cbxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxStatusActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        merc.setReferencia(tfdReferencia.getText());
+        if (cbxStatus.getSelectedItem().equals("Todos")) {
+            try {
+                obterDadosParaTabelaCompleto();
+            } catch (Exception ex) {
+                Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (cbxStatus.getSelectedItem().equals("Ativo")) {
+            merc.setAtivo('T');
+            try {
+                obterDadosEspecificoTabela();
+            } catch (Exception ex) {
+                Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else  if (cbxStatus.getSelectedItem().equals("Inativo")){
+            merc.setAtivo('F');
+            try {
+                obterDadosEspecificoTabela();
+            } catch (Exception ex) {
+                Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+    }//GEN-LAST:event_btnListarActionPerformed
+
     private void selecionado() {
 //        Mercadoria merc = new Mercadoria();
         //pega a linha selecionada
@@ -371,9 +464,9 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         this.merc.setEstoque(Double.parseDouble(tblMercadorias.getValueAt(row, 3).toString()));
         this.merc.setPrecoCusto(Double.parseDouble(tblMercadorias.getValueAt(row, 4).toString()));
         this.merc.setPrecoVenda(Double.parseDouble(tblMercadorias.getValueAt(row, 5).toString()));
-         if (tblMercadorias.getValueAt(row, 6).toString().equals("Ativo")) {
+        if (tblMercadorias.getValueAt(row, 6).toString().equals("Ativo")) {
             this.merc.setAtivo('T');
-        }else{
+        } else {
             this.merc.setAtivo('F');
         }
 

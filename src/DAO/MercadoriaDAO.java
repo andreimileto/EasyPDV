@@ -16,33 +16,35 @@ import java.util.ArrayList;
  * @author Mileto
  */
 public class MercadoriaDAO {
-     public boolean salvar(Mercadoria merc) {
+    Mercadoria mercadoria;
+
+    public boolean salvar(Mercadoria merc) {
         try {
             Statement st = ConexaoDB.conexao.createStatement();
             //executeupdate = insert,update, delete
             //query = select
-            if(merc.getId() == 0){
-                
-            String sql = "INSERT INTO mercadoria VALUES ("
-                    + "DEFAULT," + "'" + merc.getReferencia() + "',"
-                    + "'" + merc.getDescricao() + "',"
-                    + merc.getEstoque() + ","
-                    + merc.getPrecoCusto() + ","
-                    + merc.getPrecoVenda() + ","
-                    + "'" + merc.getAtivo()+"'"                   
-                    + ")";
-            System.out.println(sql);
-            int resultado = st.executeUpdate(sql);
-            }else{
-                 String sql = "UPDATE mercadoria set referencia='"+merc.getReferencia()
-                         +"', descricao ='"+merc.getDescricao()
-                         +"', estoque ='"+merc.getEstoque()
-                         +"', preco_custo ='"+merc.getPrecoCusto()
-                         +"', preco_venda ='"+merc.getPrecoVenda()
-                         +"', ativo ='"+merc.getAtivo()
-                         +"' where id ="+merc.getId();
-                 
-          int resultado = st.executeUpdate(sql);
+            if (merc.getId() == 0) {
+
+                String sql = "INSERT INTO mercadoria VALUES ("
+                        + "DEFAULT," + "'" + merc.getReferencia() + "',"
+                        + "'" + merc.getDescricao() + "',"
+                        + merc.getEstoque() + ","
+                        + merc.getPrecoCusto() + ","
+                        + merc.getPrecoVenda() + ","
+                        + "'" + merc.getAtivo() + "'"
+                        + ")";
+                System.out.println(sql);
+                int resultado = st.executeUpdate(sql);
+            } else {
+                String sql = "UPDATE mercadoria set referencia='" + merc.getReferencia()
+                        + "', descricao ='" + merc.getDescricao()
+                        + "', estoque ='" + merc.getEstoque()
+                        + "', preco_custo ='" + merc.getPrecoCusto()
+                        + "', preco_venda ='" + merc.getPrecoVenda()
+                        + "', ativo ='" + merc.getAtivo()
+                        + "' where id =" + merc.getId();
+
+                int resultado = st.executeUpdate(sql);
             }
             return true;
         } catch (Exception e) {
@@ -57,7 +59,7 @@ public class MercadoriaDAO {
         try {
             Statement st = ConexaoDB.conexao.createStatement();
             String sql = "select * from  mercadoria order by id";
-            
+
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
                 Mercadoria merc = new Mercadoria();
@@ -76,5 +78,33 @@ public class MercadoriaDAO {
 
         return mercadorias;
     }
-    
+
+    public ArrayList<Mercadoria> consultarEspecifico(Mercadoria mercadoria) {
+        this.mercadoria = mercadoria;
+        ArrayList<Mercadoria> mercadorias = new ArrayList<>();
+
+        try {
+            Statement st = ConexaoDB.conexao.createStatement();
+            String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
+                    +"' and referencia like '"+mercadoria.getReferencia()+"%'" + "order by id";
+            System.out.println(sql);
+            ResultSet resultado = st.executeQuery(sql);
+            while (resultado.next()) {
+                Mercadoria merc = new Mercadoria();
+                merc.setId(resultado.getInt("id"));
+                merc.setReferencia(resultado.getString("referencia"));
+                merc.setDescricao(resultado.getString("descricao"));
+                merc.setEstoque(resultado.getDouble("estoque"));
+                merc.setPrecoCusto(resultado.getDouble("preco_custo"));
+                merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                merc.setAtivo(resultado.getString("ativo").charAt(0));
+                mercadorias.add(merc);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar Forma de pagamento " + e);
+        }
+
+        return mercadorias;
+    }
+
 }
