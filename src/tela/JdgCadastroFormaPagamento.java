@@ -182,7 +182,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         } else {
             tfdDescricao.setText("");
             tfdDescricao.requestFocus();
-            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150");
+            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150 e o mínimo é 1");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {

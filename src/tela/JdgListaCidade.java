@@ -11,6 +11,9 @@ import entidade.Cidade;
 import entidade.FormaPagamento;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,24 +35,47 @@ public class JdgListaCidade extends javax.swing.JDialog {
         initComponents();
         listarCidades();
     }
+    
 
     private void listarCidades() {
-        CidadeDAO cidadeDAO = new CidadeDAO();
+        try {
+            //setar para tabela modelo de dados
+            tblCidades.setModel(this.obterDadosParaJTable());
+            tblCidades.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblCidades.getColumnModel().getColumn(1).setPreferredWidth(270);
+            tblCidades.getColumnModel().getColumn(2).setPreferredWidth(1);
 
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public DefaultTableModel obterDadosParaJTable() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+        CidadeDAO cidadeDAO = new CidadeDAO();
         ArrayList<Cidade> cidades = cidadeDAO.consultar();
+        dtm.addColumn("ID");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("STATUS");
 
         for (int i = 0; i < cidades.size(); i++) {
-
-            tblCidades.setValueAt(cidades.get(i).getId(), i, 0);
-            tblCidades.setValueAt(cidades.get(i).getDescricao(), i, 1);
-            if (cidades.get(i).getAtivo() == 'T') {
-                tblCidades.setValueAt("Ativo", i, 2);
-                
+            //popular tabela
+            String result = "";
+            if (String.valueOf(cidades.get(i).getAtivo()).equalsIgnoreCase("T")) {
+                result = "Ativo";
             } else {
-                tblCidades.setValueAt("Inativo", i, 2);
+                result = "Inativo";
             }
-
+            dtm.addRow(new String[]{String.valueOf(cidades.get(i).getId()),
+                cidades.get(i).getDescricao(), result});
         }
+//retorna o modelo
+        return dtm;
     }
 
     @SuppressWarnings("unchecked")
@@ -259,12 +285,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
         selecionado();
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
-    public void mouseClicked(java.awt.event.MouseEvent e) {
 
-        if (e.getClickCount() > 1) {
-            selecionado();
-        }
-    }
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
@@ -287,7 +308,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
     
     //retorna item selecionado na taleba
     private void selecionado() {
-        Cidade cidade = new Cidade();
+//        Cidade cidade = new Cidade();
         //pega a linha selecionada
         int row = tblCidades.getSelectedRow();
 

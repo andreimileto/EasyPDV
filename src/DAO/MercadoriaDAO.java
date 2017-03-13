@@ -34,11 +34,11 @@ public class MercadoriaDAO {
             System.out.println(sql);
             int resultado = st.executeUpdate(sql);
             }else{
-                 String sql = "UPDATE forma_pagamento set descricao='"+merc.getReferencia()
-                         +"', ativo ='"+merc.getDescricao()
-                         +"', ativo ='"+merc.getEstoque()
-                         +"', ativo ='"+merc.getPrecoCusto()
-                         +"', ativo ='"+merc.getPrecoVenda()
+                 String sql = "UPDATE mercadoria set referencia='"+merc.getReferencia()
+                         +"', descricao ='"+merc.getDescricao()
+                         +"', estoque ='"+merc.getEstoque()
+                         +"', preco_custo ='"+merc.getPrecoCusto()
+                         +"', preco_venda ='"+merc.getPrecoVenda()
                          +"', ativo ='"+merc.getAtivo()
                          +"' where id ="+merc.getId();
                  

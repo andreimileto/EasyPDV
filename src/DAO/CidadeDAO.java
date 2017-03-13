@@ -23,9 +23,10 @@ public boolean salvar(Cidade cidade) {
             //query = select
             
             if(cidade.getId() == 0){
+                
             String sql = "INSERT INTO cidade VALUES ("
-                    + "DEFAULT," + "'" + cidade.getAtivo() + "',"
-                    + "'" + cidade.getDescricao() + "'"
+                    + "DEFAULT," + "'"+ cidade.getDescricao() + "',"
+                    + "'" + cidade.getAtivo()  + "'"
                     + ")";
             int resultado = st.executeUpdate(sql);
             }else{

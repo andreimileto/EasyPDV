@@ -146,7 +146,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (tfdDescricao.getText().length() <= 150) {
+        if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length() > 0) {
 
             cidade.setDescricao(tfdDescricao.getText());
 
@@ -159,11 +159,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
             CidadeDAO cidadeDAO = new CidadeDAO();
 
             if (cidadeDAO.salvar(cidade)) {
-
-                tfdCodigo.setText("");
-                tfdDescricao.setText("");
-                tfdDescricao.requestFocus();
-                cidade.setId(0);
+                limparcampos();
                 JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
@@ -171,10 +167,18 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
         } else {
             tfdDescricao.setText("");
             tfdDescricao.requestFocus();
-            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150");
+            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150 e o mínimo é 1");
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void limparcampos() {
+        tfdCodigo.setText("");
+        tfdDescricao.setText("");
+        tfdDescricao.requestFocus();
+        cidade.setId(0);
+    }
+
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
@@ -189,7 +193,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
         listaCidade.setVisible(true);
 
         verificarCadastroSelecionado();
-
+        tfdDescricao.requestFocus();
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
     private void verificarCadastroSelecionado() {

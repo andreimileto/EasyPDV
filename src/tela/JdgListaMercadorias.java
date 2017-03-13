@@ -11,6 +11,8 @@ import entidade.FormaPagamento;
 import entidade.Mercadoria;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,27 +38,59 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
     
     private void listarMercadorias() {
-        MercadoriaDAO mercDAO = new MercadoriaDAO();
+         try {
+            //setar para tabela modelo de dados
+            tblMercadorias.setModel(this.obterDadosParaJTable());
+            tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(170);
+            tblMercadorias.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(6).setPreferredWidth(0);
 
-        ArrayList<Mercadoria> mercs = mercDAO.consultar();
-      
-        
-                
-        for (int i = 0; i < mercs.size(); i++) {
-
-            tblMercadorias.setValueAt(mercs.get(i).getId(), i, 0);
-            tblMercadorias.setValueAt(mercs.get(i).getReferencia(), i, 1);
-            tblMercadorias.setValueAt(mercs.get(i).getDescricao(), i,2);
-            tblMercadorias.setValueAt(mercs.get(i).getEstoque(), i, 3);
-            tblMercadorias.setValueAt(mercs.get(i).getPrecoCusto(), i, 4);
-            tblMercadorias.setValueAt(mercs.get(i).getPrecoVenda(), i, 5);
-            if (mercs.get(i).getAtivo() == 'T') {
-                tblMercadorias.setValueAt("Ativo", i, 6);
-            } else {
-                tblMercadorias.setValueAt("Inativo", i, 6);
-            }
-
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
+    }
+      public DefaultTableModel obterDadosParaJTable() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+        MercadoriaDAO mercDAO = new MercadoriaDAO();
+        ArrayList<Mercadoria> mercs = mercDAO.consultar();
+        dtm.addColumn("ID");
+        dtm.addColumn("REFERÊNCIA");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("ESTOQUE");
+        dtm.addColumn("CUSTO");
+        dtm.addColumn("VENDA");
+        dtm.addColumn("STATUS");
+
+
+        for (int i = 0; i < mercs.size(); i++) {
+            //popular tabela
+            String result = "";
+            if (String.valueOf(mercs.get(i).getAtivo()).equalsIgnoreCase("T")) {
+                result = "Ativo";
+            } else {
+                result = "Inativo";
+            }
+            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
+                mercs.get(i).getReferencia(),
+                mercs.get(i).getDescricao(),
+                String.valueOf(mercs.get(i).getEstoque()),
+                String.valueOf(mercs.get(i).getPrecoCusto()),
+                String.valueOf(mercs.get(i).getPrecoVenda()),
+                result
+            });
+        }
+//retorna o modelo
+        return dtm;
     }
 
     @SuppressWarnings("unchecked")
@@ -68,6 +102,11 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        cbxStatus = new javax.swing.JComboBox<>();
+        btnListar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        tfdReferencia = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -224,31 +263,60 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             }
         });
 
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnListar.setText("Listar");
+
+        jLabel2.setText("Status:");
+
+        jLabel3.setText("Referência:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(288, 288, 288)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(554, Short.MAX_VALUE)
-                .addComponent(btnConfirmar)
-                .addGap(18, 18, 18)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addGap(28, 28, 28))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConfirmar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListar)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -292,18 +360,23 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
     }//GEN-LAST:event_tblMercadoriasMouseEntered
 
     private void selecionado() {
-        FormaPagamento fp = new FormaPagamento();
+//        Mercadoria merc = new Mercadoria();
         //pega a linha selecionada
         int row = tblMercadorias.getSelectedRow();
 
         //seta o ID do objeto da linha selecionada
         this.merc.setId(Integer.parseInt(tblMercadorias.getValueAt(row, 0).toString()));
-        this.merc.setDescricao(tblMercadorias.getValueAt(row, 1).toString());
-         if (tblMercadorias.getValueAt(row, 2).toString().equals("Ativo")) {
+        this.merc.setReferencia(tblMercadorias.getValueAt(row, 1).toString());
+        this.merc.setDescricao(tblMercadorias.getValueAt(row, 2).toString());
+        this.merc.setEstoque(Double.parseDouble(tblMercadorias.getValueAt(row, 3).toString()));
+        this.merc.setPrecoCusto(Double.parseDouble(tblMercadorias.getValueAt(row, 4).toString()));
+        this.merc.setPrecoVenda(Double.parseDouble(tblMercadorias.getValueAt(row, 5).toString()));
+         if (tblMercadorias.getValueAt(row, 6).toString().equals("Ativo")) {
             this.merc.setAtivo('T');
         }else{
             this.merc.setAtivo('F');
         }
+
         dispose();
     }
 
@@ -352,9 +425,14 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblMercadorias;
+    private javax.swing.JTextField tfdReferencia;
     // End of variables declaration//GEN-END:variables
 }
