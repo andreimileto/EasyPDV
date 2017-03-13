@@ -7,8 +7,12 @@ package tela;
 
 import DAO.FormaPagamentoDAO;
 import entidade.FormaPagamento;
+
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,38 +23,60 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
     FormaPagamento fp;
 
-    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal, FormaPagamento fp) {
+    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal, FormaPagamento fp) throws Exception {
         super(parent, modal);
         initComponents();
         this.fp = fp;
         listarFormasPagamento();
+
     }
 
-    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal) {
+    public JdgListaFormaPagamento(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-        listarFormasPagamento();
+
     }
 
-    
     private void listarFormasPagamento() {
-        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
+        try {
+            //setar para tabela modelo de dados
+            tblFormaPagamento.setModel(this.obterDadosParaJTable());
+            tblFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(270);
+            tblFormaPagamento.getColumnModel().getColumn(2).setPreferredWidth(1);
 
-        ArrayList<FormaPagamento> formas = fpDAO.consultar();
-      
-        
-                
-        for (int i = 0; i < formas.size(); i++) {
-
-            tblFormaPagamento.setValueAt(formas.get(i).getId(), i, 0);
-            tblFormaPagamento.setValueAt(formas.get(i).getDescricao(), i, 1);
-            if (formas.get(i).getAtivo() == 'T') {
-                tblFormaPagamento.setValueAt("Ativo", i, 2);
-            } else {
-                tblFormaPagamento.setValueAt("Inativo", i, 2);
-            }
-
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public DefaultTableModel obterDadosParaJTable() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
+        ArrayList<FormaPagamento> formas = fpDAO.consultar();
+        dtm.addColumn("ID");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("ATIVO");
+
+        for (int i = 0; i < formas.size(); i++) {
+            //popular tabela
+            String result = "";
+            if (String.valueOf(formas.get(i).getAtivo()).equalsIgnoreCase("T")) {
+                result = "Ativo";
+            } else {
+                result = "Inativo";
+            }
+            dtm.addRow(new String[]{String.valueOf(formas.get(i).getId()),
+                formas.get(i).getDescricao(), result});
+        }
+//retorna o modelo
+        return dtm;
     }
 
     @SuppressWarnings("unchecked")
@@ -260,12 +286,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         selecionado();
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
-    public void mouseClicked(java.awt.event.MouseEvent e) {
 
-        if (e.getClickCount() > 1) {
-            selecionado();
-        }
-    }
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
@@ -294,9 +315,9 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         //seta o ID do objeto da linha selecionada
         this.fp.setId(Integer.parseInt(tblFormaPagamento.getValueAt(row, 0).toString()));
         this.fp.setDescricao(tblFormaPagamento.getValueAt(row, 1).toString());
-         if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Ativo")) {
+        if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Ativo")) {
             this.fp.setAtivo('T');
-        }else{
+        } else {
             this.fp.setAtivo('F');
         }
         dispose();
@@ -328,11 +349,17 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdgListaFormaPagamento dialog = new JdgListaFormaPagamento(new javax.swing.JFrame(), true);
+                JdgListaFormaPagamento dialog = null;
+                try {
+                    dialog = new JdgListaFormaPagamento(new javax.swing.JFrame(), true);
+                } catch (Exception ex) {
+                    Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

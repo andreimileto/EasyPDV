@@ -8,6 +8,8 @@ package tela;
 import DAO.FormaPagamentoDAO;
 import entidade.FormaPagamento;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,23 +28,20 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }
 
     private void verificarCadastroSelecionado() {
-        
+
         if (formaPagamento.getId() > 0) {
-            
-            
+
             tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
             tfdDescricao.setText(formaPagamento.getDescricao());
             if (formaPagamento.getAtivo() == 'T') {
-             rbtAtivo.setSelected(true);
+                rbtAtivo.setSelected(true);
 
-            }else{
+            } else {
                 rbtAtivo.setSelected(false);
             }
-            
+
         }
     }
-
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -166,36 +165,32 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (tfdDescricao.getText().length() <= 150) {
-            
-        
-        formaPagamento.setDescricao(tfdDescricao.getText());
-
-        if (rbtAtivo.isSelected()) {
-            formaPagamento.setAtivo('T');
+        if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length()>0) {
+            formaPagamento.setDescricao(tfdDescricao.getText());
+            if (rbtAtivo.isSelected()) {
+                formaPagamento.setAtivo('T');
+            } else {
+                formaPagamento.setAtivo('F');
+            }
+            FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
+            if (formaPagamentoDAO.salvar(formaPagamento)) {
+                limparCampos();
+                JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
+            }
         } else {
-            formaPagamento.setAtivo('F');
-        }
-
-        FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
-
-        if (formaPagamentoDAO.salvar(formaPagamento)) {
-            
-            tfdCodigo.setText("");
-            tfdDescricao.setText("");
-            tfdDescricao.requestFocus();
-           formaPagamento.setId(0);
-            JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
-        }
-        }else{
             tfdDescricao.setText("");
             tfdDescricao.requestFocus();
             JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
-
+    private void limparCampos() {
+        tfdCodigo.setText("");
+        tfdDescricao.setText("");
+        tfdDescricao.requestFocus();
+        formaPagamento.setId(0);
+    }
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
@@ -205,10 +200,17 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdDescricaoActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        JdgListaFormaPagamento listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
-        listaFormaPagamento.setVisible(true);
+        JdgListaFormaPagamento listaFormaPagamento;
+        try {
+            listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
+            listaFormaPagamento.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(JdgCadastroFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         verificarCadastroSelecionado();
+        
+        tfdDescricao.requestFocus();
 
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -237,6 +239,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JdgCadastroFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
