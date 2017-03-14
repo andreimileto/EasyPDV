@@ -40,6 +40,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
     private void listarMercadoriasEspecificas() {
         try {
             //setar para tabela modelo de dados
+
             tblMercadorias.setModel(this.obterDadosEspecificoTabela());
             tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(10);
@@ -62,13 +63,25 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
     }
 
     private DefaultTableModel obterDadosEspecificoTabela() throws Exception {
+
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+
         MercadoriaDAO mercDAO = new MercadoriaDAO();
+        System.out.println("chegou aqui");
         ArrayList<Mercadoria> mercs = mercDAO.consultarEspecifico(merc);
+
+        dtm.addColumn("ID");
+        dtm.addColumn("REFERÊNCIA");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("ESTOQUE");
+        dtm.addColumn("CUSTO");
+        dtm.addColumn("VENDA");
+        dtm.addColumn("STATUS");
+
         for (int i = 0; i < mercs.size(); i++) {
             //popular tabela
             String result = "";
@@ -77,6 +90,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             } else {
                 result = "Inativo";
             }
+            System.out.println(mercs.get(i).getDescricao());
             dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
                 mercs.get(i).getReferencia(),
                 mercs.get(i).getDescricao(),
@@ -86,6 +100,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                 result
             });
         }
+
 //retorna o modelo
         return dtm;
     }
@@ -429,21 +444,21 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         merc.setReferencia(tfdReferencia.getText());
         if (cbxStatus.getSelectedItem().equals("Todos")) {
             try {
-                obterDadosParaTabelaCompleto();
+                listarMercadorias();
             } catch (Exception ex) {
                 Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (cbxStatus.getSelectedItem().equals("Ativo")) {
+        } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
             merc.setAtivo('T');
             try {
-                obterDadosEspecificoTabela();
+                listarMercadoriasEspecificas();
             } catch (Exception ex) {
                 Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else  if (cbxStatus.getSelectedItem().equals("Inativo")){
+        } else if (cbxStatus.getSelectedItem().equals("Inativos")) {
             merc.setAtivo('F');
             try {
-                obterDadosEspecificoTabela();
+                listarMercadoriasEspecificas();
             } catch (Exception ex) {
                 Logger.getLogger(JdgListaMercadorias.class.getName()).log(Level.SEVERE, null, ex);
             }

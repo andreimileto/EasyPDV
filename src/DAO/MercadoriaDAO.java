@@ -73,7 +73,7 @@ public class MercadoriaDAO {
                 mercadorias.add(merc);
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar Forma de pagamento " + e);
+            System.out.println("Erro ao consultar Mercadoria " + e);
         }
 
         return mercadorias;
@@ -85,8 +85,11 @@ public class MercadoriaDAO {
 
         try {
             Statement st = ConexaoDB.conexao.createStatement();
+            System.out.println("aaa"+mercadoria.getAtivo());
             String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
-                    +"' and referencia like '"+mercadoria.getReferencia()+"%'" + "order by id";
+                    +"' and referencia like '"+mercadoria.getReferencia()+"%'" + "order by id";    
+            
+            
             System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
