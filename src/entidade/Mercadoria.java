@@ -12,7 +12,7 @@ package entidade;
 public class Mercadoria {
 
     private int id;
-    private String referencia;
+    private String referencia="";
     private String descricao;
     private double estoque;
     private double precoCusto;

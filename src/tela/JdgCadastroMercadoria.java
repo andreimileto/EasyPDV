@@ -42,7 +42,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             }
 
         } else {
-            atualizarCampos();
+            limparCampos();
         }
     }
 
@@ -246,7 +246,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
 
             if (mercadoriaDAO.salvar(mercadoria)) {
-                atualizarCampos();
+                limparCampos();
                 JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
@@ -258,13 +258,16 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        limparCampos();
         JdgListaMercadorias mercadorias = new JdgListaMercadorias(null, true, mercadoria);
         mercadorias.setVisible(true);
         verificarCadastroSelecionado();
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
-    private void atualizarCampos() {
+    private void limparCampos() {
         mercadoria.setId(0);
+        mercadoria.setReferencia("");
+        mercadoria.setAtivo(' ');
         tfdCodigo.setText("");
         tfdDescricao.setText("");
         tfdEstoque.setText("0");

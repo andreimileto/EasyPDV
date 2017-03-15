@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @author Mileto
  */
 public class MercadoriaDAO {
+
     Mercadoria mercadoria;
 
     public boolean salvar(Mercadoria merc) {
@@ -53,29 +54,53 @@ public class MercadoriaDAO {
         return false;
     }
 
-    public ArrayList<Mercadoria> consultar() {
+    public ArrayList<Mercadoria> consultar(Mercadoria mercadoria) {
+        this.mercadoria = mercadoria;
         ArrayList<Mercadoria> mercadorias = new ArrayList<>();
+        if (mercadoria.getAtivo() == 'T' || mercadoria.getAtivo() == 'F') {
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
+                System.out.println("aaa" + mercadoria.getAtivo());
+                String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
+                        + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
 
-        try {
-            Statement st = ConexaoDB.conexao.createStatement();
-            String sql = "select * from  mercadoria order by id";
-
-            ResultSet resultado = st.executeQuery(sql);
-            while (resultado.next()) {
-                Mercadoria merc = new Mercadoria();
-                merc.setId(resultado.getInt("id"));
-                merc.setReferencia(resultado.getString("referencia"));
-                merc.setDescricao(resultado.getString("descricao"));
-                merc.setEstoque(resultado.getDouble("estoque"));
-                merc.setPrecoCusto(resultado.getDouble("preco_custo"));
-                merc.setPrecoVenda(resultado.getDouble("preco_venda"));
-                merc.setAtivo(resultado.getString("ativo").charAt(0));
-                mercadorias.add(merc);
+                System.out.println(sql);
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    Mercadoria merc = new Mercadoria();
+                    merc.setId(resultado.getInt("id"));
+                    merc.setReferencia(resultado.getString("referencia"));
+                    merc.setDescricao(resultado.getString("descricao"));
+                    merc.setEstoque(resultado.getDouble("estoque"));
+                    merc.setPrecoCusto(resultado.getDouble("preco_custo"));
+                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                    merc.setAtivo(resultado.getString("ativo").charAt(0));
+                    mercadorias.add(merc);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Mercadoria " + e);
             }
-        } catch (Exception e) {
-            System.out.println("Erro ao consultar Mercadoria " + e);
-        }
+        } else {
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
+                String sql = "select * from  mercadoria where referencia like '"+ mercadoria.getReferencia() + "%'" +"order by id";
 
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    Mercadoria merc = new Mercadoria();
+                    merc.setId(resultado.getInt("id"));
+                    merc.setReferencia(resultado.getString("referencia"));
+                    merc.setDescricao(resultado.getString("descricao"));
+                    merc.setEstoque(resultado.getDouble("estoque"));
+                    merc.setPrecoCusto(resultado.getDouble("preco_custo"));
+                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                    merc.setAtivo(resultado.getString("ativo").charAt(0));
+                    mercadorias.add(merc);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Mercadoria " + e);
+            }
+        }
         return mercadorias;
     }
 
@@ -85,11 +110,10 @@ public class MercadoriaDAO {
 
         try {
             Statement st = ConexaoDB.conexao.createStatement();
-            System.out.println("aaa"+mercadoria.getAtivo());
+            System.out.println("aaa" + mercadoria.getAtivo());
             String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
-                    +"' and referencia like '"+mercadoria.getReferencia()+"%'" + "order by id";    
-            
-            
+                    + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
+
             System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
