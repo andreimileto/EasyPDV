@@ -173,6 +173,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void limparcampos() {
+        cidade.setAtivo(' ');
         tfdCodigo.setText("");
         tfdDescricao.setText("");
         tfdDescricao.requestFocus();

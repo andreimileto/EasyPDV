@@ -186,6 +186,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {
+        formaPagamento.setAtivo(' ');
         tfdCodigo.setText("");
         tfdDescricao.setText("");
         tfdDescricao.requestFocus();

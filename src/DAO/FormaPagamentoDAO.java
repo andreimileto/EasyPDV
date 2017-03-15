@@ -15,23 +15,26 @@ import java.util.ArrayList;
  * @author Mileto
  */
 public class FormaPagamentoDAO {
-     public boolean salvar(FormaPagamento fp) {
+
+    FormaPagamento form;
+
+    public boolean salvar(FormaPagamento fp) {
         try {
             Statement st = ConexaoDB.conexao.createStatement();
             //executeupdate = insert,update, delete
             //query = select
-            if(fp.getId() == 0){
-            String sql = "INSERT INTO forma_pagamento VALUES ("
-                    + "DEFAULT," + "'" + fp.getDescricao() + "',"
-                    + "'" + fp.getAtivo() + "'"
-                    + ")";
-            int resultado = st.executeUpdate(sql);
-            }else{
-                 String sql = "UPDATE forma_pagamento set descricao='"+fp.getDescricao()
-                         +"', ativo ='"+fp.getAtivo()
-                         +"' where id ="+fp.getId();
-                 
-          int resultado = st.executeUpdate(sql);
+            if (fp.getId() == 0) {
+                String sql = "INSERT INTO forma_pagamento VALUES ("
+                        + "DEFAULT," + "'" + fp.getDescricao() + "',"
+                        + "'" + fp.getAtivo() + "'"
+                        + ")";
+                int resultado = st.executeUpdate(sql);
+            } else {
+                String sql = "UPDATE forma_pagamento set descricao='" + fp.getDescricao()
+                        + "', ativo ='" + fp.getAtivo()
+                        + "' where id =" + fp.getId();
+
+                int resultado = st.executeUpdate(sql);
             }
             return true;
         } catch (Exception e) {
@@ -40,27 +43,44 @@ public class FormaPagamentoDAO {
         return false;
     }
 
-    public ArrayList<FormaPagamento> consultar() {
+    public ArrayList<FormaPagamento> consultar(FormaPagamento form) {
+        this.form = form;
         ArrayList<FormaPagamento> formasPagamento = new ArrayList<>();
+        if (form.getAtivo() == 'T' || form.getAtivo() == 'F') {
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
+                String sql = "select * from  forma_pagamento where ativo = '" + form.getAtivo() + "' order by id";
 
-        try {
-            Statement st = ConexaoDB.conexao.createStatement();
-            String sql = "select * from  forma_pagamento order by id";
-            
-            ResultSet resultado = st.executeQuery(sql);
-            while (resultado.next()) {
-                FormaPagamento fp = new FormaPagamento();
-                fp.setId(resultado.getInt("id"));
-                fp.setDescricao(resultado.getString("descricao"));
-                fp.setAtivo(resultado.getString("ativo").charAt(0));
-                formasPagamento.add(fp);
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    FormaPagamento fp = new FormaPagamento();
+                    fp.setId(resultado.getInt("id"));
+                    fp.setDescricao(resultado.getString("descricao"));
+                    fp.setAtivo(resultado.getString("ativo").charAt(0));
+                    formasPagamento.add(fp);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Forma de pagamento " + e);
             }
-        } catch (Exception e) {
-            System.out.println("Erro ao consultar Forma de pagamento " + e);
+        } else {
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
+                String sql = "select * from  forma_pagamento order by id";
+
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    FormaPagamento fp = new FormaPagamento();
+                    fp.setId(resultado.getInt("id"));
+                    fp.setDescricao(resultado.getString("descricao"));
+                    fp.setAtivo(resultado.getString("ativo").charAt(0));
+                    formasPagamento.add(fp);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Forma de pagamento " + e);
+            }
         }
 
         return formasPagamento;
     }
-    
-    
+
 }

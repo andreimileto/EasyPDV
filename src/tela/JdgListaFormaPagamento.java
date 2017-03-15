@@ -59,7 +59,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         };
 //adiciona titulo para as colunas
         FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
-        ArrayList<FormaPagamento> formas = fpDAO.consultar();
+        ArrayList<FormaPagamento> formas = fpDAO.consultar(fp);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("ATIVO");

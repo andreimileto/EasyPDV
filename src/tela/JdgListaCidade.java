@@ -58,7 +58,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
         };
 //adiciona titulo para as colunas
         CidadeDAO cidadeDAO = new CidadeDAO();
-        ArrayList<Cidade> cidades = cidadeDAO.consultar();
+        ArrayList<Cidade> cidades = cidadeDAO.consultar(cidade);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("STATUS");
