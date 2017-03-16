@@ -275,6 +275,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         tfdPrecoVenda.setText("0");
         tfdReferencia.setText("");
         tfdReferencia.requestFocus();
+        rbtAtivo.setSelected(true);
     }
 
     private boolean validarCampos() {
