@@ -27,6 +27,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.fp = fp;
+        popularComboBox();
         listarFormasPagamento();
 
     }
@@ -50,6 +51,12 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         }
 
     }
+    
+    private void popularComboBox(){
+         cbxStatus.addItem("Todos");
+        cbxStatus.addItem("Ativos");
+        cbxStatus.addItem("Inativos");
+    }
 
     public DefaultTableModel obterDadosParaJTable() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
@@ -62,7 +69,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         ArrayList<FormaPagamento> formas = fpDAO.consultar(fp);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
-        dtm.addColumn("ATIVO");
+        dtm.addColumn("STATUS");
 
         for (int i = 0; i < formas.size(); i++) {
             //popular tabela
@@ -88,6 +95,11 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        tfdDescricao = new javax.swing.JTextField();
+        cbxStatus = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -207,12 +219,12 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             }
         });
         tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblFormaPagamentoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,32 +256,60 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setText("Descrição:");
+
+        jLabel3.setText("Status:");
+
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(175, 175, 175)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(334, Short.MAX_VALUE)
+                .addComponent(btnConfirmar)
+                .addGap(18, 18, 18)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnConfirmar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(btnListar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -306,6 +346,22 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
     private void tblFormaPagamentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseEntered
 
     }//GEN-LAST:event_tblFormaPagamentoMouseEntered
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+                fp.setDescricao(tfdDescricao.getText().toLowerCase());
+        if (cbxStatus.getSelectedItem().equals("Todos")) {
+            fp.setAtivo(' ');
+        } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
+            fp.setAtivo('T');
+
+        } else if (cbxStatus.getSelectedItem().equals("Inativos")) {
+            fp.setAtivo('F');
+
+        }
+        listarFormasPagamento();
+
+        
+    }//GEN-LAST:event_btnListarActionPerformed
 
     private void selecionado() {
         FormaPagamento fp = new FormaPagamento();
@@ -373,9 +429,14 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblFormaPagamento;
+    private javax.swing.JTextField tfdDescricao;
     // End of variables declaration//GEN-END:variables
 }

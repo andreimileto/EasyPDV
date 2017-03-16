@@ -55,8 +55,9 @@ public class CidadeDAO {
         if (cid.getAtivo() == 'T' || cid.getAtivo() == 'F') {
             try {
                 Statement st = ConexaoDB.conexao.createStatement();
-                String sql = "select * from  cidade order where ativo ='" + cid.getAtivo() + "' by id";
-
+                String sql = "select * from  cidade "
+                        + "where lower (descricao) like '" + cid.getDescricao() + "%'"
+                        + "and ativo = '" + cid.getAtivo() + "' order by id";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Cidade cidade = new Cidade();
@@ -72,8 +73,8 @@ public class CidadeDAO {
 
             try {
                 Statement st = ConexaoDB.conexao.createStatement();
-                String sql = "select * from  cidade order by id";
-
+                String sql = "select * from  cidade "
+                        + "where lower (descricao) like '" + cid.getDescricao() + "%' order by id";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Cidade cidade = new Cidade();

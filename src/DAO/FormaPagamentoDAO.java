@@ -49,7 +49,9 @@ public class FormaPagamentoDAO {
         if (form.getAtivo() == 'T' || form.getAtivo() == 'F') {
             try {
                 Statement st = ConexaoDB.conexao.createStatement();
-                String sql = "select * from  forma_pagamento where ativo = '" + form.getAtivo() + "' order by id";
+                String sql = "select * from  forma_pagamento "
+                        + "where lower (descricao) like '" + form.getDescricao() + "%'"
+                        + "and ativo = '" + form.getAtivo() + "' order by id";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -65,7 +67,8 @@ public class FormaPagamentoDAO {
         } else {
             try {
                 Statement st = ConexaoDB.conexao.createStatement();
-                String sql = "select * from  forma_pagamento order by id";
+                String sql = "select * from  forma_pagamento "
+                        + "where lower (descricao) like '" + form.getDescricao() + "%' order by id";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {

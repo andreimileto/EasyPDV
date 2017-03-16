@@ -12,7 +12,7 @@ package entidade;
 public class Cidade {
 
     private int id;
-    private String descricao;
+    private String descricao = "";
     private char ativo;
 
     public int getId() {

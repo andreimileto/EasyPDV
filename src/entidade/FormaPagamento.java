@@ -10,8 +10,9 @@ package entidade;
  * @author Mileto
  */
 public class FormaPagamento {
+
     private int id;
-    private String descricao;
+    private String descricao = "";
     private char ativo;
 
     public int getId() {
@@ -37,5 +38,5 @@ public class FormaPagamento {
     public void setAtivo(char descricao) {
         this.ativo = descricao;
     }
-    
+
 }
