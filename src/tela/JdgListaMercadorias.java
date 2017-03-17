@@ -110,7 +110,6 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         btnConfirmar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         cbxStatus = new javax.swing.JComboBox<>();
-        btnListar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tfdReferencia = new javax.swing.JTextField();
@@ -254,7 +253,9 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblMercadorias);
 
-        jLabel1.setText("Lista Forma de pagamento");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel1.setText("Lista de mercadorias");
 
         btnConfirmar.setText("Confirmar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -270,22 +271,26 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             }
         });
 
+        cbxStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxStatusItemStateChanged(evt);
+            }
+        });
         cbxStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxStatusActionPerformed(evt);
             }
         });
 
-        btnListar.setText("Listar");
-        btnListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Status:");
 
         jLabel3.setText("Referência:");
+
+        tfdReferencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdReferenciaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -311,13 +316,11 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -328,7 +331,6 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnListar)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -374,8 +376,8 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxStatusActionPerformed
 
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        merc.setReferencia(tfdReferencia.getText());
+        private void listar(){
+             merc.setReferencia(tfdReferencia.getText());
         if (cbxStatus.getSelectedItem().equals("Todos")) {
             merc.setAtivo(' ');
         } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
@@ -386,9 +388,15 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
         }
         listarMercadorias();
+        }
+    
+    private void tfdReferenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdReferenciaKeyReleased
+        listar();
+    }//GEN-LAST:event_tfdReferenciaKeyReleased
 
-
-    }//GEN-LAST:event_btnListarActionPerformed
+    private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
+        listar();
+    }//GEN-LAST:event_cbxStatusItemStateChanged
 
     private void selecionado() {
 
@@ -456,7 +464,6 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;

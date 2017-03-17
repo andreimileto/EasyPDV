@@ -9,13 +9,22 @@
             <Property name="text" type="java.lang.String" value="Cadastros"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="imnClientes">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/Iconusers48.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Clientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imnClientesActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="imnCidades">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/IconLocation.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cidades"/>
               </Properties>
               <Events>
@@ -24,6 +33,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="imnMercadoria">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/Iconbox48.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Mercadorias"/>
               </Properties>
               <Events>
@@ -32,6 +44,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="imnFormaPagamento">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/Icon_credit_cards48.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Formas de pagamento"/>
               </Properties>
               <Events>

@@ -34,7 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        imnClientes = new javax.swing.JMenuItem();
         imnCidades = new javax.swing.JMenuItem();
         imnMercadoria = new javax.swing.JMenuItem();
         imnFormaPagamento = new javax.swing.JMenuItem();
@@ -61,9 +61,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Cadastros");
 
-        jMenuItem1.setText("Clientes");
-        jMenu1.add(jMenuItem1);
+        imnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Iconusers48.png"))); // NOI18N
+        imnClientes.setText("Clientes");
+        imnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnClientesActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imnClientes);
 
+        imnCidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/IconLocation.png"))); // NOI18N
         imnCidades.setText("Cidades");
         imnCidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,6 +79,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(imnCidades);
 
+        imnMercadoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Iconbox48.png"))); // NOI18N
         imnMercadoria.setText("Mercadorias");
         imnMercadoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +88,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(imnMercadoria);
 
+        imnFormaPagamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_credit_cards48.png"))); // NOI18N
         imnFormaPagamento.setText("Formas de pagamento");
         imnFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +153,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mercadoria.setVisible(true);
     }//GEN-LAST:event_imnMercadoriaActionPerformed
 
+    private void imnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnClientesActionPerformed
+        JdgCadastroCliente cadastroCliente = new JdgCadastroCliente(this,true);
+        cadastroCliente.setVisible(true);
+    }//GEN-LAST:event_imnClientesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,13 +195,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem imnCidades;
+    private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;
     private javax.swing.JMenuItem imnMercadoria;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;

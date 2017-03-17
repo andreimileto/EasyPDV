@@ -26,7 +26,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
     public JdgListaCidade(java.awt.Frame parent, boolean modal, Cidade cidade) {
         super(parent, modal);
         initComponents();
-        this.cidade= cidade;
+        this.cidade = cidade;
         popularComboBox();
         listarCidades();
     }
@@ -36,7 +36,6 @@ public class JdgListaCidade extends javax.swing.JDialog {
         initComponents();
         listarCidades();
     }
-    
 
     private void listarCidades() {
         try {
@@ -50,13 +49,14 @@ public class JdgListaCidade extends javax.swing.JDialog {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void popularComboBox(){
-         cbxStatus.addItem("Todos");
+
+    private void popularComboBox() {
+        cbxStatus.addItem("Todos");
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
     }
-    
-        public DefaultTableModel obterDadosParaJTable() throws Exception {
+
+    public DefaultTableModel obterDadosParaJTable() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -95,9 +95,8 @@ public class JdgListaCidade extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         tfdDescricao = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblSatus = new javax.swing.JLabel();
         cbxStatus = new javax.swing.JComboBox<>();
-        btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -217,12 +216,12 @@ public class JdgListaCidade extends javax.swing.JDialog {
             }
         });
         tblCidades.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblCidadesAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblCidades.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,7 +237,9 @@ public class JdgListaCidade extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblCidades);
 
-        jLabel1.setText("Lista Forma de pagamento");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel1.setText("Lista de Cidades");
 
         btnConfirmar.setText("Confirmar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -256,12 +257,20 @@ public class JdgListaCidade extends javax.swing.JDialog {
 
         jLabel2.setText("Descrição:");
 
-        jLabel3.setText("Status:");
+        tfdDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfdDescricaoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdDescricaoKeyReleased(evt);
+            }
+        });
 
-        btnListar.setText("Listar");
-        btnListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarActionPerformed(evt);
+        lblSatus.setText("Status:");
+
+        cbxStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxStatusItemStateChanged(evt);
             }
         });
 
@@ -269,10 +278,6 @@ public class JdgListaCidade extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -285,30 +290,31 @@ public class JdgListaCidade extends javax.swing.JDialog {
                             .addGap(18, 18, 18)
                             .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(36, 36, 36)))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfdDescricao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblSatus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnListar)
-                        .addGap(42, 42, 42))))
+                        .addGap(68, 68, 68))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(188, 188, 188)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnListar))
+                    .addComponent(lblSatus)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
@@ -346,10 +352,9 @@ public class JdgListaCidade extends javax.swing.JDialog {
     private void tblCidadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseEntered
 
     }//GEN-LAST:event_tblCidadesMouseEntered
-
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+    private void listar() {
         cidade.setDescricao(tfdDescricao.getText().toLowerCase());
-        System.out.println("descricao == "+ cidade.getDescricao());
+        System.out.println("descricao == " + cidade.getDescricao());
         if (cbxStatus.getSelectedItem().equals("Todos")) {
             cidade.setAtivo(' ');
         } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
@@ -360,9 +365,22 @@ public class JdgListaCidade extends javax.swing.JDialog {
 
         }
         listarCidades();
+    }
+    private void tfdDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyPressed
+       
 
-    }//GEN-LAST:event_btnListarActionPerformed
-    
+    }//GEN-LAST:event_tfdDescricaoKeyPressed
+
+    private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
+
+        listar();
+        
+    }//GEN-LAST:event_cbxStatusItemStateChanged
+
+    private void tfdDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyReleased
+        listar();
+    }//GEN-LAST:event_tfdDescricaoKeyReleased
+
     //retorna item selecionado na taleba
     private void selecionado() {
 //        Cidade cidade = new Cidade();
@@ -374,10 +392,10 @@ public class JdgListaCidade extends javax.swing.JDialog {
         this.cidade.setDescricao(tblCidades.getValueAt(row, 1).toString());
         if (tblCidades.getValueAt(row, 2).toString().equals("Ativo")) {
             this.cidade.setAtivo('T');
-        }else{
+        } else {
             this.cidade.setAtivo('F');
         }
-        
+
         dispose();
     }
 
@@ -426,13 +444,12 @@ public class JdgListaCidade extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSatus;
     private javax.swing.JTable tblCidades;
     private javax.swing.JTextField tfdDescricao;
     // End of variables declaration//GEN-END:variables
