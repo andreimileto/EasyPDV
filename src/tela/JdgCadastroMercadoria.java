@@ -8,6 +8,7 @@ package tela;
 import DAO.CidadeDAO;
 import DAO.MercadoriaDAO;
 import entidade.Mercadoria;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,15 +56,15 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         tfdCodigo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lblReferencia = new javax.swing.JLabel();
         tfdReferencia = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblDescricao = new javax.swing.JLabel();
         tfdDescricao = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblEstoque = new javax.swing.JLabel();
+        lblPrecoCusto = new javax.swing.JLabel();
+        lblPrecoVenda = new javax.swing.JLabel();
         tfdPrecoVenda = new javax.swing.JFormattedTextField();
         tfdPrecoCusto = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
@@ -75,19 +76,19 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Código:");
+        lblCodigo.setText("Código*");
 
         tfdCodigo.setEditable(false);
 
-        jLabel2.setText("Referencia:");
+        lblReferencia.setText("Referencia*");
 
-        jLabel3.setText("Descrição: ");
+        lblDescricao.setText("Descrição*");
 
-        jLabel4.setText("Estoque:");
+        lblEstoque.setText("Estoque*");
 
-        jLabel5.setText("Preço de custo:");
+        lblPrecoCusto.setText("Preço de custo*");
 
-        jLabel6.setText("Preço de venda:");
+        lblPrecoVenda.setText("Preço de venda*");
 
         tfdPrecoVenda.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
@@ -125,6 +126,11 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
+        rbtAtivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtAtivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +139,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(227, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
@@ -141,8 +147,8 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
+                                    .addComponent(lblPrecoCusto)
+                                    .addComponent(lblPrecoVenda))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -152,25 +158,25 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(10, 10, 10)
-                                                .addComponent(jLabel4)
+                                                .addComponent(lblEstoque)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(tfdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(rbtAtivo))))
                                     .addComponent(btnLocalizar)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
+                                    .addComponent(lblReferencia)
+                                    .addComponent(lblCodigo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDescricao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -186,31 +192,31 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
                 .addComponent(jLabel7)
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblCodigo)
                     .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblReferencia)
                     .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblDescricao)
                     .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(lblEstoque)
                             .addComponent(tfdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbtAtivo))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
+                            .addComponent(lblPrecoCusto)
                             .addComponent(tfdPrecoCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
+                            .addComponent(lblPrecoVenda)
                             .addComponent(tfdPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -229,6 +235,8 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+//        String camposErrados = validarCampos(); 
+
         if (validarCampos()) {
 
             mercadoria.setDescricao(tfdDescricao.getText());
@@ -257,7 +265,11 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos");
+
+            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos ");
+//            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos "
+//                    ,JOptionPane.INFORMATION_MESSAGE,camposErrados);
+
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -267,6 +279,10 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         mercadorias.setVisible(true);
         verificarCadastroSelecionado();
     }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void rbtAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAtivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtAtivoActionPerformed
 
     private void limparCampos() {
         mercadoria.setId(0);
@@ -283,30 +299,40 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     }
 
     private boolean validarCampos() {
+        lblDescricao.setForeground(Color.black);
+        lblReferencia.setForeground(Color.black);
+        lblEstoque.setForeground(Color.black);
+        lblPrecoCusto.setForeground(Color.black);
+        lblPrecoVenda.setForeground(Color.black);
         boolean ok = true;
-        if (tfdDescricao.getText().length() > 150) {
+        if (tfdDescricao.getText().length() > 150 || tfdDescricao.getText().length() <= 0) {
             ok = false;
+//            camposErrados = camposErrados+"Descrição";
+            lblDescricao.setForeground(Color.red);
 
         }
-        if (tfdReferencia.getText().length() > 45) {
+        if (tfdReferencia.getText().length() > 45 || tfdReferencia.getText().length() <=0) {
             ok = false;
+            lblReferencia.setForeground(Color.red);
 
         }
         if (tfdEstoque.getText().equals("")
                 || Double.parseDouble(tfdEstoque.getText().replace(",", ".")) <= 0.00) {
             ok = false;
+            lblEstoque.setForeground(Color.red);
 
         }
         if (tfdPrecoCusto.getText().equals("")
                 || Double.parseDouble(tfdPrecoCusto.getText().replace(",", ".")) <= 0.00) {
             ok = false;
-
+            lblPrecoCusto.setForeground(Color.red);
         }
         if (tfdPrecoVenda.getText().equals("")
                 || Double.parseDouble(tfdPrecoVenda.getText().replace(",", ".")) <= 0.00
                 || Double.parseDouble(tfdPrecoVenda.getText().replace(",", "."))
                 < Double.parseDouble(tfdPrecoCusto.getText().replace(",", "."))) {
             ok = false;
+            lblPrecoVenda.setForeground(Color.red);
         }
         return ok;
 
@@ -358,13 +384,13 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblDescricao;
+    private javax.swing.JLabel lblEstoque;
+    private javax.swing.JLabel lblPrecoCusto;
+    private javax.swing.JLabel lblPrecoVenda;
+    private javax.swing.JLabel lblReferencia;
     private javax.swing.JRadioButton rbtAtivo;
     private javax.swing.JTextField tfdCodigo;
     private javax.swing.JTextField tfdDescricao;

@@ -51,11 +51,12 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         }
 
     }
-    
-    private void popularComboBox(){
-         cbxStatus.addItem("Todos");
+
+    private void popularComboBox() {
+
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
+        cbxStatus.addItem("Todos");
     }
 
     public DefaultTableModel obterDadosParaJTable() throws Exception {
@@ -356,8 +357,8 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tblFormaPagamentoMouseEntered
 
     private void tfdDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyPressed
-        
-    
+
+
     }//GEN-LAST:event_tfdDescricaoKeyPressed
 
     private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
@@ -367,8 +368,8 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
     private void tfdDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyReleased
         listar();
     }//GEN-LAST:event_tfdDescricaoKeyReleased
-private void listar(){
-                    fp.setDescricao(tfdDescricao.getText().toLowerCase());
+    private void listar() {
+        fp.setDescricao(tfdDescricao.getText().toLowerCase());
         if (cbxStatus.getSelectedItem().equals("Todos")) {
             fp.setAtivo(' ');
         } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
@@ -380,8 +381,8 @@ private void listar(){
         }
         listarFormasPagamento();
 
-        
-}
+    }
+
     private void selecionado() {
         FormaPagamento fp = new FormaPagamento();
         //pega a linha selecionada

@@ -26,8 +26,11 @@ public class JdgListaCidade extends javax.swing.JDialog {
     public JdgListaCidade(java.awt.Frame parent, boolean modal, Cidade cidade) {
         super(parent, modal);
         initComponents();
+
         this.cidade = cidade;
+        verificarTipoChamada();
         popularComboBox();
+
         listarCidades();
     }
 
@@ -51,9 +54,18 @@ public class JdgListaCidade extends javax.swing.JDialog {
     }
 
     private void popularComboBox() {
-        cbxStatus.addItem("Todos");
+
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
+        cbxStatus.addItem("Todos");
+    }
+
+    private void verificarTipoChamada() {
+        if (cidade.getAtivo() == 'T') {
+            cbxStatus.setEnabled(false);
+        } else {
+            cbxStatus.setEditable(true);
+        }
     }
 
     public DefaultTableModel obterDadosParaJTable() throws Exception {
@@ -216,12 +228,12 @@ public class JdgListaCidade extends javax.swing.JDialog {
             }
         });
         tblCidades.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblCidadesAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblCidades.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -367,14 +379,14 @@ public class JdgListaCidade extends javax.swing.JDialog {
         listarCidades();
     }
     private void tfdDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyPressed
-       
+
 
     }//GEN-LAST:event_tfdDescricaoKeyPressed
 
     private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
 
         listar();
-        
+
     }//GEN-LAST:event_cbxStatusItemStateChanged
 
     private void tfdDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdDescricaoKeyReleased

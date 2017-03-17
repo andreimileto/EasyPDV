@@ -39,9 +39,9 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
     private void popularComboBox() {
 
-        cbxStatus.addItem("Todos");
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
+        cbxStatus.addItem("Todos");
     }
 
     private void listarMercadorias() {
@@ -376,8 +376,8 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxStatusActionPerformed
 
-        private void listar(){
-             merc.setReferencia(tfdReferencia.getText());
+    private void listar() {
+        merc.setReferencia(tfdReferencia.getText());
         if (cbxStatus.getSelectedItem().equals("Todos")) {
             merc.setAtivo(' ');
         } else if (cbxStatus.getSelectedItem().equals("Ativos")) {
@@ -388,8 +388,8 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
 
         }
         listarMercadorias();
-        }
-    
+    }
+
     private void tfdReferenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdReferenciaKeyReleased
         listar();
     }//GEN-LAST:event_tfdReferenciaKeyReleased

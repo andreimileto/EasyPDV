@@ -19,8 +19,8 @@ public class ClienteDAO {
      public boolean salvar(Cliente cli) {
          return true;
      }
-      public ArrayList<Cidade> consultar(Cliente cli) {
-          
-      }
+//      public ArrayList<Cidade> consultar(Cliente cli) {
+//          
+//      }
      
 }

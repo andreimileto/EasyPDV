@@ -68,7 +68,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
 
         jLabel1.setText("Código");
 
-        jLabel2.setText("Descrição");
+        jLabel2.setText("Descrição*");
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
@@ -118,7 +118,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,6 +149,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        
         if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length() > 0) {
 
             cidade.setDescricao(tfdDescricao.getText());

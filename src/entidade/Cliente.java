@@ -11,7 +11,7 @@ package entidade;
  */
 public class Cliente {
     private int id;
-    private Cidade idCidade;
+    private Cidade Cidade;
     private String razaoSocial;
     private char tipoCadastro;
     private String cpfCnpj;
@@ -19,8 +19,8 @@ public class Cliente {
     private String telefone;
     private char ativo;
 
-    public Cliente(Cidade idCidade) {
-        this.idCidade = idCidade;
+    public Cliente(Cidade Cidade) {
+        this.Cidade = Cidade;
     }
 
     public int getId() {
@@ -31,12 +31,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public Cidade getIdCidade() {
-        return idCidade;
+    public Cidade getCidade() {
+        return Cidade;
     }
 
-    public void setIdCidade(Cidade idCidade) {
-        this.idCidade = idCidade;
+    public void setCidade(Cidade Cidade) {
+        this.Cidade = Cidade;
     }
 
     public String getRazaoSocial() {

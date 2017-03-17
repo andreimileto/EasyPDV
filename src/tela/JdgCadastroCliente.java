@@ -5,6 +5,9 @@
  */
 package tela;
 
+import entidade.Cidade;
+import entidade.Cliente;
+import java.awt.Color;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -60,7 +63,6 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         }
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,14 +81,14 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         tfdRazaoSocial = new javax.swing.JTextField();
         lblCpfCnpj = new javax.swing.JLabel();
         tffCpfCnpj = new javax.swing.JFormattedTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblEndereco = new javax.swing.JLabel();
         tfdEndereco = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tffTelefone = new javax.swing.JFormattedTextField();
         rbtAtivo = new javax.swing.JRadioButton();
         btnSalvar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblCidade = new javax.swing.JLabel();
         tfdCidade = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
@@ -123,7 +125,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Endereço:");
+        lblEndereco.setText("Endereço:");
 
         jLabel5.setText("Telefone:");
 
@@ -138,11 +140,16 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
         btnSair.setText("Sair");
 
-        jLabel6.setText("Cidade:");
+        lblCidade.setText("Cidade:");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -161,16 +168,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                         .addGap(17, 17, 17)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfdId, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtAtivo))
+                        .addComponent(tfdId, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -178,29 +176,42 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                                 .addComponent(btnSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblCpfCnpj)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfdEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblRazaoSocial)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(tfdRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCpfCnpj)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCidade)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(114, 114, 114)
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(rbtAtivo))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(lblRazaoSocial)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(tfdRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(22, 22, 22))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblEndereco)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfdEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jLabel1)))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -220,20 +231,21 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                     .addComponent(lblRazaoSocial)
                     .addComponent(tfdRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCpfCnpj)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
                         .addComponent(tffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCpfCnpj))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCidade)
+                        .addComponent(tfdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(tfdCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblEndereco)
                     .addComponent(tfdEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -251,12 +263,60 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxTipoItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Cidade cidade = new Cidade();
+        cidade.setAtivo('T');
+        JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
+        listaCidade.setVisible(true);
+        Cliente cliente = new Cliente(cidade);
+
+        cliente.setCidade(cidade);
+        tfdCidade.setText(cliente.getCidade().getDescricao());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tffCpfCnpjActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (validarCampos()) {
+            System.out.println("deu certo");
+        }else{
+            System.out.println("deu errado");
+            System.out.println(tffCpfCnpj.getText());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+    private boolean validarCampos() {
+        lblRazaoSocial.setForeground(Color.black);
+        lblEndereco.setForeground(Color.black);
+        lblCidade.setForeground(Color.black);
+        lblCpfCnpj.setForeground(Color.black);
+        boolean ok = true;
+        if (tfdRazaoSocial.getText().length() > 150 || tfdRazaoSocial.getText().length() <= 0) {
+            ok = false;
+            lblRazaoSocial.setForeground(Color.red);
+        }
+        if (tfdEndereco.getText().length() > 150 || tfdEndereco.getText().length() <= 0) {
+            ok = false;
+            lblEndereco.setForeground(Color.red);
+        }
+        if (tfdCidade.getText().length() > 100 || tfdCidade.getText().length() <= 0) {
+            ok = false;
+            lblCidade.setForeground(Color.red);
+        }
+        if (cbxTipo.getSelectedIndex() == 1) {
+            if (tffCpfCnpj.getText().length() != 18) {
+                ok = false;
+                lblCpfCnpj.setForeground(Color.red);
+            }
+        } else {
+            if (tffCpfCnpj.getText().length() != 14) {
+                ok = false;
+                lblCpfCnpj.setForeground(Color.red);
+
+            }
+        }
+        return ok;
+    }
 
     /**
      * @param args the command line arguments
@@ -308,10 +368,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCpfCnpj;
+    private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblRazaoSocial;
     private javax.swing.JRadioButton rbtAtivo;
     private javax.swing.JTextField tfdCidade;
