@@ -15,8 +15,8 @@ public class Cliente {
     private String razaoSocial;
     private char tipoCadastro;
     private String cpfCnpj;
-    private String endereco;
-    private String telefone;
+    private String endereco = "";
+    private String telefone = "";
     private char ativo;
 
     public Cliente(Cidade Cidade) {

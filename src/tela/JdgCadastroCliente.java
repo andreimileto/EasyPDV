@@ -5,9 +5,11 @@
  */
 package tela;
 
+import DAO.ClienteDAO;
 import entidade.Cidade;
 import entidade.Cliente;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -22,6 +24,9 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
      */
     private MaskFormatter mascaraCpf;
     private MaskFormatter mascaraCnpj;
+
+    Cidade cidade = new Cidade();
+    Cliente cliente = new Cliente(cidade);
 
     public JdgCadastroCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -83,7 +88,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         tffCpfCnpj = new javax.swing.JFormattedTextField();
         lblEndereco = new javax.swing.JLabel();
         tfdEndereco = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lblTelefone = new javax.swing.JLabel();
         tffTelefone = new javax.swing.JFormattedTextField();
         rbtAtivo = new javax.swing.JRadioButton();
         btnSalvar = new javax.swing.JButton();
@@ -127,7 +132,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
         lblEndereco.setText("Endereço:");
 
-        jLabel5.setText("Telefone:");
+        lblTelefone.setText("Telefone:");
 
         try {
             tffTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -150,6 +155,8 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         btnSair.setText("Sair");
 
         lblCidade.setText("Cidade:");
+
+        tfdCidade.setEditable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +190,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                                         .addGap(31, 31, 31)
                                         .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)
+                                        .addComponent(lblTelefone)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
@@ -233,7 +240,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
+                        .addComponent(lblTelefone)
                         .addComponent(tffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblCpfCnpj))
@@ -263,13 +270,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxTipoItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cidade cidade = new Cidade();
+
         cidade.setAtivo('T');
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
-        Cliente cliente = new Cliente(cidade);
 
-        cliente.setCidade(cidade);
         tfdCidade.setText(cliente.getCidade().getDescricao());
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -279,10 +284,27 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (validarCampos()) {
-            System.out.println("deu certo");
-        }else{
-            System.out.println("deu errado");
-            System.out.println(tffCpfCnpj.getText());
+            cliente.setRazaoSocial(tfdRazaoSocial.getText());
+            cliente.setTelefone(tffTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
+            cliente.setCidade(cidade);
+            cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
+            cliente.setEndereco(tfdEndereco.getText());
+            if (cbxTipo.getSelectedIndex() == 0) {
+                cliente.setTipoCadastro('F');
+            } else {
+                cliente.setTipoCadastro('J');
+            }
+            if (rbtAtivo.isSelected()) {
+                cliente.setAtivo('T');
+            } else {
+                cliente.setAtivo('F');
+            }
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.salvar(cliente);
+
+            JOptionPane.showMessageDialog(null, "Cadastro de cliente salvo com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar cliente, campos inválidos ou nulos");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
     private boolean validarCampos() {
@@ -290,12 +312,13 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         lblEndereco.setForeground(Color.black);
         lblCidade.setForeground(Color.black);
         lblCpfCnpj.setForeground(Color.black);
+        lblTelefone.setForeground(Color.black);
         boolean ok = true;
         if (tfdRazaoSocial.getText().length() > 150 || tfdRazaoSocial.getText().length() <= 0) {
             ok = false;
             lblRazaoSocial.setForeground(Color.red);
         }
-        if (tfdEndereco.getText().length() > 150 || tfdEndereco.getText().length() <= 0) {
+        if (tfdEndereco.getText().length() > 150) {
             ok = false;
             lblEndereco.setForeground(Color.red);
         }
@@ -303,17 +326,25 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             ok = false;
             lblCidade.setForeground(Color.red);
         }
+
         if (cbxTipo.getSelectedIndex() == 1) {
-            if (tffCpfCnpj.getText().length() != 18) {
-                ok = false;
-                lblCpfCnpj.setForeground(Color.red);
-            }
-        } else {
-            if (tffCpfCnpj.getText().length() != 14) {
+            System.out.println("selecionado juridico");
+            if (tffCpfCnpj.getText().replace(" ", "").length() != 18) {
+
                 ok = false;
                 lblCpfCnpj.setForeground(Color.red);
 
             }
+        } else {
+            if (tffCpfCnpj.getText().replace(" ", "").length() != 14) {
+                ok = false;
+                lblCpfCnpj.setForeground(Color.red);
+
+            }
+        }
+        if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length()<9) {
+            lblTelefone.setForeground(Color.red);
+            ok = false;
         }
         return ok;
     }
@@ -368,11 +399,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCpfCnpj;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblRazaoSocial;
+    private javax.swing.JLabel lblTelefone;
     private javax.swing.JRadioButton rbtAtivo;
     private javax.swing.JTextField tfdCidade;
     private javax.swing.JTextField tfdEndereco;
