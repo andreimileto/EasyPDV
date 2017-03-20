@@ -24,6 +24,8 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
      */
     private MaskFormatter mascaraCpf;
     private MaskFormatter mascaraCnpj;
+    private MaskFormatter mascaraTelefone8Digitos;
+    private MaskFormatter mascaraTelefone9Digitos;
 
     Cidade cidade = new Cidade();
     Cliente cliente = new Cliente(cidade);
@@ -33,6 +35,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         initComponents();
         popularComboBox();
         mascaraCpfCnpj();
+        mascaraTelefone();
         atualizarCamposFormatados();
 
     }
@@ -41,9 +44,19 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         try {
             mascaraCpf = new MaskFormatter("###.###.###-##");
             mascaraCnpj = new MaskFormatter("##.###.###/####-##");
+
         } catch (Exception e) {
         }
 
+    }
+
+    private void mascaraTelefone() {
+        try {
+            mascaraTelefone8Digitos = new MaskFormatter("(##)####-####");
+            mascaraTelefone9Digitos = new MaskFormatter("(##)#####-####");
+
+        } catch (Exception e) {
+        }
     }
 
     private void popularComboBox() {
@@ -59,12 +72,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             lblCpfCnpj.setText("CPF:");
             tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
 
-            System.out.println("0");
         } else {
             lblRazaoSocial.setText("Razão Social:");
             lblCpfCnpj.setText("CNPJ:");
             tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCnpj));
-            System.out.println("2");
         }
     }
 
@@ -96,6 +107,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         lblCidade = new javax.swing.JLabel();
         tfdCidade = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btnLocalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -139,6 +151,21 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        tffTelefone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tffTelefoneFocusLost(evt);
+            }
+        });
+        tffTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tffTelefoneActionPerformed(evt);
+            }
+        });
+        tffTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tffTelefoneKeyReleased(evt);
+            }
+        });
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
@@ -153,6 +180,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         lblCidade.setText("Cidade:");
 
@@ -162,6 +194,14 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
+        btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
             }
         });
 
@@ -180,6 +220,8 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnLocalizar)
+                                .addGap(48, 48, 48)
                                 .addComponent(btnSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,8 +299,9 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnSair))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(btnSair)
+                    .addComponent(btnLocalizar))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -279,16 +322,22 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_tffCpfCnpjActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (validarCampos()) {
             cliente.setRazaoSocial(tfdRazaoSocial.getText());
-            cliente.setTelefone(tffTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
+
             cliente.setCidade(cidade);
             cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
-            cliente.setEndereco(tfdEndereco.getText());
+            if (cliente.getTelefone() != "null") {
+                cliente.setTelefone(tffTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
+            }
+            if (cliente.getEndereco() != "null") {
+                cliente.setEndereco(tfdEndereco.getText());
+            }
+
             if (cbxTipo.getSelectedIndex() == 0) {
                 cliente.setTipoCadastro('F');
             } else {
@@ -301,12 +350,88 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             }
             ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.salvar(cliente);
+            
+            limparCampos();
 
             JOptionPane.showMessageDialog(null, "Cadastro de cliente salvo com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar cliente, campos inválidos ou nulos");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+private void limparCampos(){
+    cliente.setId(0);
+    tffCpfCnpj.setText("");
+    tffTelefone.setText("");
+    tfdCidade.setText("");
+    tfdRazaoSocial.setText("");
+    tfdEndereco.setText("");
+    tfdRazaoSocial.requestFocus();
+}
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void tffTelefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffTelefoneKeyReleased
+//        if (tffTelefone.getText().length() != 14) {
+//            String a = "";
+//
+//            if (tffTelefone.getText().charAt(1) == '1') {
+//
+//                if (tffTelefone.getText().charAt(2) == '1'
+//                        || tffTelefone.getText().charAt(2) == '2'
+//                        || tffTelefone.getText().charAt(2) == '3'
+//                        || tffTelefone.getText().charAt(2) == '4'
+//                        || tffTelefone.getText().charAt(2) == '5'
+//                        || tffTelefone.getText().charAt(2) == '6'
+//                        || tffTelefone.getText().charAt(2) == '7'
+//                        || tffTelefone.getText().charAt(2) == '8'
+//                        || tffTelefone.getText().charAt(2) == '9') {
+//                    a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2);
+//                    System.out.println(a);
+//                    tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone9Digitos));
+//                    tffTelefone.setText(a);
+//                }
+//            }
+//
+//            if (tffTelefone.getText().charAt(1) == '5') {
+//                if (tffTelefone.getText().charAt(2) == '1'
+//                        || tffTelefone.getText().charAt(2) == '3'
+//                        || tffTelefone.getText().charAt(2) == '4'
+//                        || tffTelefone.getText().charAt(2) == '5') {
+//                    a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2);
+//                    tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone9Digitos));
+//                    tffTelefone.setText(a);
+//                }
+//            }
+//        }
+    }//GEN-LAST:event_tffTelefoneKeyReleased
+
+    private void tffTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffTelefoneActionPerformed
+
+    }//GEN-LAST:event_tffTelefoneActionPerformed
+
+    private void tffTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffTelefoneFocusLost
+        System.out.println(tffTelefone.getText().length());
+        String a = "";
+        if (tffTelefone.getText().replace(" ", "").length() == 13) {
+            a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2)
+                    + tffTelefone.getText().charAt(4) + tffTelefone.getText().charAt(5)
+                    + tffTelefone.getText().charAt(6) + tffTelefone.getText().charAt(7)
+                    + tffTelefone.getText().charAt(8) + tffTelefone.getText().charAt(10)
+                    + tffTelefone.getText().charAt(11) + tffTelefone.getText().charAt(12);
+            System.out.println(tffTelefone.getText().replace(" ", "").length());
+            tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone8Digitos));
+            tffTelefone.setText(a);
+
+        }
+    }//GEN-LAST:event_tffTelefoneFocusLost
+
+    private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        limparCampos();
+        JdgListaCliente clientes = new JdgListaCliente(null, true, cliente);
+        clientes.setVisible(true);
+//        verificarCadastroSelecionado();
+    }//GEN-LAST:event_btnLocalizarActionPerformed
     private boolean validarCampos() {
         lblRazaoSocial.setForeground(Color.black);
         lblEndereco.setForeground(Color.black);
@@ -328,7 +453,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         }
 
         if (cbxTipo.getSelectedIndex() == 1) {
-            System.out.println("selecionado juridico");
+
             if (tffCpfCnpj.getText().replace(" ", "").length() != 18) {
 
                 ok = false;
@@ -342,11 +467,22 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
             }
         }
-        if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length()<9) {
+        if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() < 10
+                && tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() > 1) {
+
             lblTelefone.setForeground(Color.red);
-            cliente.setTelefone("null");
+
             ok = false;
         }
+        if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() == 0) {
+            cliente.setTelefone("null");
+
+        }
+        if (tfdEndereco.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() == 0) {
+            cliente.setEndereco("null");
+
+        }
+
         return ok;
     }
 
@@ -393,6 +529,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbxTipo;
