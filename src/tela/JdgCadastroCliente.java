@@ -344,6 +344,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         }
         if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length()<9) {
             lblTelefone.setForeground(Color.red);
+            cliente.setTelefone("null");
             ok = false;
         }
         return ok;
