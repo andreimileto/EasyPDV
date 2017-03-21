@@ -350,7 +350,11 @@ public class JdgListaCidade extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void tblCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseClicked
-
+        if (evt.getClickCount() > 1) {
+            int linhaSelecionada = tblCidades.getSelectedRow();
+            selecionado();
+            dispose();
+        }
     }//GEN-LAST:event_tblCidadesMouseClicked
 
     private void tblCidadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMousePressed

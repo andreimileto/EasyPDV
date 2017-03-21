@@ -5,7 +5,14 @@
  */
 package tela;
 
+import DAO.ClienteDAO;
+import DAO.MercadoriaDAO;
 import entidade.Cliente;
+import entidade.Mercadoria;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,6 +37,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         initComponents();
         this.cliente = cliente;
         popularComboBox();
+        listarClientes();
 
     }
 
@@ -37,9 +45,64 @@ public class JdgListaCliente extends javax.swing.JDialog {
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
         cbxStatus.addItem("Todos");
-        
+
         cbxFiltro.addItem("Nome");
         cbxFiltro.addItem("CPF/CNPJ");
+    }
+
+    private void listarClientes() {
+        try {
+            //setar para tabela modelo de dados
+            tblListaClientes.setModel(this.obterDadosParaTabelaCompleto());
+            tblListaClientes.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblListaClientes.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblListaClientes.getColumnModel().getColumn(2).setPreferredWidth(170);
+            tblListaClientes.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblListaClientes.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tblListaClientes.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblListaClientes.getColumnModel().getColumn(6).setPreferredWidth(0);
+
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private DefaultTableModel obterDadosParaTabelaCompleto() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+        ClienteDAO cliDAO = new ClienteDAO();
+        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
+        dtm.addColumn("ID");
+        dtm.addColumn("NOME");
+        dtm.addColumn("CPF/CNPJ");
+        dtm.addColumn("CIDADE");
+        dtm.addColumn("ENDERECO");
+        dtm.addColumn("TELEFONE");
+        dtm.addColumn("STATUS");
+
+        for (int i = 0; i < clientes.size(); i++) {
+            //popular tabela
+            String result = "";
+            if (String.valueOf(clientes.get(i).getAtivo()).equalsIgnoreCase("T")) {
+                result = "Ativo";
+            } else {
+                result = "Inativo";
+            }
+            dtm.addRow(new String[]{String.valueOf(clientes.get(i).getId()),
+                clientes.get(i).getRazaoSocial(),
+                clientes.get(i).getCpfCnpj(),
+                String.valueOf(clientes.get(i).getCidade().getDescricao()),
+                String.valueOf(clientes.get(i).getEndereco()),
+                String.valueOf(clientes.get(i).getTelefone()),
+                result
+            });
+        }
+//retorna o modelo
+        return dtm;
     }
 
     /**

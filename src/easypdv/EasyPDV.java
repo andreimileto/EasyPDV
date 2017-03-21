@@ -19,6 +19,7 @@ public class EasyPDV {
      */
     public static void main(String[] args) {
         ConexaoDB.abrirConexao();
+        //mudar conexão
         TelaPrincipal tela = new TelaPrincipal();
         tela.setVisible(true);
         

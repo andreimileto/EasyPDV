@@ -15,11 +15,12 @@ import java.util.ArrayList;
  * @author Mileto
  */
 public class ClienteDAO {
+
     Cliente cli;
-    
-     public boolean salvar(Cliente cli) {
-         try {
-         Statement st = ConexaoDB.conexao.createStatement();
+
+    public boolean salvar(Cliente cli) {
+        try {
+            Statement st = ConexaoDB.conexao.createStatement();
             //executeupdate = insert,update, delete
             //query = select
             if (cli.getId() == 0) {
@@ -28,9 +29,9 @@ public class ClienteDAO {
                         + "DEFAULT," + "'" + cli.getCidade().getId() + "',"
                         + "'" + cli.getRazaoSocial() + "',"
                         + "'" + cli.getTipoCadastro() + "',"
-                        + "'"+ cli.getCpfCnpj() + "',"
-                        + "'"+ cli.getEndereco() + "',"
-                        + "'"+ cli.getTelefone() + "',"
+                        + "'" + cli.getCpfCnpj() + "',"
+                        + "'" + cli.getEndereco() + "',"
+                        + "'" + cli.getTelefone() + "',"
                         + "'" + cli.getAtivo() + "'"
                         + ")";
                 System.out.println(sql);
@@ -52,9 +53,9 @@ public class ClienteDAO {
         }
         return false;
     }
-     }
-//      public ArrayList<Cidade> consultar(Cliente cli) {
-//          
-//      }
-     
 
+    public ArrayList<Cliente> consultar(Cliente cli) {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        return clientes;
+    }
+}

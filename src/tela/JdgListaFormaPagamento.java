@@ -218,13 +218,14 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblFormaPagamento.setRowSelectionAllowed(false);
         tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblFormaPagamentoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -341,7 +342,11 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void tblFormaPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMouseClicked
-
+        if (evt.getClickCount() > 1) {
+            int linhaSelecionada = tblFormaPagamento.getSelectedRow();
+            selecionado();
+            dispose();
+        }
     }//GEN-LAST:event_tblFormaPagamentoMouseClicked
 
     private void tblFormaPagamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFormaPagamentoMousePressed

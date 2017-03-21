@@ -231,13 +231,14 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblMercadorias.setRowSelectionAllowed(false);
         tblMercadorias.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblMercadoriasAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblMercadorias.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -357,7 +358,12 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void tblMercadoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMercadoriasMouseClicked
-
+//Se clicar mais de 2x ele ira passar a escolha para a variável e fechara o programa
+        if (evt.getClickCount() > 1) {
+            int linhaSelecionada = tblMercadorias.getSelectedRow();
+            selecionado();
+            dispose();
+        }
     }//GEN-LAST:event_tblMercadoriasMouseClicked
 
     private void tblMercadoriasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMercadoriasMousePressed

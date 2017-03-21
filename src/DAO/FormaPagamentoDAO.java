@@ -21,6 +21,7 @@ public class FormaPagamentoDAO {
     public boolean salvar(FormaPagamento fp) {
         try {
             Statement st = ConexaoDB.conexao.createStatement();
+            // mudar forma de pagamento
             //executeupdate = insert,update, delete
             //query = select
             if (fp.getId() == 0) {

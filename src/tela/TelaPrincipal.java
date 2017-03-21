@@ -18,8 +18,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        
-        
+        this.setExtendedState(MAXIMIZED_BOTH);
+
     }
 
     /**
@@ -136,11 +136,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void imnFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnFormaPagamentoActionPerformed
-        
+
         JdgCadastroFormaPagamento cadastroFormaPagamento = new JdgCadastroFormaPagamento(this, true);
-        
+
         cadastroFormaPagamento.setVisible(true);
-        
+
     }//GEN-LAST:event_imnFormaPagamentoActionPerformed
 
     private void imnCidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnCidadesActionPerformed
@@ -149,12 +149,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_imnCidadesActionPerformed
 
     private void imnMercadoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnMercadoriaActionPerformed
-        JdgCadastroMercadoria mercadoria = new JdgCadastroMercadoria(this,true);
+        JdgCadastroMercadoria mercadoria = new JdgCadastroMercadoria(this, true);
         mercadoria.setVisible(true);
     }//GEN-LAST:event_imnMercadoriaActionPerformed
 
     private void imnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnClientesActionPerformed
-        JdgCadastroCliente cadastroCliente = new JdgCadastroCliente(this,true);
+        JdgCadastroCliente cadastroCliente = new JdgCadastroCliente(this, true);
         cadastroCliente.setVisible(true);
     }//GEN-LAST:event_imnClientesActionPerformed
 
