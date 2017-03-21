@@ -442,7 +442,7 @@ private void limparCampos(){
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
         limparCampos();
-        JdgListaCliente clientes = new JdgListaCliente(null, true, cliente);
+        JdgListaCliente clientes = new JdgListaCliente(null, true, cliente,cidade);
         clientes.setVisible(true);
 //        verificarCadastroSelecionado();
     }//GEN-LAST:event_btnLocalizarActionPerformed

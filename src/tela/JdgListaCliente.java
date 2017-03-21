@@ -5,8 +5,10 @@
  */
 package tela;
 
+import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import DAO.MercadoriaDAO;
+import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Mercadoria;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
      * Creates new form JdgListaCliente
      */
     Cliente cliente;
+    Cidade cid;
 
     public JdgListaCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -31,11 +34,12 @@ public class JdgListaCliente extends javax.swing.JDialog {
 
     }
 
-    public JdgListaCliente(java.awt.Frame parent, boolean modal, Cliente cliente) {
+    public JdgListaCliente(java.awt.Frame parent, boolean modal, Cliente cliente, Cidade cid) {
         super(parent, modal);
 
         initComponents();
         this.cliente = cliente;
+        this.cid = cid;
         popularComboBox();
         listarClientes();
 
@@ -74,8 +78,14 @@ public class JdgListaCliente extends javax.swing.JDialog {
             }
         };
 //adiciona titulo para as colunas
+
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        ArrayList<Cidade> cidades = cidadeDAO.consultar(cid);
+
         ClienteDAO cliDAO = new ClienteDAO();
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
+
+
         dtm.addColumn("ID");
         dtm.addColumn("NOME");
         dtm.addColumn("CPF/CNPJ");
