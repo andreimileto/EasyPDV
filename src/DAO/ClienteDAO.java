@@ -39,15 +39,16 @@ public class ClienteDAO {
                 System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
             } else {
-//                String sql = "UPDATE mercadoria set referencia='" + merc.getReferencia()
-//                        + "', descricao ='" + merc.getDescricao()
-//                        + "', estoque ='" + merc.getEstoque()
-//                        + "', preco_custo ='" + merc.getPrecoCusto()
-//                        + "', preco_venda ='" + merc.getPrecoVenda()
-//                        + "', ativo ='" + merc.getAtivo()
-//                        + "' where id =" + merc.getId();
-//
-//                int resultado = st.executeUpdate(sql);
+                String sql = "UPDATE cliente set id_cidade='" + cli.getCidade().getId()
+                        + "', razao_social ='" + cli.getRazaoSocial()
+                        + "', tipo_cadastro ='" + cli.getTipoCadastro()
+                        + "', cpf_cnpj ='" + cli.getCpfCnpj()
+                        + "', endereco ='" + cli.getEndereco()
+                        + "', telefone ='" + cli.getTelefone()
+                        + "', ativo ='" + cli.getAtivo()
+                        + "' where id =" + cli.getId();
+
+                int resultado = st.executeUpdate(sql);
             }
             return true;
         } catch (Exception e) {
@@ -67,21 +68,26 @@ public class ClienteDAO {
 
 //                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
 //                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
-            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
+//            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
+            String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,"
+                    + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                    + "from cliente c, cidade cid "
+                    + "where cid.id = c.id_cidade";
             System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
-                CidadeDAO cidDAO = new CidadeDAO();
                 Cidade cids = new Cidade();
-                cidDAO.consultar(cids);
-                Cidade cid = new Cidade();
                 Cliente cliente = new Cliente(cids);
-                cliente.setId(resultado.getInt("id"));
+                cliente.setId(resultado.getInt("id_cliente"));
                 cliente.setRazaoSocial(resultado.getString("razao_social"));
+                cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                cids.setDescricao(resultado.getString("descricao"));
+                cids.setId(resultado.getInt("id_cid"));
                 cliente.setCidade(cids);
                 cliente.getCidade().getDescricao();
+                cliente.setEndereco(resultado.getString("endereco"));
                 cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
-                cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                
 //                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
                 cliente.setAtivo(resultado.getString("ativo").charAt(0));
                 clientes.add(cliente);

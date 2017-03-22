@@ -59,11 +59,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
             //setar para tabela modelo de dados
             tblListaClientes.setModel(this.obterDadosParaTabelaCompleto());
             tblListaClientes.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblListaClientes.getColumnModel().getColumn(1).setPreferredWidth(10);
-            tblListaClientes.getColumnModel().getColumn(2).setPreferredWidth(170);
-            tblListaClientes.getColumnModel().getColumn(3).setPreferredWidth(0);
-            tblListaClientes.getColumnModel().getColumn(4).setPreferredWidth(0);
-            tblListaClientes.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblListaClientes.getColumnModel().getColumn(1).setPreferredWidth(170);
+            tblListaClientes.getColumnModel().getColumn(2).setPreferredWidth(40);
+            tblListaClientes.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tblListaClientes.getColumnModel().getColumn(4).setPreferredWidth(170);
+            tblListaClientes.getColumnModel().getColumn(5).setPreferredWidth(20);
             tblListaClientes.getColumnModel().getColumn(6).setPreferredWidth(0);
 
         } catch (Exception ex) {
@@ -114,6 +114,27 @@ public class JdgListaCliente extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
+    
+    private void selecionado() {
+
+        //pega a linha selecionada
+        int row = tblListaClientes.getSelectedRow();
+
+        //seta o ID do objeto da linha selecionada
+        this.cliente.setId(Integer.parseInt(tblListaClientes.getValueAt(row, 0).toString()));
+        this.cliente.setRazaoSocial(tblListaClientes.getValueAt(row, 1).toString());
+        this.cliente.setCpfCnpj(tblListaClientes.getValueAt(row, 2).toString());
+        this.cid.setDescricao(tblListaClientes.getValueAt(row, 3).toString());
+        this.cliente.setEndereco(tblListaClientes.getValueAt(row, 4).toString());
+        this.cliente.setTelefone(tblListaClientes.getValueAt(row, 5).toString());
+        if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
+            this.cliente.setAtivo('T');
+        } else {
+            this.cliente.setAtivo('F');
+        }
+
+        dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -159,6 +180,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblListaClientes);
 
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
 
@@ -182,7 +208,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(481, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnConfirmar)
@@ -211,12 +237,16 @@ public class JdgListaCliente extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmar)
                     .addComponent(btnSair))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        selecionado();
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments

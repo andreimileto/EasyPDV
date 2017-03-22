@@ -399,7 +399,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
 
     //retorna item selecionado na taleba
     private void selecionado() {
-//        Cidade cidade = new Cidade();
+
         //pega a linha selecionada
         int row = tblCidades.getSelectedRow();
 
