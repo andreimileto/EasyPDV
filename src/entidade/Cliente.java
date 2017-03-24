@@ -12,9 +12,9 @@ package entidade;
 public class Cliente {
     private int id;
     private Cidade Cidade;
-    private String razaoSocial;
+    private String razaoSocial = "";
     private char tipoCadastro;
-    private String cpfCnpj;
+    private String cpfCnpj = "";
     private String endereco = "";
     private String telefone = "";
     private char ativo;

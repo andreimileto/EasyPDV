@@ -50,8 +50,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
         cbxStatus.addItem("Inativos");
         cbxStatus.addItem("Todos");
 
-        cbxFiltro.addItem("Nome");
-        cbxFiltro.addItem("CPF/CNPJ");
     }
 
     private void listarClientes() {
@@ -85,7 +83,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
         ClienteDAO cliDAO = new ClienteDAO();
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
 
-
         dtm.addColumn("ID");
         dtm.addColumn("NOME");
         dtm.addColumn("CPF/CNPJ");
@@ -114,19 +111,31 @@ public class JdgListaCliente extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
-    
-    private void selecionado() {
+
+    private void selecionado() throws Exception {
 
         //pega a linha selecionada
         int row = tblListaClientes.getSelectedRow();
 
         //seta o ID do objeto da linha selecionada
+//        obterDadosParaTabelaCompleto();
         this.cliente.setId(Integer.parseInt(tblListaClientes.getValueAt(row, 0).toString()));
-        this.cliente.setRazaoSocial(tblListaClientes.getValueAt(row, 1).toString());
-        this.cliente.setCpfCnpj(tblListaClientes.getValueAt(row, 2).toString());
-        this.cid.setDescricao(tblListaClientes.getValueAt(row, 3).toString());
-        this.cliente.setEndereco(tblListaClientes.getValueAt(row, 4).toString());
-        this.cliente.setTelefone(tblListaClientes.getValueAt(row, 5).toString());
+
+//        CidadeDAO cidadeDAO = new CidadeDAO();
+//        ArrayList<Cidade> cidades = cidadeDAO.consultar(cid);
+        ClienteDAO cliDAO = new ClienteDAO();
+        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
+        cliente.setCidade(clientes.get(0).getCidade());
+        cliente.setEndereco(clientes.get(0).getEndereco());
+
+
+        System.out.println("cidade id..." + cliente.getCidade().getId());
+//
+//        this.cliente.setRazaoSocial(tblListaClientes.getValueAt(row, 1).toString());
+//        this.cliente.setCpfCnpj(tblListaClientes.getValueAt(row, 2).toString());
+//        this.cid.setDescricao(tblListaClientes.getValueAt(row, 3).toString());
+//        this.cliente.setEndereco(tblListaClientes.getValueAt(row, 4).toString());
+//        this.cliente.setTelefone(tblListaClientes.getValueAt(row, 5).toString());
         if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
             this.cliente.setAtivo('T');
         } else {
@@ -146,8 +155,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        cbxFiltro = new javax.swing.JComboBox<>();
         tfdFiltro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cbxStatus = new javax.swing.JComboBox<>();
@@ -161,8 +168,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("Lista Cadastro de Cliente");
-
-        jLabel2.setText("Tipo de filtro:");
 
         jLabel3.setText("Status:");
 
@@ -198,11 +203,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
                         .addGap(188, 188, 188)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(215, 215, 215)
                         .addComponent(tfdFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
@@ -226,8 +227,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbxFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfdFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -245,7 +244,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        selecionado();
+        try {
+            selecionado();
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
@@ -293,10 +296,8 @@ public class JdgListaCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnSair;
-    private javax.swing.JComboBox<String> cbxFiltro;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblListaClientes;

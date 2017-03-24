@@ -60,43 +60,44 @@ public class ClienteDAO {
     public ArrayList<Cliente> consultar(Cliente cli) {
         this.cli = cli;
         ArrayList<Cliente> clientes = new ArrayList<>();
+
+        if (cli.getId() == 0) {
+
 //        if (cli.getAtivo() == 'T' || cli.getAtivo() == 'F') {
-        System.out.println("entrou no if");
-        try {
-            Statement st = ConexaoDB.conexao.createStatement();
-            System.out.println("aaa" + cli.getAtivo());
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
 
 //                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
 //                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
 //            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
-            String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,"
-                    + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
-                    + "from cliente c, cidade cid "
-                    + "where (cpf_cnpj ilike '"+cli.getCpfCnpj()+"%' or"
-                    + " razao_social ilike '"+ cli.getRazaoSocial()+"%') and cid.id = c.id_cidade";
-            System.out.println(sql);
-            ResultSet resultado = st.executeQuery(sql);
-            while (resultado.next()) {
-                Cidade cids = new Cidade();
-                Cliente cliente = new Cliente(cids);
-                cliente.setId(resultado.getInt("id_cliente"));
-                cliente.setRazaoSocial(resultado.getString("razao_social"));
-                cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
-                cids.setDescricao(resultado.getString("descricao"));
-                cids.setId(resultado.getInt("id_cid"));
-                cliente.setCidade(cids);
-                cliente.getCidade().getDescricao();
-                cliente.setEndereco(resultado.getString("endereco"));
-                cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
-                
-//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
-                cliente.setAtivo(resultado.getString("ativo").charAt(0));
-                clientes.add(cliente);
-            }
+                String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,"
+                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                        + "from cliente c, cidade cid "
+                        + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
+                        + " razao_social ilike '" + cli.getRazaoSocial() + "%') and cid.id = c.id_cidade";
+                System.out.println(sql);
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    Cidade cids = new Cidade();
+                    Cliente cliente = new Cliente(cids);
+                    cliente.setId(resultado.getInt("id_cliente"));
+                    cliente.setRazaoSocial(resultado.getString("razao_social"));
+                    cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                    cids.setDescricao(resultado.getString("descricao"));
+                    cids.setId(resultado.getInt("id_cid"));
+                    cliente.setCidade(cids);
+                    cliente.getCidade().getDescricao();
+                    cliente.setEndereco(resultado.getString("endereco"));
+                    cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
 
-        } catch (Exception e) {
-            System.out.println("Erro ao consultar Mercadoria " + e);
-        }
+//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                    cliente.setAtivo(resultado.getString("ativo").charAt(0));
+                    clientes.add(cliente);
+                }
+
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Mercadoria " + e);
+            }
 //        } else {
 //            try {
 //                Statement st = ConexaoDB.conexao.createStatement();
@@ -118,6 +119,46 @@ public class ClienteDAO {
 //                System.out.println("Erro ao consultar Mercadoria " + e);
 //            }
 //        }
+        } else {
+            System.out.println("entrou no else");
+
+            try {
+                Statement st = ConexaoDB.conexao.createStatement();
+
+//                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
+//                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
+//            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
+                String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,"
+                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                        + "from cliente c, cidade cid "
+                        + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
+                        + " razao_social ilike '" + cli.getRazaoSocial() + "%') "
+                        + "and cid.id = c.id_cidade and c.id ="+cli.getId();
+                System.out.println(sql);
+                ResultSet resultado = st.executeQuery(sql);
+                while (resultado.next()) {
+                    Cidade cids = new Cidade();
+                    Cliente cliente = new Cliente(cids);
+                    cliente.setId(resultado.getInt("id_cliente"));
+                    cliente.setRazaoSocial(resultado.getString("razao_social"));
+                    cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                    cids.setDescricao(resultado.getString("descricao"));
+                    cids.setId(resultado.getInt("id_cid"));
+                    cliente.setCidade(cids);
+                    cliente.getCidade().getDescricao();
+                    cliente.setEndereco(resultado.getString("endereco"));
+                    cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+
+//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                    cliente.setAtivo(resultado.getString("ativo").charAt(0));
+                    clientes.add(cliente);
+                }
+
+            } catch (Exception e) {
+                System.out.println("Erro ao consultar Mercadoria " + e);
+            }
+
+        }
         return clientes;
     }
 

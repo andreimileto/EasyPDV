@@ -375,6 +375,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {
         cliente.setId(0);
+        cliente.setCpfCnpj("");
         tfdId.setText("");
         tffCpfCnpj.setText("");
         tffTelefone.setText("");
