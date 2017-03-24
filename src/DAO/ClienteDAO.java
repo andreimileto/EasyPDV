@@ -72,7 +72,8 @@ public class ClienteDAO {
             String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,"
                     + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
                     + "from cliente c, cidade cid "
-                    + "where cid.id = c.id_cidade";
+                    + "where (cpf_cnpj ilike '"+cli.getCpfCnpj()+"%' or"
+                    + " razao_social ilike '"+ cli.getRazaoSocial()+"%') and cid.id = c.id_cidade";
             System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
