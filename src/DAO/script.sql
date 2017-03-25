@@ -1,5 +1,11 @@
 
+---executar antes----
+
+create database easyPDV;
+
 ---------- SCRIPTS-----------
+            
+
             create table usuario(id serial,
                          login varchar(50) not null,
                          senha varchar(50) not null,
@@ -48,9 +54,9 @@
             CREATE TABLE mercadoria(id serial ,
                          referencia VARCHAR(45) not null,
                          descricao VARCHAR(100) not null,
-                         estoque DOUBLE not null,
-                         preco_custo DOUBLE not null,
-                         preco_venda DOUBLE not null,
+                         estoque DOUBLE PRECISION not null,
+                         preco_custo DOUBLE PRECISION not null,
+                         preco_venda DOUBLE PRECISION not null,
                          ativo char(1) not null,
                          CONSTRAINT pkmercadoria primary key (id)                       
                          );              
@@ -61,8 +67,8 @@
                          id_empresa int not null,
                          data_emissao timestamp not null,
                          fase char(1) not null,
-                         desconto DOUBLE,
-                         valor_total DOUBLE not null,		
+                         desconto DOUBLE PRECISION,
+                         valor_total DOUBLE PRECISION not null,		
                          parcelas int not null,
                          constraint pkfaturamento primary key (id),
                          CONSTRAINT fkid_clientefaturamento foreign key(id_cliente)
@@ -76,10 +82,10 @@
             CREATE TABLE faturamento_item(id serial,
                          id_faturamento int not null,
                          id_mercadoria int not null,
-                         quantidade DOUBLE not null,
-                         valor_unitario DOUBLE not null,
-                         desconto DOUBLE,
-                         valor_total DOUBLE not null,
+                         quantidade DOUBLE PRECISION not null,
+                         valor_unitario DOUBLE PRECISION not null,
+                         desconto DOUBLE PRECISION,
+                         valor_total DOUBLE PRECISION not null,
                          constraint pkfaturamento_item primary key (id),
                          constraint fkid_mercadoriafaturamento foreign key (id_mercadoria)
                          references mercadoria,
@@ -93,9 +99,9 @@
                          numero_titulo varchar(10) not null,
                          data_emissao timestamp not null,
                          data_vencimento timestamp not null,
-                         valor_provisorio DOUBLE,
-                         valor_titulo DOUBLE,
-                         valor_pago DOUBLE,
+                         valor_provisorio DOUBLE PRECISION,
+                         valor_titulo DOUBLE PRECISION,
+                         valor_pago DOUBLE PRECISION,
                          quitado char(1),
                          recebido char(1) not null,
                          ativo char(1) not null,

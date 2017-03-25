@@ -180,11 +180,16 @@ public class ClienteDAO {
                     cids.setId(resultado.getInt("id_cid"));
                     cliente.setCidade(cids);
                     cliente.getCidade().getDescricao();
-                    if (resultado.getString("telefone") == null) {
+                    if (resultado.getString("telefone").equals("null")) {
                         System.out.println("entrou no if telefone");
                         cliente.setTelefone("");
                     } else {
                         cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+                    }
+                    if (resultado.getString("endereco").equals("null")) {
+                        cliente.setEndereco("");
+                    }else{
+                        cliente.setEndereco(String.valueOf(resultado.getString("endereco")));
                     }
                     cliente.setTipoCadastro((resultado.getString("tipo_cadastro").charAt(0)));
 
