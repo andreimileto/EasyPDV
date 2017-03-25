@@ -39,7 +39,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         imnMercadoria = new javax.swing.JMenuItem();
         imnFormaPagamento = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        imnPDV = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
@@ -99,11 +99,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setMnemonic('p');
         jMenu2.setText("PDV");
 
-        jMenuItem5.setText("PDV");
-        jMenu2.add(jMenuItem5);
+        imnPDV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_shopping_trolley.png"))); // NOI18N
+        imnPDV.setMnemonic('v');
+        imnPDV.setText("PDV");
+        imnPDV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnPDVActionPerformed(evt);
+            }
+        });
+        jMenu2.add(imnPDV);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_list.png"))); // NOI18N
         jMenuItem6.setText("Listagem de vendas");
         jMenu2.add(jMenuItem6);
 
@@ -158,6 +167,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastroCliente.setVisible(true);
     }//GEN-LAST:event_imnClientesActionPerformed
 
+    private void imnPDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnPDVActionPerformed
+        JdgPedidoVenda pedido = new JdgPedidoVenda(this, true);
+        pedido.setVisible(true);
+    }//GEN-LAST:event_imnPDVActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -198,11 +212,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;
     private javax.swing.JMenuItem imnMercadoria;
+    private javax.swing.JMenuItem imnPDV;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
