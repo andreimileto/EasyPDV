@@ -343,7 +343,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         if (validarCampos()) {
             cliente.setRazaoSocial(tfdRazaoSocial.getText());
             System.out.println(cliente.getCidade().getId() + "id cliente cidade... antes do set");
-            cliente.setCidade(cidade);
+//            cliente.setCidade(cidade);
             System.out.println(cliente.getCidade().getId() + "id cliente cidade...depois do set");
             cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
             if (cliente.getTelefone() != "null") {
@@ -507,7 +507,13 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private void verificarCadastroSelecionado() {
         
         if (cliente.getId() > 0) {
-            
+            if (cliente.getTipoCadastro()=='F') {
+                cbxTipo.setSelectedIndex(0);
+            }else{
+                System.out.println("entrou no else");
+                System.out.println(cliente.getTipoCadastro()+"....");
+                cbxTipo.setSelectedIndex(1);
+            }
             tfdId.setText(String.valueOf(cliente.getId()));
             tfdRazaoSocial.setText(cliente.getRazaoSocial());
             tfdCidade.setText(cliente.getCidade().getDescricao());

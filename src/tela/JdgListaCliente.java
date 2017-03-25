@@ -127,6 +127,9 @@ public class JdgListaCliente extends javax.swing.JDialog {
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
         cliente.setCidade(clientes.get(0).getCidade());
         cliente.setEndereco(clientes.get(0).getEndereco());
+        cliente.setRazaoSocial(clientes.get(0).getRazaoSocial());
+        cliente.setCpfCnpj(clientes.get(0).getCpfCnpj());
+        cliente.setTipoCadastro(clientes.get(0).getTipoCadastro());
 
 
         System.out.println("cidade id..." + cliente.getCidade().getId());
@@ -169,7 +172,19 @@ public class JdgListaCliente extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("Lista Cadastro de Cliente");
 
+        tfdFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdFiltroKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Status:");
+
+        cbxStatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxStatusItemStateChanged(evt);
+            }
+        });
 
         tblListaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,6 +207,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
         });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -250,6 +270,27 @@ public class JdgListaCliente extends javax.swing.JDialog {
             Logger.getLogger(JdgListaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
+        if (cbxStatus.getSelectedIndex()==0) {
+            cliente.setAtivo('T');
+        }else if (cbxStatus.getSelectedIndex()==1) {
+            cliente.setAtivo('F');
+        }else{
+         cliente.setAtivo(' ');
+        }
+        listarClientes();
+    }//GEN-LAST:event_cbxStatusItemStateChanged
+
+    private void tfdFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdFiltroKeyReleased
+        cliente.setCpfCnpj(tfdFiltro.getText());
+        cliente.setRazaoSocial(tfdFiltro.getText());
+        listarClientes();
+    }//GEN-LAST:event_tfdFiltroKeyReleased
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
