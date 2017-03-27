@@ -147,7 +147,7 @@ public class ClienteDAO {
 
                         cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
                     }
-//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+
                     cliente.setAtivo(resultado.getString("ativo").charAt(0));
                     clientes.add(cliente);
                 }
@@ -180,14 +180,18 @@ public class ClienteDAO {
                     cids.setId(resultado.getInt("id_cid"));
                     cliente.setCidade(cids);
                     cliente.getCidade().getDescricao();
-                    if (resultado.getString("telefone") == null) {
+                    if (resultado.getString("telefone").equals("null")) {
                         System.out.println("entrou no if telefone");
                         cliente.setTelefone("");
                     } else {
                         cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
                     }
                     cliente.setTipoCadastro((resultado.getString("tipo_cadastro").charAt(0)));
-
+                    if (resultado.getString("endereco").equals("null")) {
+                        cliente.setEndereco("");
+                    }else{
+                        cliente.setEndereco(String.valueOf(resultado.getString("endereco")));
+                    }
 //                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
                     cliente.setAtivo(resultado.getString("ativo").charAt(0));
                     clientes.add(cliente);
