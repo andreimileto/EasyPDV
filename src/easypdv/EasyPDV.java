@@ -5,8 +5,10 @@
  */
 package easypdv;
 
-import DAO.ConexaoDB;
 import tela.TelaPrincipal;
+import apoio.ConexaoBD;
+import javax.swing.JOptionPane;
+import tela.Senha;
 
 /**
  *
@@ -18,11 +20,14 @@ public class EasyPDV {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ConexaoDB.abrirConexao();
-        //mudar conexão
-        TelaPrincipal tela = new TelaPrincipal();
-        tela.setVisible(true);
-        
+        if (ConexaoBD.getInstance().getConnection() != null) {
+            Senha senha = new Senha();
+            senha.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao abrir banco de dados, entre em contato com o suporte!");
+        }
+
     }
-    
+
 }

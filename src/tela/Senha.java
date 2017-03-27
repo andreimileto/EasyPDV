@@ -5,50 +5,40 @@
  */
 package tela;
 
+import apoio.ConexaoBD;
+import DAO.UsuarioDAO;
+import entidade.Cidade;
+import entidade.Usuario;
+import java.awt.event.KeyEvent;
 
-
-import DAO.ConexaoDB;
-import tela.TelaPrincipal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
 public class Senha extends javax.swing.JFrame {
-    
-    
-//   private int count;
-//   private Banco banco;
-//   private Movimentacao movimentacao;
-//   private BancoDAO clienteDAO;
-//   private ConexaoDB conexaoDB;
-//   private UsuarioDAO usuarioDAO;
-//   private MovimentacaoDAO movimentacaoDAO;
 
-//    public Senha(Banco banco, Movimentacao movimentacao,BancoDAO clienteDAO,ConexaoDB conexaoDB,UsuarioDAO usuarioDAO,MovimentacaoDAO movimentacaoDAO) {
-//        initComponents();
-//        this.banco = banco;
-//        this.movimentacao = movimentacao;
-//        this.clienteDAO = clienteDAO;
-//        this.usuarioDAO = usuarioDAO;
-//        this.movimentacaoDAO = movimentacaoDAO;
-//        count = 0;
-//        
-//      
-//    }
+    Usuario user = new Usuario();
+    private int count;
 
     public Senha() {
-       initComponents();
+        initComponents();
+
+        count = 0;
+
     }
-private void habilitarBotao(){
-    if (tfUsuario.getText().length()>0 && pfSenha.getText().length()>0) {
-        btLogin.setEnabled(true);
-    }else{
-        btLogin.setEnabled(false);
+
+//    public Senha() {
+//       initComponents();
+//    }
+    private void habilitarBotao() {
+        if (tfUsuario.getText().length() > 0 && pfSenha.getText().length() > 0) {
+            btLogin.setEnabled(true);
+        } else {
+            btLogin.setEnabled(false);
+        }
     }
-}
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +69,9 @@ private void habilitarBotao(){
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfUsuarioKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfUsuarioKeyReleased(evt);
+            }
         });
 
         jLabel2.setText("Senha:");
@@ -87,11 +80,14 @@ private void habilitarBotao(){
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 pfSenhaKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pfSenhaKeyReleased(evt);
+            }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel3.setText("Financeiro");
+        jLabel3.setText("EasyPDV");
 
         jLabel4.setText("@AndreiMileto");
 
@@ -154,49 +150,63 @@ private void habilitarBotao(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-//        count++;
-//       try {
-//           if (tfUsuario.getText().equals(usuarioDAO.verificarUsuario())
-//                   && pfSenha.getText().equals(usuarioDAO.verificarSenha())
-//                   ) {
-//               try {
-//                   usuarioDAO.verificarSenha();
-//               } catch (Exception e) {
-//                   e.printStackTrace();
-//               }
-//               Janela j = new Janela(conexaoDB,banco,movimentacao,clienteDAO, movimentacaoDAO);
-//               j.setVisible(true);
-//               // agenda.salvar();
-//               dispose();
-//           }else{
-//               if (count == 3) {
-//                   JOptionPane.showMessageDialog(rootPane, "Seu sistema será encerrado por diversas falhas de login");
-//                   dispose();
-//               }else{
-//                   
-//                   JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreta");
-//                   tfUsuario.setText("");
-//                   pfSenha.setText("");
-//                   
-//               }
-//           }
-//       } catch (SQLException ex) {
-//           Logger.getLogger(Senha.class.getName()).log(Level.SEVERE, null, ex);
-//       }
-        
-    }//GEN-LAST:event_btLoginActionPerformed
+        login();
 
+    }//GEN-LAST:event_btLoginActionPerformed
+    private void login() {
+        count++;
+        try {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioDAO.consultar(user);
+
+            if (tfUsuario.getText().equals(user.getUsuario())
+                    && pfSenha.getText().equals(user.getSenha())) {
+
+                TelaPrincipal tela = new TelaPrincipal();
+                tela.setVisible(true);
+                dispose();
+            } else {
+                if (count == 3) {
+                    JOptionPane.showMessageDialog(rootPane, "Seu sistema será encerrado por diversas falhas de login");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Usuário ou senha incorreta");
+                    tfUsuario.setText("");
+                    pfSenha.setText("");
+                    tfUsuario.requestFocus();
+                }
+
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
     private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfUsuarioActionPerformed
 
     private void tfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUsuarioKeyPressed
-       habilitarBotao();
+
     }//GEN-LAST:event_tfUsuarioKeyPressed
 
     private void pfSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfSenhaKeyPressed
-        habilitarBotao();
+
     }//GEN-LAST:event_pfSenhaKeyPressed
+
+    private void tfUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfUsuarioKeyReleased
+        habilitarBotao();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_tfUsuarioKeyReleased
+
+    private void pfSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfSenhaKeyReleased
+        habilitarBotao();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_pfSenhaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -223,6 +233,18 @@ private void habilitarBotao(){
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Senha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

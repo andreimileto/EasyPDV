@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import apoio.ConexaoBD;
 import entidade.FormaPagamento;
 import entidade.Mercadoria;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class MercadoriaDAO {
 
     public boolean salvar(Mercadoria merc) {
         try {
-            Statement st = ConexaoDB.conexao.createStatement();
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             //executeupdate = insert,update, delete
             //query = select
             if (merc.getId() == 0) {
@@ -59,7 +60,7 @@ public class MercadoriaDAO {
         ArrayList<Mercadoria> mercadorias = new ArrayList<>();
         if (mercadoria.getAtivo() == 'T' || mercadoria.getAtivo() == 'F') {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 System.out.println("aaa" + mercadoria.getAtivo());
                 String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
                         + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
@@ -81,7 +82,7 @@ public class MercadoriaDAO {
             }
         } else {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  mercadoria where referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
 
                 ResultSet resultado = st.executeQuery(sql);

@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import apoio.ConexaoBD;
 import entidade.Cidade;
 import entidade.FormaPagamento;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class CidadeDAO {
 
     public boolean salvar(Cidade cidade) {
         try {
-            Statement st = ConexaoDB.conexao.createStatement();
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             //executeupdate = insert,update, delete
             //query = select
 
@@ -54,7 +55,7 @@ public class CidadeDAO {
 
         if (cid.getAtivo() == 'T' || cid.getAtivo() == 'F') {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
                         + "where lower (descricao) like '" + cid.getDescricao() + "%'"
                         + "and ativo = '" + cid.getAtivo() + "' order by id";
@@ -72,7 +73,7 @@ public class CidadeDAO {
         } else {
 
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
                         + "where lower (descricao) like '" + cid.getDescricao() + "%' order by id";
                 ResultSet resultado = st.executeQuery(sql);

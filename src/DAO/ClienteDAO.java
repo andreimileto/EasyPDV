@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import apoio.ConexaoBD;
 import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Mercadoria;
@@ -22,7 +23,7 @@ public class ClienteDAO {
 
     public boolean salvar(Cliente cli) {
         try {
-            Statement st = ConexaoDB.conexao.createStatement();
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             //executeupdate = insert,update, delete
             //query = select
             if (cli.getId() == 0) {
@@ -65,7 +66,7 @@ public class ClienteDAO {
 
         if (cli.getAtivo() == 'T' || cli.getAtivo() == 'F') {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
 
                 String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
@@ -110,7 +111,7 @@ public class ClienteDAO {
             }
         } else {
              try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
 //                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
 //                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
@@ -132,7 +133,7 @@ public class ClienteDAO {
                     cids.setDescricao(resultado.getString("descricao"));
                     cids.setId(resultado.getInt("id_cid"));
                     cliente.setCidade(cids);
-                    cliente.getCidade().getDescricao();
+//                    cliente.getCidade().getDescricao();
                     if (resultado.getString("endereco").equals("null")) {
                         cliente.setEndereco("");
 
@@ -160,7 +161,7 @@ public class ClienteDAO {
             System.out.println("entrou no else");
 
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
                 String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "

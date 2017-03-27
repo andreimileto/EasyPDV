@@ -5,7 +5,7 @@
  */
 package tela;
 
-import DAO.ConexaoDB;
+import apoio.ConexaoBD;
 
 /**
  *

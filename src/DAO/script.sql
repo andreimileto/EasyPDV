@@ -111,3 +111,6 @@ create database easyPDV;
                          );
 
 
+---------------insert-------------------
+
+insert into usuario values(default,'usuario','123456');

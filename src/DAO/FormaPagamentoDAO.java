@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import apoio.ConexaoBD;
 import entidade.FormaPagamento;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -20,7 +21,7 @@ public class FormaPagamentoDAO {
 
     public boolean salvar(FormaPagamento fp) {
         try {
-            Statement st = ConexaoDB.conexao.createStatement();
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             // mudar forma de pagamento
             //executeupdate = insert,update, delete
             //query = select
@@ -49,7 +50,7 @@ public class FormaPagamentoDAO {
         ArrayList<FormaPagamento> formasPagamento = new ArrayList<>();
         if (form.getAtivo() == 'T' || form.getAtivo() == 'F') {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  forma_pagamento "
                         + "where lower (descricao) like '" + form.getDescricao() + "%'"
                         + "and ativo = '" + form.getAtivo() + "' order by id";
@@ -67,7 +68,7 @@ public class FormaPagamentoDAO {
             }
         } else {
             try {
-                Statement st = ConexaoDB.conexao.createStatement();
+                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  forma_pagamento "
                         + "where lower (descricao) like '" + form.getDescricao() + "%' order by id";
 
