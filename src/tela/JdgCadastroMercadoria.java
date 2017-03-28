@@ -76,7 +76,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblCodigo.setText("Código*");
+        lblCodigo.setText("Código");
 
         tfdCodigo.setEditable(false);
 

@@ -9,6 +9,7 @@ import DAO.ClienteDAO;
 import entidade.Cidade;
 import entidade.Cliente;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -26,10 +27,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private MaskFormatter mascaraCnpj;
     private MaskFormatter mascaraTelefone8Digitos;
     private MaskFormatter mascaraTelefone9Digitos;
-    
+
     Cidade cidade = new Cidade();
     Cliente cliente = new Cliente(cidade);
-    
+
     public JdgCadastroCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -37,41 +38,41 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         mascaraCpfCnpj();
         mascaraTelefone();
         atualizarCamposFormatados();
-        
+
     }
-    
+
     private void mascaraCpfCnpj() {
         try {
             mascaraCpf = new MaskFormatter("###.###.###-##");
             mascaraCnpj = new MaskFormatter("##.###.###/####-##");
-            
+
         } catch (Exception e) {
         }
-        
+
     }
-    
+
     private void mascaraTelefone() {
         try {
             mascaraTelefone8Digitos = new MaskFormatter("(##)####-####");
             mascaraTelefone9Digitos = new MaskFormatter("(##)#####-####");
-            
+
         } catch (Exception e) {
         }
     }
-    
+
     private void popularComboBox() {
         cbxTipo.addItem("Pessoa Física");
         cbxTipo.addItem("Pessoa Jurídica");
         atualizarCamposFormatados();
     }
-    
+
     private void atualizarCamposFormatados() {
         tffCpfCnpj.setValue(null);
         if (cbxTipo.getSelectedIndex() == 0) {
             lblRazaoSocial.setText("Nome:");
             lblCpfCnpj.setText("CPF:");
             tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
-            
+
         } else {
             lblRazaoSocial.setText("Razão Social:");
             lblCpfCnpj.setText("CNPJ:");
@@ -159,11 +160,6 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         tffTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tffTelefoneActionPerformed(evt);
-            }
-        });
-        tffTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tffTelefoneKeyReleased(evt);
             }
         });
 
@@ -322,11 +318,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxTipoItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         cidade.setAtivo('T');
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
-        
+
         tfdCidade.setText(cliente.getCidade().getDescricao());
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -336,37 +332,43 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (validarCampos()) {
-            cliente.setRazaoSocial(tfdRazaoSocial.getText());
-            System.out.println(cliente.getCidade().getId() + "id cliente cidade... antes do set");
+            if (verificarCadastrado()) {
+
+                cliente.setRazaoSocial(tfdRazaoSocial.getText());
+                System.out.println(cliente.getCidade().getId() + "id cliente cidade... antes do set");
 //            cliente.setCidade(cidade);
-            System.out.println(cliente.getCidade().getId() + "id cliente cidade...depois do set");
-            cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
-            if (cliente.getTelefone() != "null") {
-                cliente.setTelefone(tffTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
-            }
-            if (cliente.getEndereco() != "null") {
-                cliente.setEndereco(tfdEndereco.getText());
-            }
-            
-            if (cbxTipo.getSelectedIndex() == 0) {
-                cliente.setTipoCadastro('F');
+                System.out.println(cliente.getCidade().getId() + "id cliente cidade...depois do set");
+                cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
+                if (cliente.getTelefone() != "null") {
+                    cliente.setTelefone(tffTelefone.getText().replace("(", "").replace(")", "").replace("-", ""));
+                }
+                if (cliente.getEndereco() != "null") {
+                    cliente.setEndereco(tfdEndereco.getText());
+                }
+
+                if (cbxTipo.getSelectedIndex() == 0) {
+                    cliente.setTipoCadastro('F');
+                } else {
+                    cliente.setTipoCadastro('J');
+                }
+                if (rbtAtivo.isSelected()) {
+                    cliente.setAtivo('T');
+                } else {
+                    cliente.setAtivo('F');
+                }
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.salvar(cliente);
+
+                limparCampos();
             } else {
-                cliente.setTipoCadastro('J');
+                JOptionPane.showMessageDialog(null, "Cliente já cadastrado!");
             }
-            if (rbtAtivo.isSelected()) {
-                cliente.setAtivo('T');
-            } else {
-                cliente.setAtivo('F');
-            }
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.salvar(cliente);
-            
-            limparCampos();
-            
             JOptionPane.showMessageDialog(null, "Cadastro de cliente salvo com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar cliente, campos inválidos ou nulos");
         }
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {
         cliente.setId(0);
@@ -384,41 +386,6 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void tffTelefoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffTelefoneKeyReleased
-//        if (tffTelefone.getText().length() != 14) {
-//            String a = "";
-//
-//            if (tffTelefone.getText().charAt(1) == '1') {
-//
-//                if (tffTelefone.getText().charAt(2) == '1'
-//                        || tffTelefone.getText().charAt(2) == '2'
-//                        || tffTelefone.getText().charAt(2) == '3'
-//                        || tffTelefone.getText().charAt(2) == '4'
-//                        || tffTelefone.getText().charAt(2) == '5'
-//                        || tffTelefone.getText().charAt(2) == '6'
-//                        || tffTelefone.getText().charAt(2) == '7'
-//                        || tffTelefone.getText().charAt(2) == '8'
-//                        || tffTelefone.getText().charAt(2) == '9') {
-//                    a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2);
-//                    System.out.println(a);
-//                    tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone9Digitos));
-//                    tffTelefone.setText(a);
-//                }
-//            }
-//
-//            if (tffTelefone.getText().charAt(1) == '5') {
-//                if (tffTelefone.getText().charAt(2) == '1'
-//                        || tffTelefone.getText().charAt(2) == '3'
-//                        || tffTelefone.getText().charAt(2) == '4'
-//                        || tffTelefone.getText().charAt(2) == '5') {
-//                    a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2);
-//                    tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone9Digitos));
-//                    tffTelefone.setText(a);
-//                }
-//            }
-//        }
-    }//GEN-LAST:event_tffTelefoneKeyReleased
-
     private void tffTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffTelefoneActionPerformed
 
     }//GEN-LAST:event_tffTelefoneActionPerformed
@@ -435,7 +402,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             System.out.println(tffTelefone.getText().replace(" ", "").length());
             tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone8Digitos));
             tffTelefone.setText(a);
-            
+
         }
     }//GEN-LAST:event_tffTelefoneFocusLost
 
@@ -464,49 +431,66 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             ok = false;
             lblCidade.setForeground(Color.red);
         }
-        
+
         if (cbxTipo.getSelectedIndex() == 1) {
-            
+
             if (tffCpfCnpj.getText().replace(" ", "").length() != 18) {
-                
+
                 ok = false;
                 lblCpfCnpj.setForeground(Color.red);
-                
+
             }
         } else {
             if (tffCpfCnpj.getText().replace(" ", "").length() != 14) {
                 ok = false;
                 lblCpfCnpj.setForeground(Color.red);
-                
+
             }
         }
         if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() < 10
                 && tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() > 1) {
-            
+
             lblTelefone.setForeground(Color.red);
-            
+
             ok = false;
         }
         if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() == 0) {
             cliente.setTelefone("null");
-            
+
         }
         if (tfdEndereco.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() == 0) {
             cliente.setEndereco("null");
-            
+
         }
-        
+
         return ok;
     }
 
-    private void verificarCadastroSelecionado() {
+    private boolean verificarCadastrado() {
+
+        ClienteDAO cliDAO = new ClienteDAO();
+        cliente.setCpfCnpj(tffCpfCnpj.getText().replace(".", "").replace("-", "").replace("/", ""));
         
+        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
+        for (int i = 0; i < clientes.size(); i++) {
+         System.out.println(clientes.get(i).getCpfCnpj());   
+        
+        }
+        if (tffCpfCnpj.getText().replace(".", "").replace("-", "").replace("/", "").equals(clientes.get(0).getCpfCnpj())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void verificarCadastroSelecionado() {
+
         if (cliente.getId() > 0) {
-            if (cliente.getTipoCadastro()=='F') {
+            if (cliente.getTipoCadastro() == 'F') {
                 cbxTipo.setSelectedIndex(0);
-            }else{
+            } else {
                 System.out.println("entrou no else");
-                System.out.println(cliente.getTipoCadastro()+"....");
+                System.out.println(cliente.getTipoCadastro() + "....");
                 cbxTipo.setSelectedIndex(1);
             }
             tfdId.setText(String.valueOf(cliente.getId()));
@@ -517,11 +501,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             tffTelefone.setText(cliente.getTelefone());
             if (cliente.getAtivo() == 'T') {
                 rbtAtivo.setSelected(true);
-                
+
             } else {
                 rbtAtivo.setSelected(false);
             }
-            
+
         } else {
             limparCampos();
         }

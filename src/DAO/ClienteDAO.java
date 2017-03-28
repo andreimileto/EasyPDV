@@ -64,99 +64,95 @@ public class ClienteDAO {
 
         if (cli.getId() == 0) {
 
-        if (cli.getAtivo() == 'T' || cli.getAtivo() == 'F') {
-            try {
-                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            if (cli.getAtivo() == 'T' || cli.getAtivo() == 'F') {
+                try {
+                    Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
+                    String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
+                            + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                            + "from cliente c, cidade cid "
+                            + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
+                            + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
+                            + " and cid.id = c.id_cidade and c.ativo ='" + cli.getAtivo() + "'"
+                            +"and c.id > 1 order by c.razao_social";
+                    System.out.println(sql);
+                    ResultSet resultado = st.executeQuery(sql);
+                    while (resultado.next()) {
+                        Cidade cids = new Cidade();
+                        Cliente cliente = new Cliente(cids);
+                        cliente.setId(resultado.getInt("id_cliente"));
+                        cliente.setRazaoSocial(resultado.getString("razao_social"));
+                        cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                        cids.setDescricao(resultado.getString("descricao"));
+                        cids.setId(resultado.getInt("id_cid"));
+                        cliente.setCidade(cids);
+                        cliente.getCidade().getDescricao();
+                        if (resultado.getString("endereco").equals("null")) {
+                            cliente.setEndereco("");
 
-                String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
-                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
-                        + "from cliente c, cidade cid "
-                        + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
-                        + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
-                        + " and cid.id = c.id_cidade and c.ativo ='"+cli.getAtivo()+"'";
-                System.out.println(sql);
-                ResultSet resultado = st.executeQuery(sql);
-                while (resultado.next()) {
-                    Cidade cids = new Cidade();
-                    Cliente cliente = new Cliente(cids);
-                    cliente.setId(resultado.getInt("id_cliente"));
-                    cliente.setRazaoSocial(resultado.getString("razao_social"));
-                    cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
-                    cids.setDescricao(resultado.getString("descricao"));
-                    cids.setId(resultado.getInt("id_cid"));
-                    cliente.setCidade(cids);
-                    cliente.getCidade().getDescricao();
-                    if (resultado.getString("endereco").equals("null")) {
-                        cliente.setEndereco("");
+                        } else {
 
-                    } else {
+                            cliente.setEndereco(resultado.getString("endereco"));
+                        }
+                        if (resultado.getString("telefone").equals("null")) {
 
-                        cliente.setEndereco(resultado.getString("endereco"));
+                            cliente.setTelefone("");
+                        } else {
+
+                            cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+                        }
+                        cliente.setAtivo(resultado.getString("ativo").charAt(0));
+                        clientes.add(cliente);
                     }
-                    if (resultado.getString("telefone").equals("null")) {
 
-                        cliente.setTelefone("");
-                    } else {
-
-                        cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
-                    }
-//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
-                    cliente.setAtivo(resultado.getString("ativo").charAt(0));
-                    clientes.add(cliente);
+                } catch (Exception e) {
+                    System.out.println("Erro ao consultar Mercadoria " + e);
                 }
+            } else {
+                try {
+                    Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
-            } catch (Exception e) {
-                System.out.println("Erro ao consultar Mercadoria " + e);
-            }
-        } else {
-             try {
-                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-
-//                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
-//                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
-//            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
-                String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
-                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
-                        + "from cliente c, cidade cid "
-                        + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
-                        + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
-                        + " and cid.id = c.id_cidade";
-                System.out.println(sql);
-                ResultSet resultado = st.executeQuery(sql);
-                while (resultado.next()) {
-                    Cidade cids = new Cidade();
-                    Cliente cliente = new Cliente(cids);
-                    cliente.setId(resultado.getInt("id_cliente"));
-                    cliente.setRazaoSocial(resultado.getString("razao_social"));
-                    cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
-                    cids.setDescricao(resultado.getString("descricao"));
-                    cids.setId(resultado.getInt("id_cid"));
-                    cliente.setCidade(cids);
+                    String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
+                            + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                            + "from cliente c, cidade cid "
+                            + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
+                            + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
+                            + " and cid.id = c.id_cidade and c.id > 1 order by c.razao_social";
+                    System.out.println(sql);
+                    ResultSet resultado = st.executeQuery(sql);
+                    while (resultado.next()) {
+                        Cidade cids = new Cidade();
+                        Cliente cliente = new Cliente(cids);
+                        cliente.setId(resultado.getInt("id_cliente"));
+                        cliente.setRazaoSocial(resultado.getString("razao_social"));
+                        cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                        cids.setDescricao(resultado.getString("descricao"));
+                        cids.setId(resultado.getInt("id_cid"));
+                        cliente.setCidade(cids);
 //                    cliente.getCidade().getDescricao();
-                    if (resultado.getString("endereco").equals("null")) {
-                        cliente.setEndereco("");
+                        if (resultado.getString("endereco").equals("null")) {
+                            cliente.setEndereco("");
 
-                    } else {
+                        } else {
 
-                        cliente.setEndereco(resultado.getString("endereco"));
+                            cliente.setEndereco(resultado.getString("endereco"));
+                        }
+                        if (resultado.getString("telefone").equals("null")) {
+
+                            cliente.setTelefone("");
+                        } else {
+
+                            cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+                        }
+
+                        cliente.setAtivo(resultado.getString("ativo").charAt(0));
+                        clientes.add(cliente);
                     }
-                    if (resultado.getString("telefone").equals("null")) {
 
-                        cliente.setTelefone("");
-                    } else {
-
-                        cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
-                    }
-
-                    cliente.setAtivo(resultado.getString("ativo").charAt(0));
-                    clientes.add(cliente);
+                } catch (Exception e) {
+                    System.out.println("Erro ao consultar Mercadoria " + e);
                 }
-
-            } catch (Exception e) {
-                System.out.println("Erro ao consultar Mercadoria " + e);
             }
-        }
         } else {
             System.out.println("entrou no else");
 
@@ -168,7 +164,8 @@ public class ClienteDAO {
                         + "from cliente c, cidade cid "
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%') "
-                        + "and cid.id = c.id_cidade and c.id =" + cli.getId();
+                        + "and cid.id = c.id_cidade and c.id =" + cli.getId() 
+                        +"and c.id > 1 order by c.razao_social";
                 System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -190,7 +187,7 @@ public class ClienteDAO {
                     cliente.setTipoCadastro((resultado.getString("tipo_cadastro").charAt(0)));
                     if (resultado.getString("endereco").equals("null")) {
                         cliente.setEndereco("");
-                    }else{
+                    } else {
                         cliente.setEndereco(String.valueOf(resultado.getString("endereco")));
                     }
 //                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));

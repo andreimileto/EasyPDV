@@ -58,7 +58,7 @@ public class CidadeDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
                         + "where lower (descricao) like '" + cid.getDescricao() + "%'"
-                        + "and ativo = '" + cid.getAtivo() + "' order by id";
+                        + "and ativo = '" + cid.getAtivo() + "' order by descricao";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Cidade cidade = new Cidade();
@@ -75,7 +75,7 @@ public class CidadeDAO {
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
-                        + "where lower (descricao) like '" + cid.getDescricao() + "%' order by id";
+                        + "where lower (descricao) like '" + cid.getDescricao() + "%' order by descricao";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Cidade cidade = new Cidade();
@@ -93,25 +93,4 @@ public class CidadeDAO {
 
     }
 
-//    public ArrayList<Cidade> consultarUmRegistro(Cidade cid) {
-//        this.cid = cid;
-//        ArrayList<Cidade> cidades = new ArrayList<>();
-//        try {
-//            Statement st = ConexaoDB.conexao.createStatement();
-//            String sql = "select * from  cidade "
-//                    + "where id = '" + cid.getId()+ "'";
-//            ResultSet resultado = st.executeQuery(sql);
-//            while (resultado.next()) {
-//                Cidade cidade = new Cidade();
-//                cidade.setId(resultado.getInt("id"));
-//                cidade.setDescricao(resultado.getString("descricao"));
-//                cidade.setAtivo(resultado.getString("ativo").charAt(0));
-//                cidades.add(cidade);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Erro ao consultar cidades " + e);
-//        }
-//        return cidades;
-//
-//    }
 }

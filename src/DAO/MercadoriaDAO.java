@@ -63,7 +63,7 @@ public class MercadoriaDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 System.out.println("aaa" + mercadoria.getAtivo());
                 String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
-                        + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
+                        + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by referencia";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -83,7 +83,8 @@ public class MercadoriaDAO {
         } else {
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                String sql = "select * from  mercadoria where referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
+                String sql = "select * from  mercadoria where referencia like '" 
+                        + mercadoria.getReferencia() + "%'" + "order by referencia";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {

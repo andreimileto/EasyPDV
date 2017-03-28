@@ -53,7 +53,7 @@ public class FormaPagamentoDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  forma_pagamento "
                         + "where lower (descricao) like '" + form.getDescricao() + "%'"
-                        + "and ativo = '" + form.getAtivo() + "' order by id";
+                        + "and ativo = '" + form.getAtivo() + "' order by descricao";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -70,7 +70,7 @@ public class FormaPagamentoDAO {
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  forma_pagamento "
-                        + "where lower (descricao) like '" + form.getDescricao() + "%' order by id";
+                        + "where lower (descricao) like '" + form.getDescricao() + "%' order by descricao";
 
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
