@@ -74,7 +74,7 @@ public class ClienteDAO {
                         + "from cliente c, cidade cid "
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
-                        + " and cid.id = c.id_cidade and c.ativo ='"+cli.getAtivo()+"'";
+                        + " and cid.id = c.id_cidade and c.ativo ='"+cli.getAtivo()+"' order by c.razao_social";
                 System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -101,7 +101,7 @@ public class ClienteDAO {
 
                         cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
                     }
-//                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+
                     cliente.setAtivo(resultado.getString("ativo").charAt(0));
                     clientes.add(cliente);
                 }
@@ -113,15 +113,13 @@ public class ClienteDAO {
              try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
-//                String sql = "select * from  cliente where ativo='" + cli.getAtivo()
-//                        + "' and razao_social ilike '" + cli.getRazaoSocial()+ "%'" + "order by razao_social";
-//            String sql = "select * from  cliente   where razao_social ilike  '%'order by razao_social";
+
                 String sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
                         + "from cliente c, cidade cid "
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
-                        + " and cid.id = c.id_cidade";
+                        + " and cid.id = c.id_cidade order by c.razao_social";
                 System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -133,7 +131,7 @@ public class ClienteDAO {
                     cids.setDescricao(resultado.getString("descricao"));
                     cids.setId(resultado.getInt("id_cid"));
                     cliente.setCidade(cids);
-//                    cliente.getCidade().getDescricao();
+                    cliente.getCidade().getDescricao();
                     if (resultado.getString("endereco").equals("null")) {
                         cliente.setEndereco("");
 
@@ -168,7 +166,7 @@ public class ClienteDAO {
                         + "from cliente c, cidade cid "
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%') "
-                        + "and cid.id = c.id_cidade and c.id =" + cli.getId();
+                        + "and cid.id = c.id_cidade and c.id =" + cli.getId()+" order by c.razao_social";
                 System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {

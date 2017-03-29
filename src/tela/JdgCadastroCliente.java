@@ -326,8 +326,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         cidade.setAtivo('T');
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
-        
+        cliente.setCidade(cidade);
         tfdCidade.setText(cliente.getCidade().getDescricao());
+        
+        System.out.println(cliente.getCidade().getId()+"... id cidade");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
