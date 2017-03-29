@@ -9,6 +9,7 @@ import DAO.CidadeDAO;
 import DAO.MercadoriaDAO;
 import entidade.Mercadoria;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,7 +29,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     private void verificarCadastroSelecionado() {
 
         if (mercadoria.getId() > 0) {
-
+            tfdReferencia.setEnabled(false);
             tfdCodigo.setText(String.valueOf(mercadoria.getId()));
             tfdReferencia.setText(String.valueOf(mercadoria.getReferencia()));
             tfdDescricao.setText(mercadoria.getDescricao());
@@ -44,6 +45,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
 
         } else {
             limparCampos();
+
         }
     }
 
@@ -235,40 +237,39 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-//        String camposErrados = validarCampos(); 
+        if (validarCadastro()) {
 
-        if (validarCampos()) {
+            if (validarCampos()) {
 
-            mercadoria.setDescricao(tfdDescricao.getText());
+                mercadoria.setDescricao(tfdDescricao.getText());
 
-            mercadoria.setReferencia(tfdReferencia.getText());
+                mercadoria.setReferencia(tfdReferencia.getText());
 
-            mercadoria.setEstoque(Double.parseDouble(tfdEstoque.getText().replace(',', '.')));
+                mercadoria.setEstoque(Double.parseDouble(tfdEstoque.getText().replace(',', '.')));
 
-            mercadoria.setPrecoCusto(Double.parseDouble(tfdPrecoCusto.getText().replace(',', '.')));
+                mercadoria.setPrecoCusto(Double.parseDouble(tfdPrecoCusto.getText().replace(',', '.')));
 
-            mercadoria.setPrecoVenda(Double.parseDouble(tfdPrecoVenda.getText().replace(',', '.')));
+                mercadoria.setPrecoVenda(Double.parseDouble(tfdPrecoVenda.getText().replace(',', '.')));
 
-            if (rbtAtivo.isSelected()) {
-                mercadoria.setAtivo('T');
-            } else {
-                mercadoria.setAtivo('F');
+                if (rbtAtivo.isSelected()) {
+                    mercadoria.setAtivo('T');
+                } else {
+                    mercadoria.setAtivo('F');
+                }
+
+                MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
+
+                if (mercadoriaDAO.salvar(mercadoria)) {
+                    limparCampos();
+                    JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
+                }
             }
-
-            MercadoriaDAO mercadoriaDAO = new MercadoriaDAO();
-
-            if (mercadoriaDAO.salvar(mercadoria)) {
-                limparCampos();
-                JOptionPane.showMessageDialog(null, "Cadastro de Mercadoria Salva com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
-            }
-
         } else {
 
-            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos ");
-//            JOptionPane.showMessageDialog(null, "Erro ao salvar, Caracteres inválidos ou nulos "
-//                    ,JOptionPane.INFORMATION_MESSAGE,camposErrados);
+            JOptionPane.showMessageDialog(null, "Mercadoria já cadastrada ");
+
 
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -288,6 +289,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         mercadoria.setId(0);
         mercadoria.setReferencia("");
         mercadoria.setAtivo(' ');
+        tfdReferencia.setEnabled(true);
         tfdCodigo.setText("");
         tfdDescricao.setText("");
         tfdEstoque.setText("0");
@@ -311,7 +313,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             lblDescricao.setForeground(Color.red);
 
         }
-        if (tfdReferencia.getText().length() > 45 || tfdReferencia.getText().length() <=0) {
+        if (tfdReferencia.getText().length() > 45 || tfdReferencia.getText().length() <= 0) {
             ok = false;
             lblReferencia.setForeground(Color.red);
 
@@ -336,6 +338,28 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         }
         return ok;
 
+    }
+
+    private boolean validarCadastro() {
+        MercadoriaDAO mercDAO = new MercadoriaDAO();
+        mercadoria.setReferencia(tfdReferencia.getText());
+
+        ArrayList<Mercadoria> mercadorias = mercDAO.consultar(mercadoria);
+
+        if (mercadoria.getId() == 0) {
+
+            if (mercadorias.size() > 0) {
+
+                if (mercadoria.getReferencia().equals(mercadorias.get(0).getReferencia())) {
+                    System.out.println("false");
+                    return false;
+                } else {
+                    System.out.println("true");
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 
     /**

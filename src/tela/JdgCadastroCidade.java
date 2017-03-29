@@ -164,7 +164,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
 
             if (cidadeDAO.salvar(cidade)) {
                 limparcampos();
-                JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade Salva com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
             }

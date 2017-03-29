@@ -58,49 +58,44 @@ public class MercadoriaDAO {
     public ArrayList<Mercadoria> consultar(Mercadoria mercadoria) {
         this.mercadoria = mercadoria;
         ArrayList<Mercadoria> mercadorias = new ArrayList<>();
+        String sql = "";
+        //validação de quais dados consultar
+
         if (mercadoria.getAtivo() == 'T' || mercadoria.getAtivo() == 'F') {
-            try {
-                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                System.out.println("aaa" + mercadoria.getAtivo());
-                String sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
-                        + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
-
-                ResultSet resultado = st.executeQuery(sql);
-                while (resultado.next()) {
-                    Mercadoria merc = new Mercadoria();
-                    merc.setId(resultado.getInt("id"));
-                    merc.setReferencia(resultado.getString("referencia"));
-                    merc.setDescricao(resultado.getString("descricao"));
-                    merc.setEstoque(resultado.getDouble("estoque"));
-                    merc.setPrecoCusto(resultado.getDouble("preco_custo"));
-                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
-                    merc.setAtivo(resultado.getString("ativo").charAt(0));
-                    mercadorias.add(merc);
-                }
-            } catch (Exception e) {
-                System.out.println("Erro ao consultar Mercadoria " + e);
-            }
+            System.out.println("entrou no if da consulta do T ou F");
+            sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
+                    + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
+            //validação de quais dados consultar
+        } else if (mercadoria.getReferencia() != "" && mercadoria.getId() == 0) {
+            System.out.println("entrou no if da consulta do cliente cadastrado");
+            sql = "select * from mercadoria where referencia ='" + mercadoria.getReferencia() + "'";
+            System.out.println(sql);
+            //validação de quais dados consultar
         } else {
-            try {
-                Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                String sql = "select * from  mercadoria where referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
+            System.out.println("entrou no else");
+            sql = "select * from  mercadoria where referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
 
-                ResultSet resultado = st.executeQuery(sql);
-                while (resultado.next()) {
-                    Mercadoria merc = new Mercadoria();
-                    merc.setId(resultado.getInt("id"));
-                    merc.setReferencia(resultado.getString("referencia"));
-                    merc.setDescricao(resultado.getString("descricao"));
-                    merc.setEstoque(resultado.getDouble("estoque"));
-                    merc.setPrecoCusto(resultado.getDouble("preco_custo"));
-                    merc.setPrecoVenda(resultado.getDouble("preco_venda"));
-                    merc.setAtivo(resultado.getString("ativo").charAt(0));
-                    mercadorias.add(merc);
-                }
-            } catch (Exception e) {
-                System.out.println("Erro ao consultar Mercadoria " + e);
-            }
         }
+
+        //faz consulta de dados e adiciona os dados consultados para o array...
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            ResultSet resultado = st.executeQuery(sql);
+            while (resultado.next()) {
+                Mercadoria merc = new Mercadoria();
+                merc.setId(resultado.getInt("id"));
+                merc.setReferencia(resultado.getString("referencia"));
+                merc.setDescricao(resultado.getString("descricao"));
+                merc.setEstoque(resultado.getDouble("estoque"));
+                merc.setPrecoCusto(resultado.getDouble("preco_custo"));
+                merc.setPrecoVenda(resultado.getDouble("preco_venda"));
+                merc.setAtivo(resultado.getString("ativo").charAt(0));
+                mercadorias.add(merc);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar Mercadoria " + e);
+        }
+
         return mercadorias;
     }
 }
