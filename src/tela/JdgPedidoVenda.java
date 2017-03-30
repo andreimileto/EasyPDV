@@ -9,7 +9,9 @@ import DAO.ClienteDAO;
 import DAO.MercadoriaDAO;
 import entidade.Cidade;
 import entidade.Cliente;
+import entidade.FaturamentoItem;
 import entidade.Mercadoria;
+import java.awt.Color;
 import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Toolkit;
@@ -25,20 +27,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Mileto
  */
 public class JdgPedidoVenda extends javax.swing.JDialog {
-//	private Toolkit tk = Toolkit.getDefaultToolkit(); 
-//	private Dimension screenSize = tk.getScreenSize();
-//	private void initialize() {
-//		this.setSize(screenSize.width, screenSize.height);
-//		this.setVisible(true);
-//
-//
-//	}
 
     Cidade cid = new Cidade();
     Cliente cliente = new Cliente(cid);
-    
-    Mercadoria mercadoria = new Mercadoria();
 
+    Mercadoria mercadoria = new Mercadoria();
+    FaturamentoItem faturamentoItem = new FaturamentoItem();
+    int count = 1;
+    ArrayList<FaturamentoItem> mercs = new ArrayList<>();
+    
+    
     /**
      * Creates new form JdgPedidoVenda
      */
@@ -48,7 +46,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 //        initialize();
 
         listarMercadorias();
-        limparCampos();
+        
+        tffCpfCNPJ.requestFocus();
     }
 
     /**
@@ -63,7 +62,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblReferencia = new javax.swing.JLabel();
         tfdReferencia = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         tfdDescricao = new javax.swing.JTextField();
@@ -76,10 +75,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         tffDesconto = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
+        lblRetornoMercadoria = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         tfdRazaoSocial = new javax.swing.JTextField();
         tffCpfCNPJ = new javax.swing.JFormattedTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lblCpfCnpj = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -104,8 +104,13 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mercadoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 204))); // NOI18N
 
-        jLabel1.setText("Referência");
+        lblReferencia.setText("Referência");
 
+        tfdReferencia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfdReferenciaFocusLost(evt);
+            }
+        });
         tfdReferencia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tfdReferenciaKeyReleased(evt);
@@ -126,6 +131,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jLabel2.setText("Descrição");
 
         tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tffQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tffQuantidadeFocusLost(evt);
+            }
+        });
         tffQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tffQuantidadeKeyReleased(evt);
@@ -153,6 +163,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         jLabel5.setText("Desconto $");
 
+        lblRetornoMercadoria.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -160,7 +172,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
+                    .addComponent(lblReferencia)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,20 +196,24 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                             .addComponent(jLabel6)))
                     .addComponent(tfdDescricao))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRetornoMercadoria, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(lblReferencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -215,14 +231,20 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tffDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tffValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 10, Short.MAX_VALUE))
+                    .addComponent(tffValorTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRetornoMercadoria, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
         tfdRazaoSocial.setEditable(false);
 
+        tffCpfCNPJ.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tffCpfCNPJFocusLost(evt);
+            }
+        });
         tffCpfCNPJ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tffCpfCNPJActionPerformed(evt);
@@ -234,7 +256,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setText("CPF/CNPJ");
+        lblCpfCnpj.setText("CPF/CNPJ");
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         jButton2.setMnemonic('c');
@@ -287,14 +309,14 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(tffCpfCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7)))
+                                            .addComponent(lblCpfCnpj)))
                                     .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton2)
                                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
+                        .addGap(63, 63, 63)
                         .addComponent(lblRetornoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -307,23 +329,26 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                         .addComponent(tfdId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tffCpfCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblCpfCnpj)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tffCpfCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton8)))
                         .addGap(5, 5, 5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfdRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRetornoCliente))
+                .addComponent(lblRetornoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_money.png"))); // NOI18N
@@ -487,13 +512,27 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 //
 //        tfdCidade.setText(cliente.getCidade().getDescricao());
     }//GEN-LAST:event_jButton1ActionPerformed
-    private void limparCampos() {
-        tffCpfCNPJ.requestFocus();
+    private void limparCampos() throws Exception {
+        mercadoria.setId(0);
+        mercadoria.setDescricao("");
+        mercadoria.setPrecoVenda(0);
+        mercadoria.setReferencia("");
+        faturamentoItem.setDesconto(0);
+        faturamentoItem.setMercadoria(mercadoria);
+        faturamentoItem.setQuantidade(0);
+        faturamentoItem.setValorTotal(0);
+        tfdReferencia.setText(faturamentoItem.getMercadoria().getReferencia());
+        tfdDescricao.setText(faturamentoItem.getMercadoria().getDescricao());
+        tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()));
+        tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
+        tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+        
     }
 
     private void listarMercadorias() {
         try {
             //setar para tabela modelo de dados
+
             tblMercadorias.setModel(this.obterDadosParaTabelaCompleto());
             tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -517,32 +556,37 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         };
 //adiciona titulo para as colunas
 //        MercadoriaDAO mercDAO = new MercadoriaDAO();
-//        ArrayList<Mercadoria> mercs = mercDAO.consultar(merc);
-        dtm.addColumn("ID");
+
+        dtm.addColumn("SEQUÊNCIA");
         dtm.addColumn("REFERÊNCIA");
         dtm.addColumn("DESCRIÇÃO");
-        dtm.addColumn("QTN");
+        dtm.addColumn("QNT");
         dtm.addColumn("$UNITÁRIO");
         dtm.addColumn("$DESCONTO");
         dtm.addColumn("$TOTAL");
+        
+        
+        
+        
+        mercs.add(faturamentoItem);
+        if (faturamentoItem.getValorTotal() > 0) {
+            for (int i = 1; i < mercs.size(); i++) {
+                //popular tabela
+                
+                        System.out.println(mercs.get(i).getValorTotal());
+                dtm.addRow(new String[]{String.valueOf(count),
+                    mercs.get(i).getMercadoria().getReferencia(),
+                    mercs.get(i).getMercadoria().getDescricao(),
+                    String.valueOf(mercs.get(i).getQuantidade()),
+                    String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
+                    String.valueOf(mercs.get(i).getDesconto()),
+                    String.valueOf(mercs.get(i).getValorTotal())});
+                
+            }
+            
+            count++;
+        }
 
-//        for (int i = 0; i < mercs.size(); i++) {
-//            //popular tabela
-//            String result = "";
-//            if (String.valueOf(mercs.get(i).getAtivo()).equalsIgnoreCase("T")) {
-//                result = "Ativo";
-//            } else {
-//                result = "Inativo";
-//            }
-//            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
-//                mercs.get(i).getReferencia(),
-//                mercs.get(i).getDescricao(),
-//                String.valueOf(mercs.get(i).getEstoque()),
-//                String.valueOf(mercs.get(i).getPrecoCusto()),
-//                String.valueOf(mercs.get(i).getPrecoVenda()),
-//                result
-//            });
-//        }
 //retorna o modelo
         return dtm;
     }
@@ -567,87 +611,127 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     private void tffCpfCNPJKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffCpfCNPJKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (verificarClienteCadastrado()) {
-                tfdId.setText(String.valueOf(cliente.getId()));
-                tfdRazaoSocial.setText(cliente.getRazaoSocial());
-                lblRetornoCliente.setText("");
-                tfdReferencia.requestFocus();
-            }else{
-//             JOptionPane.showMessageDialog(null, "Cliente não cadastrado");
-                lblRetornoCliente.setText("Cliente não cadastrado");
-                
-            }
-            
+            confirmarCPFCNPJCliente();
+
         }
     }//GEN-LAST:event_tffCpfCNPJKeyReleased
+    private void confirmarCPFCNPJCliente() {
+        if (verificarClienteCadastrado()) {
+            lblCpfCnpj.setForeground(Color.black);
+            tfdId.setText(String.valueOf(cliente.getId()));
+            tfdRazaoSocial.setText(cliente.getRazaoSocial());
+            lblRetornoCliente.setText("");
+            tfdReferencia.requestFocus();
+        } else {
+//             JOptionPane.showMessageDialog(null, "Cliente não cadastrado");
+            lblRetornoCliente.setText("Cliente não cadastrado");
+            lblCpfCnpj.setForeground(Color.red);
+
+        }
+    }
+
     private boolean verificarClienteCadastrado() {
         boolean ok = false;
         ClienteDAO cliDAO = new ClienteDAO();
         cliente.setCpfCnpj(tffCpfCNPJ.getText());
 
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
-
-        if (clientes.size() > 0) {
-            cliente.setId(clientes.get(0).getId());
-            cliente.setRazaoSocial(clientes.get(0).getRazaoSocial());
-            System.out.println(clientes.get(0).getCpfCnpj()+"...");
-            if (cliente.getCpfCnpj().equals(clientes.get(0).getCpfCnpj())) {
-                System.out.println("true");
-                ok = true;
-            } else {
-                System.out.println("false");
-                ok = false;
+        System.out.println("cpf cnpj..." + tffCpfCNPJ.getText());
+        if (tffCpfCNPJ.getText().length() > 0) {
+            System.out.println("entrou no if");
+            if (clientes.size() > 0) {
+                cliente.setId(clientes.get(0).getId());
+                cliente.setRazaoSocial(clientes.get(0).getRazaoSocial());
+                System.out.println(clientes.get(0).getCpfCnpj() + "...");
+                if (cliente.getCpfCnpj().equals(clientes.get(0).getCpfCnpj())) {
+                    System.out.println("true");
+                    ok = true;
+                } else {
+                    System.out.println("false");
+                    ok = false;
+                }
             }
+        } else {
+            ok = true;
         }
 
         return ok;
     }
     private void tfdReferenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdReferenciaKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (verificarMercadoriaCadastrada()) {
-                tfdDescricao.setText(mercadoria.getDescricao());
-                tffPrecoUnitario.setText(String.valueOf(mercadoria.getPrecoVenda()));
-                System.out.println(mercadoria.getReferencia());
-//                mercadoria.setReferencia("");
-                tffQuantidade.requestFocus();
-            }else{
-                JOptionPane.showMessageDialog(null, "Mercadoria não localizada");
-            }
-            
+            confirmarReferenciaMercadoria();
+
         }
+
+
     }//GEN-LAST:event_tfdReferenciaKeyReleased
-    private boolean verificarMercadoriaCadastrada(){
-        boolean ok = true;
+    private void confirmarReferenciaMercadoria() {
+        if (verificarMercadoriaCadastrada()) {
+            lblReferencia.setForeground(Color.black);
+            lblRetornoMercadoria.setText("");
+            System.out.println("entrou no if da verificação...tem cadastrado");
+            tfdDescricao.setText(mercadoria.getDescricao());
+            faturamentoItem.setMercadoria(mercadoria);
+
+            tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
+            System.out.println(mercadoria.getReferencia());
+
+            tffQuantidade.requestFocus();
+        } else {
+
+            mercadoria.setReferencia("");
+            lblRetornoMercadoria.setText("Mercadoria não localizada");
+            lblReferencia.setForeground(Color.red);
+        }
+    }
+
+    private boolean verificarMercadoriaCadastrada() {
+        boolean ok = false;
         MercadoriaDAO mercDAO = new MercadoriaDAO();
         mercadoria.setReferencia(tfdReferencia.getText());
-        
 
         ArrayList<Mercadoria> mercadorias = mercDAO.consultar(mercadoria);
 //        mercadoria.setReferencia("");
-        if (mercadorias.size() > 0) {
-            mercadoria.setId(mercadorias.get(0).getId());
-            mercadoria.setReferencia(mercadorias.get(0).getReferencia());
-            mercadoria.setDescricao(mercadorias.get(0).getDescricao());
-            mercadoria.setPrecoCusto(mercadorias.get(0).getPrecoCusto());
-            mercadoria.setPrecoVenda(mercadorias.get(0).getPrecoVenda());
-            System.out.println(mercadorias.get(0).getReferencia()+"...");
-            if (mercadoria.getReferencia().equals(mercadorias.get(0).getReferencia())) {
-                System.out.println("true");
-                ok = true;
-            } else {
-                System.out.println("false");
-                ok = false;
+        if (tfdReferencia.getText().length() > 0) {
+
+            if (mercadorias.size() > 0) {
+                mercadoria.setId(mercadorias.get(0).getId());
+                mercadoria.setReferencia(mercadorias.get(0).getReferencia());
+                mercadoria.setDescricao(mercadorias.get(0).getDescricao());
+                mercadoria.setPrecoCusto(mercadorias.get(0).getPrecoCusto());
+                mercadoria.setPrecoVenda(mercadorias.get(0).getPrecoVenda());
+                System.out.println(mercadorias.get(0).getReferencia() + "...referencia do array posição 0");
+                if (mercadorias.get(0).getReferencia().equals(tfdReferencia.getText())) {
+                    System.out.println("true");
+                    ok = true;
+                } else {
+                    System.out.println("false");
+                    ok = false;
+                }
             }
+        } else {
+            ok = true;
         }
-        
+
         return ok;
     }
     private void tffQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            tffDesconto.requestFocus();
+            quantidadeItem();
+
         }
     }//GEN-LAST:event_tffQuantidadeKeyReleased
+    private void quantidadeItem() {
+        if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0) {
+            faturamentoItem.setQuantidade(Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
+            faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
+            tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+            tffDesconto.requestFocus();
+        } else {
+            tffQuantidade.requestFocus();
+        }
 
+    }
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         acrecentarItem();
 
@@ -655,9 +739,25 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            acrecentarItem();
+            try {
+                
+                acrescentarDesconto();
+            } catch (Exception ex) {
+                Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_tffDescontoKeyReleased
+    private void acrescentarDesconto() throws Exception {
+        if (Double.parseDouble(tffDesconto.getText().replace(",", ".")) < faturamentoItem.getValorTotal()) {
+            faturamentoItem.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
+            faturamentoItem.setValorTotal(Double.parseDouble(tffValorTotal.getText()) - faturamentoItem.getDesconto());
+            tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+            
+            listarMercadorias();
+            limparCampos();
+            tfdReferencia.requestFocus();
+        }
+    }
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         tfdReferencia.requestFocus();
@@ -666,6 +766,18 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private void tffCpfCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCNPJActionPerformed
 
     }//GEN-LAST:event_tffCpfCNPJActionPerformed
+
+    private void tfdReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusLost
+        confirmarReferenciaMercadoria();
+    }//GEN-LAST:event_tfdReferenciaFocusLost
+
+    private void tffCpfCNPJFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusLost
+        confirmarCPFCNPJCliente();
+    }//GEN-LAST:event_tffCpfCNPJFocusLost
+
+    private void tffQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffQuantidadeFocusLost
+        quantidadeItem();
+    }//GEN-LAST:event_tffQuantidadeFocusLost
 
     private void acrecentarItem() {
         tfdReferencia.requestFocus();
@@ -684,13 +796,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -699,7 +809,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCpfCnpj;
+    private javax.swing.JLabel lblReferencia;
     private javax.swing.JLabel lblRetornoCliente;
+    private javax.swing.JLabel lblRetornoMercadoria;
     private javax.swing.JTable tblMercadorias;
     private javax.swing.JTextField tfdDescricao;
     private javax.swing.JTextField tfdId;
