@@ -574,18 +574,20 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 //popular tabela
                 
                         System.out.println(mercs.get(i).getValorTotal());
-                dtm.addRow(new String[]{String.valueOf(count),
+                dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
                     mercs.get(i).getMercadoria().getReferencia(),
                     mercs.get(i).getMercadoria().getDescricao(),
                     String.valueOf(mercs.get(i).getQuantidade()),
                     String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
                     String.valueOf(mercs.get(i).getDesconto()),
                     String.valueOf(mercs.get(i).getValorTotal())});
-                
+
             }
             
             count++;
         }
+        mercadoria = new Mercadoria();
+        faturamentoItem = new FaturamentoItem();
 
 //retorna o modelo
         return dtm;
@@ -667,12 +669,13 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdReferenciaKeyReleased
     private void confirmarReferenciaMercadoria() {
         if (verificarMercadoriaCadastrada()) {
+            
             lblReferencia.setForeground(Color.black);
             lblRetornoMercadoria.setText("");
             System.out.println("entrou no if da verificação...tem cadastrado");
             tfdDescricao.setText(mercadoria.getDescricao());
             faturamentoItem.setMercadoria(mercadoria);
-
+            faturamentoItem.setId(count);
             tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
             System.out.println(mercadoria.getReferencia());
 
