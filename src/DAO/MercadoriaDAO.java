@@ -66,9 +66,9 @@ public class MercadoriaDAO {
             sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
                     + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
             //validação de quais dados consultar
-        } else if (mercadoria.getReferencia() != "" && mercadoria.getId() == 0) {
+        } else if (mercadoria.getReferencia() != "" && mercadoria.getId() == 0 && mercadoria.getAtivo()=='V') {
             System.out.println("entrou no if da consulta do cliente cadastrado");
-            sql = "select * from mercadoria where referencia ='" + mercadoria.getReferencia() + "'";
+            sql = "select * from mercadoria where referencia ='" + mercadoria.getReferencia() + "' and ativo = 'T'";
             System.out.println(sql);
             //validação de quais dados consultar
         } else {

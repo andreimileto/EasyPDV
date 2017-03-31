@@ -75,16 +75,23 @@ public class ClienteDAO {
                         + " and cid.id = c.id_cidade and c.ativo ='" + cli.getAtivo() + "' order by c.razao_social";
                 System.out.println("consulta T ou F..."+sql);
 
-            } else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "") {
+            } else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "" && cli.getAtivo() == ' ') {
                 sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
                         + "from cliente c, cidade cid "
                         + "where cpf_cnpj = '" + cli.getCpfCnpj() + "'"
                         + " and cid.id = c.id_cidade"
-                        + " and c.id > 1  order by c.razao_social";
+                        + " and c.id > 1   order by c.razao_social";
                 System.out.println("consulta cadastrado..."+sql);
 
-            } else {
+            }else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "" && cli.getAtivo()== 'V') {
+                sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
+                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
+                        + "from cliente c, cidade cid "
+                        + "where cpf_cnpj = '" + cli.getCpfCnpj() + "'"
+                        + " and cid.id = c.id_cidade"
+                        + " and c.id > 1 and c.ativo = 'T'  order by c.razao_social";
+            }else {
                 sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
                         + "from cliente c, cidade cid "
@@ -107,7 +114,7 @@ public class ClienteDAO {
                     + " razao_social ilike '" + cli.getRazaoSocial() + "%') "
                     + "and cid.id = c.id_cidade and c.id =" + cli.getId() + " order by c.razao_social";
             System.out.println(sql);
-
+            System.out.println("ativo..."+cli.getAtivo());
         }
 
         //faz consulta e adiciona os valores para o array...

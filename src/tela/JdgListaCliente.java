@@ -41,6 +41,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         this.cliente = cliente;
         this.cid = cid;
         popularComboBox();
+        
         listarClientes();
 
     }
@@ -121,8 +122,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
 //        obterDadosParaTabelaCompleto();
         this.cliente.setId(Integer.parseInt(tblListaClientes.getValueAt(row, 0).toString()));
 
-//        CidadeDAO cidadeDAO = new CidadeDAO();
-//        ArrayList<Cidade> cidades = cidadeDAO.consultar(cid);
         ClienteDAO cliDAO = new ClienteDAO();
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
         cliente.setCidade(clientes.get(0).getCidade());
@@ -133,12 +132,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
 
 
         System.out.println("cidade id..." + cliente.getCidade().getId());
-//
-//        this.cliente.setRazaoSocial(tblListaClientes.getValueAt(row, 1).toString());
-//        this.cliente.setCpfCnpj(tblListaClientes.getValueAt(row, 2).toString());
-//        this.cid.setDescricao(tblListaClientes.getValueAt(row, 3).toString());
-//        this.cliente.setEndereco(tblListaClientes.getValueAt(row, 4).toString());
-//        this.cliente.setTelefone(tblListaClientes.getValueAt(row, 5).toString());
+
         if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
             this.cliente.setAtivo('T');
         } else {

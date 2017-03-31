@@ -22,7 +22,7 @@ create database easyPDV;
                          id_cidade int not null,
                          razao_social varchar(150) not null,
                          tipo_cadastro CHAR(1) not null,
-                         cpf_cnpj varchar(18) not null,
+                         cpf_cnpj varchar(18) unique,
                          endereco varchar(150),
                          telefone varchar(15),
                          ativo char(1) not null,
@@ -52,7 +52,7 @@ create database easyPDV;
                     
                      
             CREATE TABLE mercadoria(id serial ,
-                         referencia VARCHAR(45) not null,
+                         referencia VARCHAR(45) not null unique,
                          descricao VARCHAR(100) not null,
                          estoque DOUBLE PRECISION not null,
                          preco_custo DOUBLE PRECISION not null,

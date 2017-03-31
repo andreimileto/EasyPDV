@@ -330,7 +330,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         cliente.setCidade(cidade);
         tfdCidade.setText(cliente.getCidade().getDescricao());
 
-        System.out.println(cliente.getCidade().getId() + "... id cidade");
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
@@ -376,6 +376,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {
         cliente.setId(0);
+        
         cliente.setCpfCnpj("");
         tfdId.setText("");
         tffCpfCnpj.setText("");

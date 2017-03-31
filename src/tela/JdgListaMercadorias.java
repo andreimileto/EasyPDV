@@ -28,6 +28,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         initComponents();
         this.merc = merc;
         popularComboBox();
+//        verificarTipoChamada();
         listarMercadorias();
     }
 
@@ -35,6 +36,13 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+    }
+    private void verificarTipoChamada() {
+        if (merc.getAtivo() == 'T') {
+            cbxStatus.setEnabled(false);
+        } else {
+            cbxStatus.setEditable(true);
+        }
     }
 
     private void popularComboBox() {

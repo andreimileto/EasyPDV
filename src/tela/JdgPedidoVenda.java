@@ -137,6 +137,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             }
         });
         tffQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tffQuantidadeKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tffQuantidadeKeyReleased(evt);
             }
@@ -156,6 +159,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         tffDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tffDescontoKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tffDescontoKeyReleased(evt);
             }
@@ -241,6 +247,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tfdRazaoSocial.setEditable(false);
 
         tffCpfCNPJ.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tffCpfCNPJFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tffCpfCNPJFocusLost(evt);
             }
@@ -503,7 +512,22 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showConfirmDialog(rootPane, "referencia...");
+        mercadoria.setDescricao("");
+        mercadoria.setId(0);
+        mercadoria.setReferencia("");
+        JdgListaMercadorias listaMercadoria = new JdgListaMercadorias(null, true,mercadoria);
+        listaMercadoria.setVisible(true);
+         
+            faturamentoItem.setMercadoria(mercadoria);
+            tfdReferencia.setText(faturamentoItem.getMercadoria().getReferencia());
+            tfdDescricao.setText(mercadoria.getDescricao());
+            faturamentoItem.setMercadoria(mercadoria);
+            faturamentoItem.setId(count);
+            faturamentoItem.setQuantidade(1.00);
+            faturamentoItem.setDesconto(0.00);
+            tffQuantidade.setText(String.valueOf(faturamentoItem.getQuantidade()));
+            tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()));
+            tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
         tffQuantidade.requestFocus();
 
 //        cidade.setAtivo('T');
@@ -528,6 +552,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
         
     }
+    
 
     private void listarMercadorias() {
         try {
@@ -593,8 +618,16 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         return dtm;
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane.showMessageDialog(rootPane, "foi");
-        tfdReferencia.requestFocus();
+        cliente.setId(0);
+        cliente.setRazaoSocial("");
+        cliente.setCpfCnpj("");
+        JdgListaCliente listaCliente = new JdgListaCliente(null, true, cliente, cid);
+        listaCliente.setVisible(true);
+            tffCpfCNPJ.setText(cliente.getCpfCnpj());
+            tfdId.setText(String.valueOf(cliente.getId()));
+            tfdRazaoSocial.setText(cliente.getRazaoSocial());
+            
+            tfdReferencia.requestFocus();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
@@ -636,7 +669,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         boolean ok = false;
         ClienteDAO cliDAO = new ClienteDAO();
         cliente.setCpfCnpj(tffCpfCNPJ.getText());
-
+        cliente.setAtivo('V');
+        cliente.setId(0);
         ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
         System.out.println("cpf cnpj..." + tffCpfCNPJ.getText());
         if (tffCpfCNPJ.getText().length() > 0) {
@@ -676,6 +710,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             tfdDescricao.setText(mercadoria.getDescricao());
             faturamentoItem.setMercadoria(mercadoria);
             faturamentoItem.setId(count);
+            faturamentoItem.setQuantidade(1.00);
+            faturamentoItem.setDesconto(0.00);
+            tffQuantidade.setText(String.valueOf(faturamentoItem.getQuantidade()));
+            tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()));
             tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
             System.out.println(mercadoria.getReferencia());
 
@@ -692,7 +730,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         boolean ok = false;
         MercadoriaDAO mercDAO = new MercadoriaDAO();
         mercadoria.setReferencia(tfdReferencia.getText());
-
+        mercadoria.setAtivo('V');
         ArrayList<Mercadoria> mercadorias = mercDAO.consultar(mercadoria);
 //        mercadoria.setReferencia("");
         if (tfdReferencia.getText().length() > 0) {
@@ -725,7 +763,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tffQuantidadeKeyReleased
     private void quantidadeItem() {
-        if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0) {
+        if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0.00) {
             faturamentoItem.setQuantidade(Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
             faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
             tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
@@ -781,6 +819,22 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private void tffQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffQuantidadeFocusLost
         quantidadeItem();
     }//GEN-LAST:event_tffQuantidadeFocusLost
+
+    private void tffCpfCNPJFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusGained
+        tffCpfCNPJ.requestFocus();
+    }//GEN-LAST:event_tffCpfCNPJFocusGained
+
+    private void tffQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyPressed
+         if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+             tffQuantidade.setText("");
+         }
+    }//GEN-LAST:event_tffQuantidadeKeyPressed
+
+    private void tffDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyPressed
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+             tffQuantidade.setText("");
+         }
+    }//GEN-LAST:event_tffDescontoKeyPressed
 
     private void acrecentarItem() {
         tfdReferencia.requestFocus();
