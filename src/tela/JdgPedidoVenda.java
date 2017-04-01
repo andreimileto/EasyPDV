@@ -16,7 +16,10 @@ import java.awt.Dimension;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -858,6 +861,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     private void tfdReferenciaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusGained
         try {
+            
             limparCampos();
         } catch (Exception ex) {
             Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -865,12 +869,22 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdReferenciaFocusGained
 
     private void tffTotalDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffTotalDescontoKeyReleased
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tffTotalDescontoKeyReleased
 
-    private void acrecentarItem() {
-        tfdReferencia.requestFocus();
+  
+
+    
+        public  String dataAtual() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        System.out.println(date);
+        return dateFormat.format(date);
+//        return dateFormat.format(Date.parse("2017-03-31 20:09:29".replace("-", "/")));
+
     }
+
+    
     /**
      * @param args the command line arguments
      */
