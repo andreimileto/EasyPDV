@@ -328,8 +328,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
         cliente.setCidade(cidade);
+        if (cliente.getCidade().getId() > 0) {
+            
+        
         tfdCidade.setText(cliente.getCidade().getDescricao());
-
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
