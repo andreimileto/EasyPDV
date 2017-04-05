@@ -323,16 +323,19 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxTipoItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        int auxIdCidade = cliente.getCidade().getId();
+        System.out.println(cliente.getCidade().getId()+"Id antes...");
         cidade.setAtivo('T');
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
         cliente.setCidade(cidade);
-        if (cliente.getCidade().getId() > 0) {
-            
-        
+        if (cliente.getCidade().getId() > 0) {       
+            System.out.println("entrou no if do id > 0");
         tfdCidade.setText(cliente.getCidade().getDescricao());
+        }else{
+            cidade.setId(auxIdCidade);
         }
+       
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -379,7 +382,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {
         cliente.setId(0);
-        
+        cidade.setId(0);
         cliente.setCpfCnpj("");
         tfdId.setText("");
         tffCpfCnpj.setText("");

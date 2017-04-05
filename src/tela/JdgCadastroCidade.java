@@ -178,6 +178,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
 
     private void limparcampos() {
         cidade.setAtivo(' ');
+        rbtAtivo.setSelected(true);
         tfdCodigo.setText("");
         tfdDescricao.setText("");
         tfdDescricao.requestFocus();
@@ -205,7 +206,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
 
         if (cidade.getId() > 0) {
             if (cidade.getAtivo() == 'T') {
-                rbtAtivo.isSelected();
+                rbtAtivo.setSelected(true);
 
             } else {
                 rbtAtivo.setSelected(false);

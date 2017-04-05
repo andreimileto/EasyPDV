@@ -133,7 +133,7 @@ public class ClienteDAO {
                 cliente.setCidade(cids);
                 cliente.getCidade().getDescricao();
                 if (resultado.getString("telefone").equals("null")) {
-                    System.out.println("entrou no if telefone");
+                    
                     cliente.setTelefone("");
                 } else {
                     cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
