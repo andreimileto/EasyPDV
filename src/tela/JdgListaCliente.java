@@ -191,6 +191,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblListaClientes.setFocusable(false);
         jScrollPane1.setViewportView(tblListaClientes);
 
         btnConfirmar.setText("Confirmar");

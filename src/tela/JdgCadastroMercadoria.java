@@ -268,7 +268,7 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             }
         } else {
 
-            JOptionPane.showMessageDialog(null, "Mercadoria já cadastrada ");
+            JOptionPane.showMessageDialog(null, "Referência de mercadoria já utilizado em outro cadastro");
 
 
         }

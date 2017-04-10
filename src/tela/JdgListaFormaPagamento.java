@@ -218,14 +218,14 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblFormaPagamento.setRowSelectionAllowed(false);
+        tblFormaPagamento.setFocusable(false);
         tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblFormaPagamentoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -227,13 +227,14 @@ public class JdgListaCidade extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblCidades.setFocusable(false);
         tblCidades.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblCidadesAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblCidades.addMouseListener(new java.awt.event.MouseAdapter() {

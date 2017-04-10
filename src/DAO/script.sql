@@ -1,7 +1,5 @@
 
----executar antes----
 
-create database easyPDV;
 
 ---------- SCRIPTS-----------
             

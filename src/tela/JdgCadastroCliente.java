@@ -377,7 +377,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Cliente já cadastrado!");
+            JOptionPane.showMessageDialog(null, "CPF/CNPJ do cliente já utilizado em outro cadastro");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
     private void limparCampos() {

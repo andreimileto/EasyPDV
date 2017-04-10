@@ -97,7 +97,7 @@
                 <Column editable="false" title="Ativo" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="tblFormaPagamentoAncestorAdded"/>

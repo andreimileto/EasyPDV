@@ -239,14 +239,14 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblMercadorias.setRowSelectionAllowed(false);
+        tblMercadorias.setFocusable(false);
         tblMercadorias.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblMercadoriasAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblMercadorias.addMouseListener(new java.awt.event.MouseAdapter() {
