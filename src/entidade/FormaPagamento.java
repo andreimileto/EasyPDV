@@ -13,6 +13,7 @@ public class FormaPagamento {
 
     private int id;
     private String descricao = "";
+    private char formaAvista;
     private char ativo;
 
     public int getId() {
@@ -37,6 +38,14 @@ public class FormaPagamento {
 
     public void setAtivo(char descricao) {
         this.ativo = descricao;
+    }
+
+    public char getFormaAvista() {
+        return formaAvista;
+    }
+
+    public void setFormaAvista(char formaAvista) {
+        this.formaAvista = formaAvista;
     }
 
 }

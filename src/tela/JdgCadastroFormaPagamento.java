@@ -30,7 +30,8 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         verificarCadastroSelecionado();
 
     }
-    private void popularGroupButton(){
+
+    private void popularGroupButton() {
         rbg.add(rbtAvista);
         rbg.add(rbtPrazo);
         rbtAvista.setSelected(true);
@@ -42,13 +43,22 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
 
             tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
             tfdDescricao.setText(formaPagamento.getDescricao());
+            System.out.println(formaPagamento.getAtivo());
+            System.out.println(formaPagamento.getFormaAvista()+".. prazo");
             if (formaPagamento.getAtivo() == 'T') {
                 rbtAtivo.setSelected(true);
 
             } else {
                 rbtAtivo.setSelected(false);
             }
+            System.out.println("ativo"+ formaPagamento.getAtivo());
+            if (formaPagamento.getFormaAvista() == 'T') {
+                rbtAvista.setSelected(true);
 
+            } else if (formaPagamento.getFormaAvista() == 'F')  {
+                rbtPrazo.setSelected(true);
+            }
+            
         }
     }
 
@@ -78,25 +88,33 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         setTitle("EasyPDV - Cadastro Forma pagamento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro forma de Pagamento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Código");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 33, -1, -1));
 
         tfdCodigo.setEnabled(false);
+        jPanel1.add(tfdCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 71, -1));
 
         tfdDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfdDescricaoActionPerformed(evt);
             }
         });
+        jPanel1.add(tfdDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 268, -1));
 
         jLabel2.setText("Descrição*");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 64, -1, -1));
 
         rbtAvista.setText("Avista");
+        jPanel1.add(rbtAvista, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 88, -1, -1));
 
         rbtPrazo.setText("Prazo");
+        jPanel1.add(rbtPrazo, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 88, -1, -1));
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
+        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
@@ -105,6 +123,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnLocalizarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnLocalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -113,6 +132,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, -1, -1));
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -121,65 +141,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnSairActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(rbtAtivo)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(btnLocalizar)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnSalvar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(rbtAvista)
-                                .addGap(12, 12, 12)
-                                .addComponent(rbtPrazo)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtAvista)
-                    .addComponent(rbtPrazo)
-                    .addComponent(rbtAtivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSair)
-                        .addComponent(btnSalvar))
-                    .addComponent(btnLocalizar))
-                .addContainerGap())
-        );
+        jPanel1.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 79, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,14 +149,14 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -203,24 +165,26 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+
         try {
-            if (verificarCadastrado()) {         
-                
-                
-                if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length()>0) {
+            if (verificarCadastrado()) {
+
+                if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length() > 0) {
                     formaPagamento.setDescricao(tfdDescricao.getText());
                     if (rbtAtivo.isSelected()) {
                         formaPagamento.setAtivo('T');
                     } else {
                         formaPagamento.setAtivo('F');
                     }
-                    if (rbtAtivo.isSelected()) {
-                        System.out.println("T");
-                    }else{
-                        System.out.println("F");
+                    if (rbtAvista.isSelected()) {
+                        formaPagamento.setFormaAvista('T');
+                    } else if (rbtPrazo.isSelected()) {
+                        formaPagamento.setFormaAvista('F');
                     }
+ 
+                        
                     
+
                     FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
                     if (formaPagamentoDAO.salvar(formaPagamento)) {
                         limparCampos();
@@ -234,7 +198,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Erro ao salvar Forma de pagamento \n"
                             + "Descrição da forma de pagamento em branco ou maior que 150 caracteres");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar Forma de pagamento: \n"
                         + "Forma de pagamento já cadastrada");
                 tfdDescricao.requestFocus();
@@ -243,7 +207,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             Logger.getLogger(JdgCadastroFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
-     private boolean verificarCadastrado() throws SQLException {
+    private boolean verificarCadastrado() throws SQLException {
 
         FormaPagamentoDAO formDAO = new FormaPagamentoDAO();
         formaPagamento.setDescricao(tfdDescricao.getText());
@@ -252,7 +216,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         if (formaPagamento.getId() == 0) {
 
             if (formas.size() > 0) {
-                
+
                 if (tfdDescricao.getText().equalsIgnoreCase(formas.get(0).getDescricao())) {
                     System.out.println("false");
                     System.out.println(formaPagamento.getDescricao());
@@ -262,12 +226,12 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                     System.out.println(formaPagamento.getDescricao());
                     return true;
                 }
-                
+
             }
         }
         return true;
     }
-    
+
     private void limparCampos() {
         formaPagamento.setAtivo(' ');
         rbtAtivo.setSelected(true);
@@ -275,6 +239,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         tfdDescricao.setText("");
         tfdDescricao.requestFocus();
         formaPagamento.setId(0);
+        rbtAvista.setSelected(true);
     }
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
@@ -285,6 +250,8 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdDescricaoActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+        String auxFormaPagamento = tfdDescricao.getText();
+        
         JdgListaFormaPagamento listaFormaPagamento;
         try {
             listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
@@ -292,9 +259,13 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(JdgCadastroFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
         verificarCadastroSelecionado();
-        
+        if (tfdDescricao.getText().length() < 1) {
+            tfdDescricao.setText(auxFormaPagamento);
+        }
+
         tfdDescricao.requestFocus();
 
     }//GEN-LAST:event_btnLocalizarActionPerformed

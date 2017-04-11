@@ -45,6 +45,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             tblFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(270);
             tblFormaPagamento.getColumnModel().getColumn(2).setPreferredWidth(1);
+            tblFormaPagamento.getColumnModel().getColumn(3).setPreferredWidth(1);
 
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,18 +71,25 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         ArrayList<FormaPagamento> formas = fpDAO.consultar(fp);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("FORMA");
         dtm.addColumn("SITUAÇÃO");
 
         for (int i = 0; i < formas.size(); i++) {
             //popular tabela
-            String result = "";
+            String resultAtivo = "";
+            String resultPrazo = "";
             if (String.valueOf(formas.get(i).getAtivo()).equalsIgnoreCase("T")) {
-                result = "Ativo";
+                resultAtivo = "Ativo";
             } else {
-                result = "Inativo";
+                resultAtivo = "Inativo";
+            }
+            if (String.valueOf(formas.get(i).getFormaAvista()).equalsIgnoreCase("T")) {
+                resultPrazo = "Avista";
+            }else{
+                resultPrazo = "Prazo";
             }
             dtm.addRow(new String[]{String.valueOf(formas.get(i).getId()),
-                formas.get(i).getDescricao(), result});
+                formas.get(i).getDescricao(),resultPrazo, resultAtivo});
         }
 //retorna o modelo
         return dtm;
@@ -221,12 +229,12 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         });
         tblFormaPagamento.setFocusable(false);
         tblFormaPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tblFormaPagamentoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tblFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -283,31 +291,30 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 22, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67))))
+                .addContainerGap(56, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
             .addGroup(layout.createSequentialGroup()
                 .addGap(173, 173, 173)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,9 +327,9 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
                     .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmar)
                     .addComponent(btnSair))
@@ -397,7 +404,14 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         //seta o ID do objeto da linha selecionada
         this.fp.setId(Integer.parseInt(tblFormaPagamento.getValueAt(row, 0).toString()));
         this.fp.setDescricao(tblFormaPagamento.getValueAt(row, 1).toString());
-        if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Ativo")) {
+        if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Avista")) {
+            this.fp.setFormaAvista('T');
+            System.out.println("entrou no if do avista");
+        } else  if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Prazo")){
+            this.fp.setFormaAvista('F');
+            System.out.println("entrou no if do prazo");
+        }
+        if (tblFormaPagamento.getValueAt(row, 3).toString().equals("Ativo")) {
             this.fp.setAtivo('T');
         } else {
             this.fp.setAtivo('F');

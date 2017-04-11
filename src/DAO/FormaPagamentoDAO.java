@@ -28,11 +28,14 @@ public class FormaPagamentoDAO {
             if (fp.getId() == 0) {
                 String sql = "INSERT INTO forma_pagamento VALUES ("
                         + "DEFAULT," + "'" + fp.getDescricao() + "',"
+                        +"'" + fp.getFormaAvista() + "',"
                         + "'" + fp.getAtivo() + "'"
                         + ")";
+                System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
             } else {
                 String sql = "UPDATE forma_pagamento set descricao='" + fp.getDescricao()
+                        +"', forma_avista = '" + fp.getFormaAvista()
                         + "', ativo ='" + fp.getAtivo()
                         + "' where id =" + fp.getId();
 
@@ -60,7 +63,9 @@ public class FormaPagamentoDAO {
                     FormaPagamento fp = new FormaPagamento();
                     fp.setId(resultado.getInt("id"));
                     fp.setDescricao(resultado.getString("descricao"));
+                    fp.setFormaAvista(resultado.getString("forma_avista").charAt(0));
                     fp.setAtivo(resultado.getString("ativo").charAt(0));
+                    
                     formasPagamento.add(fp);
                 }
             } catch (Exception e) {
@@ -77,6 +82,7 @@ public class FormaPagamentoDAO {
                     FormaPagamento fp = new FormaPagamento();
                     fp.setId(resultado.getInt("id"));
                     fp.setDescricao(resultado.getString("descricao"));
+                    fp.setFormaAvista(resultado.getString("forma_avista").charAt(0));
                     fp.setAtivo(resultado.getString("ativo").charAt(0));
                     formasPagamento.add(fp);
                 }

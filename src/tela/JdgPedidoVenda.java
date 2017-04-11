@@ -644,6 +644,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         return dtm;
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println("char ativo cliente... "+cliente.getAtivo());
         cliente.setId(0);
         cliente.setRazaoSocial("");
         cliente.setCpfCnpj("");

@@ -44,6 +44,7 @@
 
             CREATE TABLE forma_pagamento( id serial not null,
                          descricao VARCHAR(100) not null,
+                         forma_avista CHAR(1) NOT NULL,
                          ativo CHAR(1) not null,
                          constraint pkforma_pagamento primary key (id)
                          );

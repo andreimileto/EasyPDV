@@ -40,10 +40,23 @@ public class JdgListaCliente extends javax.swing.JDialog {
         initComponents();
         this.cliente = cliente;
         this.cid = cid;
+        System.out.println("ativo cliente na listaaaa" + cliente.getAtivo());
         popularComboBox();
-        
+        verificarTipoChamada();
         listarClientes();
 
+    }
+    
+        private void verificarTipoChamada() {
+            System.out.println("ativo cliente na lista" + cliente.getAtivo());
+        if (cliente.getAtivo() == 'V') {
+            cbxStatus.setEnabled(false);
+            System.out.println("ativo cliente na lista" + cliente.getAtivo());
+            btnConfirmar.setText("Selecionar");
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+        } else {
+            cbxStatus.setEditable(true);
+        }
     }
 
     private void popularComboBox() {
