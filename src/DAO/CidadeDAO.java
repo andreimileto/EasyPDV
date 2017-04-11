@@ -9,6 +9,7 @@ import apoio.ConexaoBD;
 import entidade.Cidade;
 import entidade.FormaPagamento;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class CidadeDAO {
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
-                        + "where lower (descricao) like '" + cid.getDescricao() + "%'"
+                        + "where descricao ilike '" + cid.getDescricao() + "%'"
                         + "and ativo = '" + cid.getAtivo() + "' order by id";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
@@ -70,12 +71,12 @@ public class CidadeDAO {
             } catch (Exception e) {
                 System.out.println("Erro ao consultar cidades " + e);
             }
-        } else {
+        }else {
 
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  cidade "
-                        + "where lower (descricao) like '" + cid.getDescricao() + "%' order by id";
+                        + "where  descricao ilike '" + cid.getDescricao() + "%' order by id";
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Cidade cidade = new Cidade();

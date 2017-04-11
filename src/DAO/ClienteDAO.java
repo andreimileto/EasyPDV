@@ -66,7 +66,7 @@ public class ClienteDAO {
         if (cli.getId() == 0) {
 
             if (cli.getAtivo() == 'T' || cli.getAtivo() == 'F') {
-
+                
                 sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
                         + "from cliente c, cidade cid "
@@ -75,6 +75,7 @@ public class ClienteDAO {
                         + " and cid.id = c.id_cidade and c.ativo ='" + cli.getAtivo() + "' order by c.razao_social";
                 System.out.println("consulta T ou F..."+sql);
 
+                //consulta cadastrado
             } else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "" && cli.getAtivo() == ' ') {
                 sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "

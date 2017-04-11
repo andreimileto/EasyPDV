@@ -6,10 +6,15 @@
 package tela;
 
 import DAO.CidadeDAO;
+import DAO.ClienteDAO;
 import DAO.FormaPagamentoDAO;
 import entidade.Cidade;
+import entidade.Cliente;
 import entidade.FormaPagamento;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,7 +49,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
         btnLocalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Forma pagamento - EasyPDV");
+        setTitle("EasyPDV - Cadastro Cidade");
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -111,13 +116,13 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtAtivo)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -150,31 +155,70 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
-        if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length() > 0) {
-
-            cidade.setDescricao(tfdDescricao.getText());
-
-            if (rbtAtivo.isSelected()) {
-                cidade.setAtivo('T');
-            } else {
-                cidade.setAtivo('F');
+        try {
+            if (verificarCadastrado()) {
+                
+                if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length() > 0) {
+                    
+                    cidade.setDescricao(tfdDescricao.getText());
+                    
+                    if (rbtAtivo.isSelected()) {
+                        cidade.setAtivo('T');
+                    } else {
+                        cidade.setAtivo('F');
+                    }
+                    
+                    CidadeDAO cidadeDAO = new CidadeDAO();
+                    
+                    if (cidadeDAO.salvar(cidade)) {
+                        limparcampos();
+                        JOptionPane.showMessageDialog(null, "Cidade Salva com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
+                    }
+                } else {
+                    tfdDescricao.setText("");
+                    tfdDescricao.requestFocus();
+                     JOptionPane.showMessageDialog(null, "Erro ao salvar Cidade \n"
+                            + "Descrição da cidade em branco ou maior que 150 caracteres");
+                    
+                }
+            }else{
+                tfdDescricao.requestFocus();
+                JOptionPane.showMessageDialog(null, "Erro ao salvar Cidade: \n"
+                            + "Descrição da mercadoria em branco ou maior que 150 caracteres");
             }
-
-            CidadeDAO cidadeDAO = new CidadeDAO();
-
-            if (cidadeDAO.salvar(cidade)) {
-                limparcampos();
-                JOptionPane.showMessageDialog(null, "Cidade Salva com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
-            }
-        } else {
-            tfdDescricao.setText("");
-            tfdDescricao.requestFocus();
-            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150 e o mínimo é 1");
+        } catch (SQLException ex) {
+            Logger.getLogger(JdgCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+       
+            
+        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private boolean verificarCadastrado() throws SQLException {
+
+        CidadeDAO cidDAO = new CidadeDAO();
+        cidade.setDescricao(tfdDescricao.getText());
+
+        ArrayList<Cidade> cidades = cidDAO.consultar(cidade);
+        if (cidade.getId() == 0) {
+
+            if (cidades.size() > 0) {
+
+                if (tfdDescricao.getText().equalsIgnoreCase(cidades.get(0).getDescricao())) {
+                    System.out.println("false");
+                    return false;
+                } else {
+                    System.out.println("true");
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
 
     private void limparcampos() {
         cidade.setAtivo(' ');
@@ -183,6 +227,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
         tfdDescricao.setText("");
         tfdDescricao.requestFocus();
         cidade.setId(0);
+        cidade.setDescricao("");
     }
 
 
@@ -195,6 +240,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdDescricaoActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
+
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
 

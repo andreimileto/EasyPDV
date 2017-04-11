@@ -90,7 +90,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         dtm.addColumn("CIDADE");
         dtm.addColumn("ENDERECO");
         dtm.addColumn("TELEFONE");
-        dtm.addColumn("STATUS");
+        dtm.addColumn("SITUAÇÃO");
 
         for (int i = 0; i < clientes.size(); i++) {
             //popular tabela
@@ -161,6 +161,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Lista de clientes");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
@@ -194,7 +195,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         tblListaClientes.setFocusable(false);
         jScrollPane1.setViewportView(tblListaClientes);
 
-        btnConfirmar.setText("Confirmar");
+        btnConfirmar.setText("Editar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -227,7 +228,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
                 .addContainerGap(481, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnConfirmar)
+                .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))

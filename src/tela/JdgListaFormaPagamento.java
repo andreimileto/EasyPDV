@@ -70,7 +70,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         ArrayList<FormaPagamento> formas = fpDAO.consultar(fp);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
-        dtm.addColumn("STATUS");
+        dtm.addColumn("SITUAÇÃO");
 
         for (int i = 0; i < formas.size(); i++) {
             //popular tabela
@@ -102,6 +102,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Lista formas de pagamento");
 
         tblFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -245,7 +246,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("Lista Formas de pagamento");
 
-        btnConfirmar.setText("Confirmar");
+        btnConfirmar.setText("Editar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -283,17 +284,17 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(334, Short.MAX_VALUE)
-                .addComponent(btnConfirmar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 22, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

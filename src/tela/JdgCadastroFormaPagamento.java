@@ -5,8 +5,11 @@
  */
 package tela;
 
+import DAO.CidadeDAO;
 import DAO.FormaPagamentoDAO;
+import entidade.Cidade;
 import entidade.FormaPagamento;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +26,14 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     public JdgCadastroFormaPagamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        popularGroupButton();
         verificarCadastroSelecionado();
 
+    }
+    private void popularGroupButton(){
+        rbg.add(rbtAvista);
+        rbg.add(rbtPrazo);
+        rbtAvista.setSelected(true);
     }
 
     private void verificarCadastroSelecionado() {
@@ -52,20 +61,50 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        rbg = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        tfdCodigo = new javax.swing.JTextField();
+        tfdDescricao = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        rbtAvista = new javax.swing.JRadioButton();
+        rbtPrazo = new javax.swing.JRadioButton();
+        rbtAtivo = new javax.swing.JRadioButton();
+        btnLocalizar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        rbtAtivo = new javax.swing.JRadioButton();
-        tfdDescricao = new javax.swing.JTextField();
-        tfdCodigo = new javax.swing.JTextField();
-        btnLocalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Forma pagamento - EasyPDV");
+        setTitle("EasyPDV - Cadastro Forma pagamento");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro forma de Pagamento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
+
+        jLabel1.setText("Código");
+
+        tfdCodigo.setEnabled(false);
+
+        tfdDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfdDescricaoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Descrição*");
+
+        rbtAvista.setText("Avista");
+
+        rbtPrazo.setText("Prazo");
+
+        rbtAtivo.setSelected(true);
+        rbtAtivo.setText("Ativo");
+
+        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
+        btnLocalizar.setText("Localizar");
+        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocalizarActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -83,84 +122,80 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel3.setText("Cadastro forma de pagamento");
-
-        jLabel1.setText("Código");
-
-        jLabel2.setText("Descrição");
-
-        rbtAtivo.setSelected(true);
-        rbtAtivo.setText("Ativo");
-
-        tfdDescricao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfdDescricaoActionPerformed(evt);
-            }
-        });
-
-        tfdCodigo.setEnabled(false);
-
-        btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
-        btnLocalizar.setText("Localizar");
-        btnLocalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLocalizarActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rbtAtivo)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(btnLocalizar)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(rbtAvista)
+                                .addGap(12, 12, 12)
+                                .addComponent(rbtPrazo)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbtAvista)
+                    .addComponent(rbtPrazo)
+                    .addComponent(rbtAtivo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSair)
+                        .addComponent(btnSalvar))
+                    .addComponent(btnLocalizar))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnLocalizar)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnSalvar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair)
-                .addGap(16, 16, 16))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtAtivo)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfdDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtAtivo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSair)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvar)
-                        .addComponent(btnLocalizar)))
-                .addGap(11, 11, 11))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -168,26 +203,71 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length()>0) {
-            formaPagamento.setDescricao(tfdDescricao.getText());
-            if (rbtAtivo.isSelected()) {
-                formaPagamento.setAtivo('T');
-            } else {
-                formaPagamento.setAtivo('F');
+        
+        try {
+            if (verificarCadastrado()) {         
+                
+                
+                if (tfdDescricao.getText().length() <= 150 && tfdDescricao.getText().length()>0) {
+                    formaPagamento.setDescricao(tfdDescricao.getText());
+                    if (rbtAtivo.isSelected()) {
+                        formaPagamento.setAtivo('T');
+                    } else {
+                        formaPagamento.setAtivo('F');
+                    }
+                    if (rbtAtivo.isSelected()) {
+                        System.out.println("T");
+                    }else{
+                        System.out.println("F");
+                    }
+                    
+                    FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
+                    if (formaPagamentoDAO.salvar(formaPagamento)) {
+                        limparCampos();
+                        JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
+                    }
+                } else {
+                    tfdDescricao.setText("");
+                    tfdDescricao.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar Forma de pagamento \n"
+                            + "Descrição da forma de pagamento em branco ou maior que 150 caracteres");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro ao salvar Forma de pagamento: \n"
+                        + "Forma de pagamento já cadastrada");
+                tfdDescricao.requestFocus();
             }
-            FormaPagamentoDAO formaPagamentoDAO = new FormaPagamentoDAO();
-            if (formaPagamentoDAO.salvar(formaPagamento)) {
-                limparCampos();
-                JOptionPane.showMessageDialog(null, "Forma de Pagamento Salva com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o registro");
-            }
-        } else {
-            tfdDescricao.setText("");
-            tfdDescricao.requestFocus();
-            JOptionPane.showMessageDialog(null, "O tamanho máximo de caracteres na descrição é de 150 e o mínimo é 1");
+        } catch (SQLException ex) {
+            Logger.getLogger(JdgCadastroFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+     private boolean verificarCadastrado() throws SQLException {
+
+        FormaPagamentoDAO formDAO = new FormaPagamentoDAO();
+        formaPagamento.setDescricao(tfdDescricao.getText());
+
+        ArrayList<FormaPagamento> formas = formDAO.consultar(formaPagamento);
+        if (formaPagamento.getId() == 0) {
+
+            if (formas.size() > 0) {
+                
+                if (tfdDescricao.getText().equalsIgnoreCase(formas.get(0).getDescricao())) {
+                    System.out.println("false");
+                    System.out.println(formaPagamento.getDescricao());
+                    return false;
+                } else {
+                    System.out.println("true");
+                    System.out.println(formaPagamento.getDescricao());
+                    return true;
+                }
+                
+            }
+        }
+        return true;
+    }
+    
     private void limparCampos() {
         formaPagamento.setAtivo(' ');
         rbtAtivo.setSelected(true);
@@ -266,12 +346,13 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
     private javax.swing.JButton btnLocalizar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.ButtonGroup rbg;
     private javax.swing.JRadioButton rbtAtivo;
+    private javax.swing.JRadioButton rbtAvista;
+    private javax.swing.JRadioButton rbtPrazo;
     private javax.swing.JTextField tfdCodigo;
     private javax.swing.JTextField tfdDescricao;
     // End of variables declaration//GEN-END:variables

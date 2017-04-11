@@ -79,7 +79,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
         ArrayList<Cidade> cidades = cidadeDAO.consultar(cidade);
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
-        dtm.addColumn("STATUS");
+        dtm.addColumn("SITUAÇÃO");
 
         for (int i = 0; i < cidades.size(); i++) {
             //popular tabela
@@ -111,6 +111,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
         cbxStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Lista de cidades");
 
         tblCidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -254,7 +255,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("Lista de Cidades");
 
-        btnConfirmar.setText("Confirmar");
+        btnConfirmar.setText("Editar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -299,7 +300,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(28, 28, 28))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btnConfirmar)
+                            .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(36, 36, 36)))

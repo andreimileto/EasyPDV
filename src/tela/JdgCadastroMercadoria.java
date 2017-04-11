@@ -77,8 +77,9 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
         rbtAtivo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Cadastro mercadoria");
 
-        lblCodigo.setText("Código*");
+        lblCodigo.setText("Código");
 
         tfdCodigo.setEditable(false);
 

@@ -85,7 +85,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         dtm.addColumn("ESTOQUE");
         dtm.addColumn("CUSTO");
         dtm.addColumn("VENDA");
-        dtm.addColumn("STATUS");
+        dtm.addColumn("SITUAÇÃO");
 
         for (int i = 0; i < mercs.size(); i++) {
             //popular tabela
@@ -123,6 +123,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         tfdReferencia = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Lista de mercadorias");
 
         tblMercadorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,7 +267,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));
         jLabel1.setText("Lista de mercadorias");
 
-        btnConfirmar.setText("Confirmar");
+        btnConfirmar.setText("Editar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -291,7 +292,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Status:");
+        jLabel2.setText("Situação:");
 
         jLabel3.setText("Referência:");
 
@@ -318,7 +319,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnConfirmar)
+                        .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36))

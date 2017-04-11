@@ -58,6 +58,7 @@ public class Senha extends javax.swing.JFrame {
         lblValidacaologin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EasyPDV - Login");
 
         jLabel1.setText("Usuário:");
 
