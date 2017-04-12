@@ -91,6 +91,7 @@ public class MercadoriaDAO {
                 merc.setPrecoVenda(resultado.getDouble("preco_venda"));
                 merc.setAtivo(resultado.getString("ativo").charAt(0));
                 mercadorias.add(merc);
+                System.out.println("while DAO = "+merc.getReferencia());
             }
         } catch (Exception e) {
             System.out.println("Erro ao consultar Mercadoria " + e);

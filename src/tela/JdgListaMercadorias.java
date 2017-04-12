@@ -27,9 +27,22 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.merc = merc;
+        verificarTipoChamada();
         popularComboBox();
-//        verificarTipoChamada();
+
         listarMercadorias();
+    }
+
+    private void verificarTipoChamada() {
+
+        if (merc.getAtivo() == 'T') {
+            cbxStatus.setEnabled(false);
+
+            btnConfirmar.setText("Selecionar");
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+        } else {
+            cbxStatus.setEditable(true);
+        }
     }
 
     public JdgListaMercadorias(java.awt.Frame parent, boolean modal) {
@@ -37,13 +50,14 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
         initComponents();
 
     }
-    private void verificarTipoChamada() {
-        if (merc.getAtivo() == 'T') {
-            cbxStatus.setEnabled(false);
-        } else {
-            cbxStatus.setEditable(true);
-        }
-    }
+//
+//    private void verificarTipoChamada() {
+//        if (merc.getAtivo() == 'T') {
+//            cbxStatus.setEnabled(false);
+//        } else {
+//            cbxStatus.setEditable(true);
+//        }
+//    }
 
     private void popularComboBox() {
 

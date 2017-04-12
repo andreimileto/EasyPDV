@@ -41,15 +41,17 @@ public class JdgListaCliente extends javax.swing.JDialog {
         this.cliente = cliente;
         this.cid = cid;
         System.out.println("ativo cliente na listaaaa" + cliente.getAtivo());
-        popularComboBox();
         verificarTipoChamada();
+        popularComboBox();
+        System.out.println("ativo cliente na listaaaa depois do popular" + cliente.getAtivo());
+        
         listarClientes();
 
     }
-    
-        private void verificarTipoChamada() {
-            System.out.println("ativo cliente na lista" + cliente.getAtivo());
-        if (cliente.getAtivo() == 'V') {
+
+    private void verificarTipoChamada() {
+        System.out.println("ativo cliente na lista" + cliente.getAtivo());
+        if (cliente.getAtivo() == 'T') {
             cbxStatus.setEnabled(false);
             System.out.println("ativo cliente na lista" + cliente.getAtivo());
             btnConfirmar.setText("Selecionar");
@@ -60,10 +62,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
     }
 
     private void popularComboBox() {
+        System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
         cbxStatus.addItem("Todos");
-
+        System.out.println("ativo cliente na listaaaa popular fim" + cliente.getAtivo());
     }
 
     private void listarClientes() {
@@ -142,7 +145,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
         cliente.setRazaoSocial(clientes.get(0).getRazaoSocial());
         cliente.setCpfCnpj(clientes.get(0).getCpfCnpj());
         cliente.setTipoCadastro(clientes.get(0).getTipoCadastro());
-
 
         System.out.println("cidade id..." + cliente.getCidade().getId());
 
@@ -281,16 +283,18 @@ public class JdgListaCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void cbxStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxStatusItemStateChanged
-        if (cbxStatus.getSelectedIndex()==0) {
+        listar();
+    }//GEN-LAST:event_cbxStatusItemStateChanged
+    private void listar() {
+        if (cbxStatus.getSelectedIndex() == 0) {
             cliente.setAtivo('T');
-        }else if (cbxStatus.getSelectedIndex()==1) {
+        } else if (cbxStatus.getSelectedIndex() == 1) {
             cliente.setAtivo('F');
-        }else{
-         cliente.setAtivo(' ');
+        } else {
+            cliente.setAtivo(' ');
         }
         listarClientes();
-    }//GEN-LAST:event_cbxStatusItemStateChanged
-
+    }
     private void tfdFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdFiltroKeyReleased
         cliente.setCpfCnpj(tfdFiltro.getText());
         cliente.setRazaoSocial(tfdFiltro.getText());

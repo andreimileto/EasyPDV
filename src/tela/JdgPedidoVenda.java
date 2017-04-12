@@ -9,6 +9,7 @@ import DAO.ClienteDAO;
 import DAO.MercadoriaDAO;
 import entidade.Cidade;
 import entidade.Cliente;
+import entidade.Faturamento;
 import entidade.FaturamentoItem;
 import entidade.Mercadoria;
 import java.awt.Color;
@@ -36,6 +37,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     Mercadoria mercadoria = new Mercadoria();
     FaturamentoItem faturamentoItem = new FaturamentoItem();
+    Faturamento faturamento = new Faturamento();
     int count = 1;
     ArrayList<FaturamentoItem> mercs = new ArrayList<>();
     
@@ -87,7 +89,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tfdRazaoSocial = new javax.swing.JTextField();
         tffCpfCNPJ = new javax.swing.JFormattedTextField();
         lblCpfCnpj = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         tfdId = new javax.swing.JTextField();
@@ -168,6 +170,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         tffDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tffDescontoKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tffDescontoKeyReleased(evt);
             }
@@ -303,18 +308,18 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         lblCpfCnpj.setText("CPF/CNPJ");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
-        jButton2.setMnemonic('c');
-        jButton2.setText("Cliente");
-        jButton2.setActionCommand("C");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
+        btnCliente.setMnemonic('c');
+        btnCliente.setText("Cliente");
+        btnCliente.setActionCommand("C");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnClienteActionPerformed(evt);
             }
         });
-        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton2KeyPressed(evt);
+                btnClienteKeyPressed(evt);
             }
         });
 
@@ -358,7 +363,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                                     .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
+                                    .addComponent(btnCliente)
                                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
@@ -386,7 +391,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton8)))
                         .addGap(5, 5, 5)))
@@ -420,6 +425,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
         jButton7.setText("Cancelar Item");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -540,6 +550,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         mercadoria.setDescricao("");
         mercadoria.setId(0);
         mercadoria.setReferencia("");
+        mercadoria.setAtivo('T');
         JdgListaMercadorias listaMercadoria = new JdgListaMercadorias(null, true,mercadoria);
         listaMercadoria.setVisible(true);
          
@@ -643,11 +654,12 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         System.out.println("char ativo cliente... "+cliente.getAtivo());
         cliente.setId(0);
         cliente.setRazaoSocial("");
         cliente.setCpfCnpj("");
+        cliente.setAtivo('T');
         JdgListaCliente listaCliente = new JdgListaCliente(null, true, cliente, cid);
         listaCliente.setVisible(true);
             tffCpfCNPJ.setText(cliente.getCpfCnpj());
@@ -655,13 +667,13 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             tfdRazaoSocial.setText(cliente.getRazaoSocial());
             
             tfdReferencia.requestFocus();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnClienteActionPerformed
 
-    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+    private void btnClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnClienteKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             JOptionPane.showMessageDialog(null, "Pressionou F1!");
         }
-    }//GEN-LAST:event_jButton2KeyPressed
+    }//GEN-LAST:event_btnClienteKeyPressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         dispose();
@@ -812,6 +824,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             try {
                 
                 acrescentarDesconto();
+                
             } catch (Exception ex) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -822,11 +835,18 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             faturamentoItem.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
             faturamentoItem.setValorTotal(Double.parseDouble(tffValorTotal.getText()) - faturamentoItem.getDesconto());
             tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
-            
+            atualizarFaturamento();
             listarMercadorias();
             limparCampos();
             tfdReferencia.requestFocus();
         }
+    }
+    
+    private void atualizarFaturamento(){
+        faturamento.setValorTotal(faturamento.getValorTotal()+faturamentoItem.getValorTotal());
+        faturamento.setDesconto(faturamento.getDesconto()+faturamentoItem.getDesconto());
+        tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".",","));
+        tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".",","));
     }
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -838,7 +858,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJActionPerformed
 
     private void tfdReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusLost
-        confirmarReferenciaMercadoria();
+        
     }//GEN-LAST:event_tfdReferenciaFocusLost
 
     private void tffCpfCNPJFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusLost
@@ -873,6 +893,40 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         
     }//GEN-LAST:event_tffTotalDescontoKeyReleased
 
+    private void tffDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyPressed
+                 if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB 
+                 && tffDesconto.getText().equals("0,0")) {
+             tffDesconto.setText("");
+         }
+    }//GEN-LAST:event_tffDescontoKeyPressed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+selecionado();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+        private void selecionado() {
+
+        //pega a linha selecionada
+        int row = tblMercadorias.getSelectedRow();
+
+        mercs.remove(row);
+        tblMercadorias.remove(row);
+        listarMercadorias();
+        //seta o ID do objeto da linha selecionada
+//        this.merc.setId(Integer.parseInt(tblMercadorias.getValueAt(row, 0).toString()));
+//        this.merc.setReferencia(tblMercadorias.getValueAt(row, 1).toString());
+//        this.merc.setDescricao(tblMercadorias.getValueAt(row, 2).toString());
+//        this.merc.setEstoque(Double.parseDouble(tblMercadorias.getValueAt(row, 3).toString()));
+//        this.merc.setPrecoCusto(Double.parseDouble(tblMercadorias.getValueAt(row, 4).toString()));
+//        this.merc.setPrecoVenda(Double.parseDouble(tblMercadorias.getValueAt(row, 5).toString()));
+//        if (tblMercadorias.getValueAt(row, 6).toString().equals("Ativo")) {
+//            this.merc.setAtivo('T');
+//        } else {
+//            this.merc.setAtivo('F');
+//        }
+//
+//        dispose();
+    }
   
 
     
@@ -892,9 +946,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
