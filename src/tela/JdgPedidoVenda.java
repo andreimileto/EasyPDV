@@ -40,8 +40,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     Faturamento faturamento = new Faturamento();
     int count = 1;
     ArrayList<FaturamentoItem> mercs = new ArrayList<>();
-    
-    
+
     /**
      * Creates new form JdgPedidoVenda
      */
@@ -51,7 +50,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 //        initialize();
 
         listarMercadorias();
-        
+
         tffCpfCNPJ.requestFocus();
     }
 
@@ -98,7 +97,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnCancelarItem = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMercadorias = new javax.swing.JTable();
@@ -423,11 +422,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             }
         });
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
-        jButton7.setText("Cancelar Item");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
+        btnCancelarItem.setText("Cancelar Item");
+        btnCancelarItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnCancelarItemActionPerformed(evt);
             }
         });
 
@@ -452,7 +451,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7)))
+                        .addComponent(btnCancelarItem)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -465,7 +464,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmar)
-                    .addComponent(jButton7))
+                    .addComponent(btnCancelarItem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addGap(27, 27, 27)
@@ -551,19 +550,19 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         mercadoria.setId(0);
         mercadoria.setReferencia("");
         mercadoria.setAtivo('T');
-        JdgListaMercadorias listaMercadoria = new JdgListaMercadorias(null, true,mercadoria);
+        JdgListaMercadorias listaMercadoria = new JdgListaMercadorias(null, true, mercadoria);
         listaMercadoria.setVisible(true);
-         
-            faturamentoItem.setMercadoria(mercadoria);
-            tfdReferencia.setText(faturamentoItem.getMercadoria().getReferencia());
-            tfdDescricao.setText(mercadoria.getDescricao());
-            faturamentoItem.setMercadoria(mercadoria);
-            faturamentoItem.setId(count);
-            faturamentoItem.setQuantidade(1.00);
-            faturamentoItem.setDesconto(0.00);
-            tffQuantidade.setText(String.valueOf(faturamentoItem.getQuantidade()));
-            tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()));
-            tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
+
+        faturamentoItem.setMercadoria(mercadoria);
+        tfdReferencia.setText(faturamentoItem.getMercadoria().getReferencia());
+        tfdDescricao.setText(mercadoria.getDescricao());
+        faturamentoItem.setMercadoria(mercadoria);
+        faturamentoItem.setId(count);
+        faturamentoItem.setQuantidade(1.00);
+        faturamentoItem.setDesconto(0.00);
+        tffQuantidade.setText(String.valueOf(faturamentoItem.getQuantidade()));
+        tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()));
+        tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
         tffQuantidade.requestFocus();
 
 //        cidade.setAtivo('T');
@@ -587,9 +586,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()).replace(".", ","));
         tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()).replace(".", ","));
         tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()).replace(".", ","));
-        
+
     }
-    
 
     private void listarMercadorias() {
         try {
@@ -626,16 +624,13 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         dtm.addColumn("$UNITÁRIO");
         dtm.addColumn("$DESCONTO");
         dtm.addColumn("$TOTAL");
-        
-        
-        
-        
+
         mercs.add(faturamentoItem);
         if (faturamentoItem.getValorTotal() > 0) {
             for (int i = 1; i < mercs.size(); i++) {
                 //popular tabela
-                
-                        System.out.println(mercs.get(i).getValorTotal());
+
+                System.out.println(mercs.get(i).getValorTotal());
                 dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
                     mercs.get(i).getMercadoria().getReferencia(),
                     mercs.get(i).getMercadoria().getDescricao(),
@@ -645,7 +640,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                     String.valueOf(mercs.get(i).getValorTotal())});
 
             }
-            
+
             count++;
         }
         mercadoria = new Mercadoria();
@@ -655,18 +650,18 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         return dtm;
     }
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        System.out.println("char ativo cliente... "+cliente.getAtivo());
+        System.out.println("char ativo cliente... " + cliente.getAtivo());
         cliente.setId(0);
         cliente.setRazaoSocial("");
         cliente.setCpfCnpj("");
         cliente.setAtivo('T');
         JdgListaCliente listaCliente = new JdgListaCliente(null, true, cliente, cid);
         listaCliente.setVisible(true);
-            tffCpfCNPJ.setText(cliente.getCpfCnpj());
-            tfdId.setText(String.valueOf(cliente.getId()));
-            tfdRazaoSocial.setText(cliente.getRazaoSocial());
-            
-            tfdReferencia.requestFocus();
+        tffCpfCNPJ.setText(cliente.getCpfCnpj());
+        tfdId.setText(String.valueOf(cliente.getId()));
+        tfdRazaoSocial.setText(cliente.getRazaoSocial());
+
+        tfdReferencia.requestFocus();
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnClienteKeyPressed
@@ -738,7 +733,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdReferenciaKeyReleased
     private void confirmarReferenciaMercadoria() {
         if (verificarMercadoriaCadastrada()) {
-            
+
             lblReferencia.setForeground(Color.black);
             lblRetornoMercadoria.setText("");
             System.out.println("entrou no if da verificação...tem cadastrado");
@@ -809,6 +804,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     }
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        confirmarItem();
+
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+    private void confirmarItem() {
         listarMercadorias();
         try {
             limparCampos();
@@ -816,15 +815,14 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
         }
         tfdReferencia.requestFocus();
-
-    }//GEN-LAST:event_btnConfirmarActionPerformed
+    }
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             try {
-                
+
                 acrescentarDesconto();
-                
+
             } catch (Exception ex) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -841,12 +839,12 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             tfdReferencia.requestFocus();
         }
     }
-    
-    private void atualizarFaturamento(){
-        faturamento.setValorTotal(faturamento.getValorTotal()+faturamentoItem.getValorTotal());
-        faturamento.setDesconto(faturamento.getDesconto()+faturamentoItem.getDesconto());
-        tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".",","));
-        tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".",","));
+
+    private void atualizarFaturamento() {
+        faturamento.setValorTotal(faturamento.getValorTotal() + faturamentoItem.getValorTotal());
+        faturamento.setDesconto(faturamento.getDesconto() + faturamentoItem.getDesconto());
+        tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
+        tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".", ","));
     }
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -858,7 +856,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJActionPerformed
 
     private void tfdReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusLost
-        
+
     }//GEN-LAST:event_tfdReferenciaFocusLost
 
     private void tffCpfCNPJFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusLost
@@ -874,15 +872,15 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJFocusGained
 
     private void tffQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyPressed
-         if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB 
-                 && tffQuantidade.getText().equals("1,0")) {
-             tffQuantidade.setText("");
-         }
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB
+                && tffQuantidade.getText().equals("1,0")) {
+            tffQuantidade.setText("");
+        }
     }//GEN-LAST:event_tffQuantidadeKeyPressed
 
     private void tfdReferenciaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusGained
         try {
-            
+
             limparCampos();
         } catch (Exception ex) {
             Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -890,47 +888,44 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tfdReferenciaFocusGained
 
     private void tffTotalDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffTotalDescontoKeyReleased
-        
+
     }//GEN-LAST:event_tffTotalDescontoKeyReleased
 
     private void tffDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyPressed
-                 if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB 
-                 && tffDesconto.getText().equals("0,0")) {
-             tffDesconto.setText("");
-         }
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB
+                && tffDesconto.getText().equals("0,0")) {
+            tffDesconto.setText("");
+        }
     }//GEN-LAST:event_tffDescontoKeyPressed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-selecionado();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnCancelarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarItemActionPerformed
+        cancelarItem();
+    }//GEN-LAST:event_btnCancelarItemActionPerformed
 
-        private void selecionado() {
+    private void cancelarItem() {
 
         //pega a linha selecionada
         int row = tblMercadorias.getSelectedRow();
+        System.out.println("linha selecionada" + row);
+        
+        faturamento.setValorTotal(faturamento.getValorTotal() - mercs.get(row + 1).getValorTotal());
+        faturamento.setDesconto(faturamento.getDesconto() - mercs.get(row + 1).getDesconto());
+        tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
+        tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".", ","));
+        faturamentoItem.setDesconto(0.00);
+        faturamentoItem.setQuantidade(0.00);
+        faturamentoItem.setValorTotal(0.00);
+//        listarMercadorias();
+        mercs.get(row + 1).setDesconto(0.00);
+        mercs.get(row + 1).setValorTotal(0.00);
+        mercs.get(row + 1).setQuantidade(0.00);
+        mercs.get(row + 1).getMercadoria().setPrecoVenda(0.00);
+        mercs.get(row + 1).getMercadoria().setDescricao(mercs.get(row + 1).getMercadoria().getDescricao() + " *** CANCELADO ***");
 
-        mercs.remove(row);
-        tblMercadorias.remove(row);
-        listarMercadorias();
-        //seta o ID do objeto da linha selecionada
-//        this.merc.setId(Integer.parseInt(tblMercadorias.getValueAt(row, 0).toString()));
-//        this.merc.setReferencia(tblMercadorias.getValueAt(row, 1).toString());
-//        this.merc.setDescricao(tblMercadorias.getValueAt(row, 2).toString());
-//        this.merc.setEstoque(Double.parseDouble(tblMercadorias.getValueAt(row, 3).toString()));
-//        this.merc.setPrecoCusto(Double.parseDouble(tblMercadorias.getValueAt(row, 4).toString()));
-//        this.merc.setPrecoVenda(Double.parseDouble(tblMercadorias.getValueAt(row, 5).toString()));
-//        if (tblMercadorias.getValueAt(row, 6).toString().equals("Ativo")) {
-//            this.merc.setAtivo('T');
-//        } else {
-//            this.merc.setAtivo('F');
-//        }
-//
-//        dispose();
+      
     }
-  
 
-    
-        public  String dataAtual() {
+    public String dataAtual() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         System.out.println(date);
@@ -939,19 +934,17 @@ selecionado();
 
     }
 
-    
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelarItem;
     private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
