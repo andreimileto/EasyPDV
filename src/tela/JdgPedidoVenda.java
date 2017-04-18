@@ -140,7 +140,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         jLabel2.setText("Descrição");
 
-        tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##.##"))));
         tffQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tffQuantidadeFocusLost(evt);
@@ -208,36 +208,39 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblReferencia)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1))
-                        .addComponent(jLabel2)
+                        .addComponent(tfdDescricao)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(tffQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(tffPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(tffDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tffValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)))
-                        .addComponent(tfdDescricao))
+                                .addComponent(lblReferencia)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(tfdReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton1))
+                                .addComponent(jLabel2)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(tffQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(tffPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(tffDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tffValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7))))
+                            .addGap(1, 1, 1)))
                     .addComponent(jLabel1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(tffTotalDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(tffTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,11 +261,12 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tffQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tffQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tffPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tffPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(26, 26, 26)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -274,7 +278,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tffTotalDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tffTotalVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -491,10 +495,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 843, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -587,6 +591,65 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()).replace(".", ","));
         tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()).replace(".", ","));
 
+    }
+
+    private void atualizarMercadoriasCanceladas() {
+        try {
+            //setar para tabela modelo de dados
+
+            tblMercadorias.setModel(this.obterDadosCompletosCancelados());
+            tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblMercadorias.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tblMercadorias.getColumnModel().getColumn(6).setPreferredWidth(0);
+
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private DefaultTableModel obterDadosCompletosCancelados() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+//        MercadoriaDAO mercDAO = new MercadoriaDAO();
+
+        dtm.addColumn("SEQUÊNCIA");
+        dtm.addColumn("REFERÊNCIA");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("QNT");
+        dtm.addColumn("$UNITÁRIO");
+        dtm.addColumn("$DESCONTO");
+        dtm.addColumn("$TOTAL");
+
+        // mercs.add(faturamentoItem);
+        for (int i = 1; i < mercs.size(); i++) {
+            //popular tabela
+            System.out.println("decrição.. " + mercs.get(i).getMercadoria().getDescricao());
+
+            System.out.println(mercs.get(i).getValorTotal());
+            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
+                mercs.get(i).getMercadoria().getReferencia(),
+                mercs.get(i).getMercadoria().getDescricao(),
+                String.valueOf(mercs.get(i).getQuantidade()),
+                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
+                String.valueOf(mercs.get(i).getDesconto()),
+                String.valueOf(mercs.get(i).getValorTotal())});
+
+        }
+
+        mercadoria = new Mercadoria();
+        faturamentoItem = new FaturamentoItem();
+
+//retorna o modelo
+        return dtm;
     }
 
     private void listarMercadorias() {
@@ -727,8 +790,20 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             confirmarReferenciaMercadoria();
 
+            if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0.00) {
+                faturamentoItem.setQuantidade(Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
+                
+                faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
+                tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+            }
+            if (Double.parseDouble(tffDesconto.getText().replace(",", ".")) < faturamentoItem.getValorTotal()) {
+                faturamentoItem.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
+                faturamentoItem.setValorTotal(Double.parseDouble(tffValorTotal.getText()) - faturamentoItem.getDesconto());
+                tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+                
+            }
+            atualizarFaturamento();
         }
-
 
     }//GEN-LAST:event_tfdReferenciaKeyReleased
     private void confirmarReferenciaMercadoria() {
@@ -745,7 +820,6 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             tffQuantidade.setText(String.valueOf(faturamentoItem.getQuantidade()).replace(".", ","));
             tffDesconto.setText(String.valueOf(faturamentoItem.getDesconto()).replace(".", ","));
             tffPrecoUnitario.setText(String.valueOf(faturamentoItem.getMercadoria().getPrecoVenda()));
-            System.out.println(mercadoria.getReferencia());
 
             tffQuantidade.requestFocus();
         } else {
@@ -856,7 +930,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJActionPerformed
 
     private void tfdReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusLost
-
+        btnConfirmar.setEnabled(true);
     }//GEN-LAST:event_tfdReferenciaFocusLost
 
     private void tffCpfCNPJFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusLost
@@ -864,7 +938,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJFocusLost
 
     private void tffQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffQuantidadeFocusLost
-        quantidadeItem();
+//        quantidadeItem();
     }//GEN-LAST:event_tffQuantidadeFocusLost
 
     private void tffCpfCNPJFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusGained
@@ -879,6 +953,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffQuantidadeKeyPressed
 
     private void tfdReferenciaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusGained
+        btnConfirmar.setEnabled(false);
+        faturamentoItem.setQuantidade(1.00);
+        faturamentoItem.setDesconto(0.00);
         try {
 
             limparCampos();
@@ -899,15 +976,26 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDescontoKeyPressed
 
     private void btnCancelarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarItemActionPerformed
-        cancelarItem();
+
+        int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a mercadora? \n"
+                + "Referência: " + mercs.get(tblMercadorias.getSelectedRow() + 1).getMercadoria().getReferencia() + "\n"
+                + "Descrição: " + mercs.get(tblMercadorias.getSelectedRow() + 1).getMercadoria().getDescricao());
+        if (op == 0) {
+            try {
+                cancelarItem();
+            } catch (Exception ex) {
+                Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_btnCancelarItemActionPerformed
 
-    private void cancelarItem() {
+    private void cancelarItem() throws Exception {
 
         //pega a linha selecionada
         int row = tblMercadorias.getSelectedRow();
         System.out.println("linha selecionada" + row);
-        
+
         faturamento.setValorTotal(faturamento.getValorTotal() - mercs.get(row + 1).getValorTotal());
         faturamento.setDesconto(faturamento.getDesconto() - mercs.get(row + 1).getDesconto());
         tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
@@ -916,13 +1004,16 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         faturamentoItem.setQuantidade(0.00);
         faturamentoItem.setValorTotal(0.00);
 //        listarMercadorias();
+
         mercs.get(row + 1).setDesconto(0.00);
         mercs.get(row + 1).setValorTotal(0.00);
         mercs.get(row + 1).setQuantidade(0.00);
         mercs.get(row + 1).getMercadoria().setPrecoVenda(0.00);
         mercs.get(row + 1).getMercadoria().setDescricao(mercs.get(row + 1).getMercadoria().getDescricao() + " *** CANCELADO ***");
+        System.out.println("tamanho array..." + mercs.size());
 
-      
+        atualizarMercadoriasCanceladas();
+
     }
 
     public String dataAtual() {
