@@ -113,3 +113,34 @@
 ---------------insert-------------------
 
 insert into usuario values(default,'usuario','123456');
+
+--------procedure e triggers---------------
+
+---atualiza estoque quando o pedido é encerrado ou cancelado
+CREATE OR REPLACE FUNCTION fatuaizaestoque()
+RETURNS trigger
+AS $$
+ 
+BEGIN
+
+	if (NEW.fase = 'e') then
+    update mercadoria m set estoque = (estoque - f.quantidade  )
+    from faturamento_item f, faturamento fa
+    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+    
+ end if;
+    if (NEW.fase = 'c') then
+    update mercadoria m set estoque = estoque 
+    from faturamento_item f, faturamento fa
+    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+end if;
+RETURN null;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE  TRIGGER tatuaizaestoquecancelamento
+AFTER  UPDATE ON faturamento
+FOR EACH ROW
+EXECUTE PROCEDURE fatuaizaestoquecancelamento ()
+
+
