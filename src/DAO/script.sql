@@ -144,3 +144,22 @@ FOR EACH ROW
 EXECUTE PROCEDURE fatuaizaestoquecancelamento ()
 
 
+--------testes---------------
+update faturamento f set fase = 'c' where f.id = 9
+
+update empresa e set id =1
+delete from faturamento
+update mercadoria m set estoque = (estoque - f.quantidade  )from faturamento_item f where m.id = f.id_mercadoria
+
+select * from mercadoria 
+
+select * from faturamento
+select max(id) id from faturamento 
+
+INSERT INTO public.faturamento(
+	id, id_cliente, id_forma_pagamento, id_empresa, data_emissao, fase, desconto, valor_total, parcelas)
+	VALUES (default, 10, 16, 2, '10/02/2017', '', 0, 100, 1);
+    
+    INSERT INTO public.faturamento_item(
+	id, id_faturamento, id_mercadoria, quantidade, valor_unitario, desconto, valor_total)
+	VALUES (default, 9, 6, 6, 16, 0, 32);
