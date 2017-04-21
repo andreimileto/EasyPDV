@@ -5,18 +5,42 @@
  */
 package tela;
 
+import DAO.ClienteDAO;
+import DAO.FaturamentoDAO;
+import apoio.Formatacao;
+import entidade.Faturamento;
+import entidade.FaturamentoItem;
+import entidade.FormaPagamento;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author pc05
  */
+
+
 public class JdgFormaPagamento extends javax.swing.JDialog {
 
+  private ArrayList<FaturamentoItem> mercs; 
+  private Faturamento fat;
+  private FaturamentoItem fatItem;
     /**
      * Creates new form JdgFormaPagamento
      */
     public JdgFormaPagamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    public JdgFormaPagamento(java.awt.Frame parent, boolean modal,ArrayList<FaturamentoItem> mercs, Faturamento fat, FaturamentoItem fatItem) {
+        super(parent, modal);
+        initComponents();
+        
+        this.mercs = mercs;
+        this.fat = fat;
+        this.fatItem=fatItem;
+        
     }
 
     /**
@@ -143,6 +167,11 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_money.png"))); // NOI18N
         jButton1.setText("FINALIZAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         jButton2.setText("Sair");
@@ -253,8 +282,8 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,6 +319,22 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private void tffParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffParcelasKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_tffParcelasKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
+        FormaPagamento formaPagamento = new FormaPagamento();
+        formaPagamento.setId(7);
+        fat.setFormaPagamento(formaPagamento);
+        String dataAtual = Formatacao.getDataAtual();
+        
+        fat.setDataEmissao(dataAtual);
+        
+                if(faturamentoDAO.salvar(fat, mercs, fatItem)){
+                    System.out.println("salvou");
+                }else{
+                    System.out.println("não salvou");
+                }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

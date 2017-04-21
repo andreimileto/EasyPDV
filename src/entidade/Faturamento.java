@@ -16,7 +16,7 @@ public class Faturamento {
     private Cliente cliente;
     private FormaPagamento formaPagamento;
     private Empresa empresa;
-    private Date dataEmissao;
+    private String  dataEmissao;
     private int fase;
     private double valorTotal;
     private double desconto;
@@ -54,11 +54,11 @@ public class Faturamento {
         this.empresa = empresa;
     }
 
-    public Date getDataEmissao() {
+    public String getDataEmissao() {
         return dataEmissao;
     }
 
-    public void setDataEmissao(Date dataEmissao) {
+    public void setDataEmissao(String dataEmissao) {
         this.dataEmissao = dataEmissao;
     }
 

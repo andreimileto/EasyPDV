@@ -6,6 +6,7 @@
 package tela;
 
 import DAO.ClienteDAO;
+import DAO.FaturamentoItemDAO;
 import DAO.MercadoriaDAO;
 import entidade.Cidade;
 import entidade.Cliente;
@@ -267,7 +268,6 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(26, 26, 26)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
@@ -407,6 +407,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_money.png"))); // NOI18N
         jButton3.setMnemonic('f');
         jButton3.setText("Finalizar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         jButton4.setMnemonic('s');
@@ -792,7 +797,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
             if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0.00) {
                 faturamentoItem.setQuantidade(Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
-                
+
                 faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
                 tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
             }
@@ -800,7 +805,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 faturamentoItem.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
                 faturamentoItem.setValorTotal(Double.parseDouble(tffValorTotal.getText()) - faturamentoItem.getDesconto());
                 tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
-                
+
             }
             atualizarFaturamento();
         }
@@ -907,7 +912,11 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             faturamentoItem.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
             faturamentoItem.setValorTotal(Double.parseDouble(tffValorTotal.getText()) - faturamentoItem.getDesconto());
             tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
-            atualizarFaturamento();
+//            atualizarFaturamento();
+            faturamento.setDesconto(faturamento.getDesconto() + faturamentoItem.getDesconto());
+            faturamento.setValorTotal(faturamento.getValorTotal() - faturamentoItem.getDesconto());
+            tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
+            tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".", ","));
             listarMercadorias();
             limparCampos();
             tfdReferencia.requestFocus();
@@ -989,6 +998,18 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnCancelarItemActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
+        fatItemDAO.consultar(faturamentoItem, mercs);
+        System.out.println("id cliente = " + cliente.getId());
+        faturamento.setCliente(cliente);
+        faturamentoItem.setMercadoria(mercadoria);
+
+        System.out.println("id cliente = " + faturamento.getCliente().getId());
+        JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
+        forPag.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cancelarItem() throws Exception {
 

@@ -136,7 +136,7 @@ public class Formatacao {
 
     public static String getDataAtual() {
         Date now = new Date();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataHoje = df.format(now);
         
         return dataHoje;
