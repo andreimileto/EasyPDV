@@ -79,6 +79,7 @@
                          );
                                                   
             CREATE TABLE faturamento_item(id serial,
+                         sequencia int not null,   
                          id_faturamento int not null,
                          id_mercadoria int not null,
                          quantidade DOUBLE PRECISION not null,

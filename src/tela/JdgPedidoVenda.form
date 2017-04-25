@@ -109,8 +109,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButton3" min="-2" pref="241" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="btnConfirmar" min="-2" pref="112" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnCancelarItem" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>

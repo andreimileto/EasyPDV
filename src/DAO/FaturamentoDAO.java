@@ -27,7 +27,7 @@ public class FaturamentoDAO {
     Faturamento fat;
     FaturamentoItem fatItem;
 
-    public boolean salvar(Faturamento fat, ArrayList<FaturamentoItem> mercs, FaturamentoItem fatItem) {
+     public boolean salvar(Faturamento fat, ArrayList<FaturamentoItem> mercs, FaturamentoItem fatItem) {
 //        this.mercs = mercs;
 //        this.fat = fat;
 //        this.fatItem = fatItem;
@@ -58,13 +58,14 @@ public class FaturamentoDAO {
                  ResultSet resulSelect = st.executeQuery(sql);
                  resulSelect.next();
                 
-                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max") + 1));
+                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max")));
+                System.out.println("id faturamento ultimo é = "+fatItem.getIdFaturamento());
                 mercs.add(fatItem);
                 for (int i = 0; i < mercs.size(); i++) {
                     
-                    sql = "INSERT INTO faturamento_item VALUES ("
-                            + mercs.get(i).getId() + ","
-                            + fatItem.getIdFaturamento() + ","
+                    sql = "INSERT INTO faturamento_item VALUES (default"
+                            
+                            + fatItem.getIdFaturamento()+","
                             + mercs.get(i).getMercadoria().getId() + ","
                             + mercs.get(i).getQuantidade() + ","
                             + mercs.get(i).getMercadoria().getPrecoVenda() + ","
