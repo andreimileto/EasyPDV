@@ -458,9 +458,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelarItem)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -707,7 +706,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                     String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
                     String.valueOf(mercs.get(i).getDesconto()),
                     String.valueOf(mercs.get(i).getValorTotal())});
-                System.out.println("referencia ..." + mercs.get(i).getMercadoria().getReferencia());
+
             }
 
             count++;
@@ -1002,17 +1001,14 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
-        
-        System.out.println("referencia mercadoria = "+faturamentoItem.getQuantidade());
-//           System.out.println("referencia mercadoria = "+mercs.get(0).getMercadoria().getReferencia());
-//        fatItemDAO.consultar(faturamentoItem, mercs);
-//        System.out.println("id cliente = " + cliente.getId());
-//        faturamento.setCliente(cliente);
-//        faturamentoItem.setMercadoria(mercadoria);
-//
-//        System.out.println("id cliente = " + faturamento.getCliente().getId());
-//        JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
-//        forPag.setVisible(true);
+        fatItemDAO.consultar(faturamentoItem, mercs);
+        System.out.println("id cliente = " + cliente.getId());
+        faturamento.setCliente(cliente);
+        faturamentoItem.setMercadoria(mercadoria);
+
+        System.out.println("id cliente = " + faturamento.getCliente().getId());
+        JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
+        forPag.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cancelarItem() throws Exception {
