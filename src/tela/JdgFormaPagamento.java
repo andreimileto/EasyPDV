@@ -30,7 +30,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private FaturamentoItem fatItem;
     private FormaPagamento fp;
     private ArrayList<FormaPagamento> formas;
-    private double totalPago  = 0;
+    private double totalPago = 0;
 
     /**
      * Creates new form JdgFormaPagamento
@@ -64,20 +64,17 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         lblTotalBruto.setText(String.valueOf(fat.getValorTotal()));
         lblTotalLiquido.setText(String.valueOf(fat.getValorTotal() - Double.parseDouble(tffDesconto.getText().replace(",", "."))));
         tffValorPago.setText(lblTotalLiquido.getText().replace(".", ","));
-        
-        
-        
-        
-        double saldoAPagar =  Double.parseDouble(lblTotalLiquido.getText().replace(",", ".")) - totalPago;
-        if (saldoAPagar>=0) {
+
+        double saldoAPagar = Double.parseDouble(lblTotalLiquido.getText().replace(",", ".")) - totalPago;
+        if (saldoAPagar >= 0) {
             lblSaldo.setText("Saldo a Pagar");
             lblSaldoPagar.setText(String.valueOf(saldoAPagar));
-        }else{
-           saldoAPagar = saldoAPagar *(-1) ;
-           lblSaldo.setText("Troco");
+        } else {
+            saldoAPagar = saldoAPagar * (-1);
+            lblSaldo.setText("Troco");
             lblSaldoPagar.setText(String.valueOf(saldoAPagar));
         }
-        
+
     }
 
     private void listarFormasPagamento() {
@@ -128,6 +125,59 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
+    
+    
+        private void listarFormasPagamentoPagas() {
+        try {
+            //setar para tabela modelo de dados
+            tblFormaPagamento.setModel(this.obterDadosParaJTablePagas());
+            tblFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblFormaPagamento.getColumnModel().getColumn(2).setPreferredWidth(10);
+//            tblFormaPagamento.getColumnModel().getColumn(3).setPreferredWidth(1);
+
+        } catch (Exception ex) {
+            Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public DefaultTableModel obterDadosParaJTablePagas() throws Exception {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//adiciona titulo para as colunas
+
+        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
+        fp.setAtivo('T');
+
+        formas = fpDAO.consultar(fp);
+
+        dtm.addColumn("ID");
+        dtm.addColumn("DESCRIÇÃO");
+        dtm.addColumn("FORMA");
+//        dtm.addColumn("SITUAÇÃO");
+
+ for (int i = 0; i < mercs.size(); i++) {
+            //popular tabela
+
+            System.out.println(mercs.get(i).getValorTotal());
+            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
+                mercs.get(i).getMercadoria().getReferencia(),
+                mercs.get(i).getMercadoria().getDescricao(),
+                String.valueOf(mercs.get(i).getQuantidade()),
+                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
+                String.valueOf(mercs.get(i).getDesconto()),
+                String.valueOf(mercs.get(i).getValorTotal())});
+            
+        }
+        
+        
+//retorna o modelo
+        return dtm;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,15 +219,23 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Descrição", "Valor"
+                "Id", "Descrição", "Valor", "Parcelas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Código:");
@@ -288,44 +346,47 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(tffCodigoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(tffDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(tffValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tffParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(lblTotalBruto)
-                                .addComponent(jLabel7)
-                                .addComponent(lblTotalPago))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblSaldoPagar)
-                                .addComponent(lblSaldo)
-                                .addComponent(lblTotalLiquido)
-                                .addComponent(jLabel5))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
-                        .addComponent(jButton2)))
-                .addGap(163, 163, 163))
+                        .addComponent(jButton2)
+                        .addGap(114, 114, 114))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(tffCodigoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(tffDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(tffValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tffParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(lblTotalBruto)
+                                    .addComponent(jLabel7)
+                                    .addComponent(lblTotalPago))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSaldoPagar)
+                                    .addComponent(lblSaldo)
+                                    .addComponent(lblTotalLiquido)
+                                    .addComponent(jLabel5))))
+                        .addGap(104, 104, 104))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +395,15 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalBruto)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalPago))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -356,27 +425,20 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tffParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblTotalBruto)
-                                    .addComponent(lblTotalLiquido))
+                                .addComponent(lblTotalLiquido)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(lblSaldo))
+                                .addComponent(lblSaldo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblTotalPago)
-                                    .addComponent(lblSaldoPagar))))
+                                .addComponent(lblSaldoPagar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
-                            .addComponent(jButton2))))
+                            .addComponent(jButton2))
+                        .addGap(5, 5, 5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -406,17 +468,22 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tffValorPagoKeyPressed
 
     private void tffValorPagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffValorPagoKeyReleased
-    if (evt.getKeyCode() == KeyEvent.VK_ENTER && evt.getKeyCode() == KeyEvent.VK_TAB){
-        totalPago = Double.parseDouble(lblTotalPago.getText().replace(",", ".")) + Double.parseDouble(tffValorPago.getText().replace(",", "."));
-        lblTotalPago.setText(String.valueOf(totalPago));
-        atualizarValores();
-        
-        tffCodigoPagamento.requestFocus();
-    }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            totalPago = Double.parseDouble(lblTotalPago.getText().replace(",", ".")) + Double.parseDouble(tffValorPago.getText().replace(",", "."));
+            lblTotalPago.setText(String.valueOf(totalPago));
+            atualizarValores();
+            if (validarParcela()) {
+                tffParcelas.requestFocus();
+                
+            } else {
+                tffCodigoPagamento.requestFocus();
+            }
+
+        }
     }//GEN-LAST:event_tffValorPagoKeyReleased
 
     private void tffDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyPressed
-                if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB
                 && tffDesconto.getText().equals("0,00")) {
             tffDesconto.setText("");
         }
@@ -434,7 +501,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_tffParcelasKeyPressed
 
     private void tffParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffParcelasKeyReleased
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            tffCodigoPagamento.requestFocus();
+        }
     }//GEN-LAST:event_tffParcelasKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -454,22 +523,29 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCodigoPagamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffCodigoPagamentoKeyReleased
-        boolean ok = false;
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            for (int i = 0; i < formas.size(); i++) {
-                if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText()) && formas.get(i).getFormaAvista() == 'F') {
-                    ok = true;
-                }
 
-            }
-            if (ok) {
-                tffParcelas.setEnabled(true);
-            }else{
-                tffParcelas.setEnabled(false);
-            }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            validarParcela();
             tffDesconto.requestFocus();
+
         }
     }//GEN-LAST:event_tffCodigoPagamentoKeyReleased
+
+    private boolean validarParcela() {
+        boolean ok = false;
+        for (int i = 0; i < formas.size(); i++) {
+            if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText()) && formas.get(i).getFormaAvista() == 'F') {
+                ok = true;
+            }
+
+        }
+        if (ok) {
+            tffParcelas.setEnabled(true);
+        } else {
+            tffParcelas.setEnabled(false);
+        }
+        return ok;
+    }
 
     /**
      * @param args the command line arguments
