@@ -107,7 +107,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton3" min="-2" pref="241" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" pref="251" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="btnConfirmar" min="-2" pref="112" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -170,7 +170,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="tfdReferencia" min="-2" pref="166" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnLocalizarProduto" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
@@ -218,7 +218,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="tfdReferencia" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="btnLocalizarProduto" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -280,7 +280,7 @@
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdReferenciaKeyReleased"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="btnLocalizarProduto">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/imagens/Lupa3.png"/>
@@ -289,7 +289,7 @@
                     <Property name="text" type="java.lang.String" value="Refer&#xea;ncia"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLocalizarProdutoActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="tfdDescricao">

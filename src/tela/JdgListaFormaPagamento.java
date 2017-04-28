@@ -38,6 +38,13 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
 
     }
 
+    private void popularComboBox() {
+
+        cbxStatus.addItem("Ativos");
+        cbxStatus.addItem("Inativos");
+        cbxStatus.addItem("Todos");
+    }
+
     private void listarFormasPagamento() {
         try {
             //setar para tabela modelo de dados
@@ -51,13 +58,6 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-    private void popularComboBox() {
-
-        cbxStatus.addItem("Ativos");
-        cbxStatus.addItem("Inativos");
-        cbxStatus.addItem("Todos");
     }
 
     public DefaultTableModel obterDadosParaJTable() throws Exception {
@@ -85,11 +85,11 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
             }
             if (String.valueOf(formas.get(i).getFormaAvista()).equalsIgnoreCase("T")) {
                 resultPrazo = "Avista";
-            }else{
+            } else {
                 resultPrazo = "Prazo";
             }
             dtm.addRow(new String[]{String.valueOf(formas.get(i).getId()),
-                formas.get(i).getDescricao(),resultPrazo, resultAtivo});
+                formas.get(i).getDescricao(), resultPrazo, resultAtivo});
         }
 //retorna o modelo
         return dtm;
@@ -407,7 +407,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Avista")) {
             this.fp.setFormaAvista('T');
             System.out.println("entrou no if do avista");
-        } else  if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Prazo")){
+        } else if (tblFormaPagamento.getValueAt(row, 2).toString().equals("Prazo")) {
             this.fp.setFormaAvista('F');
             System.out.println("entrou no if do prazo");
         }

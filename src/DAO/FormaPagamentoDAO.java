@@ -56,8 +56,8 @@ public class FormaPagamentoDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "select * from  forma_pagamento "
                         + "where descricao ilike '" + form.getDescricao() + "%'"
-                        + "and ativo = '" + form.getAtivo() + "' order by id";
-
+                        + "and ativo = '" + form.getAtivo() + "' order by descricao";
+                
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     FormaPagamento fp = new FormaPagamento();
