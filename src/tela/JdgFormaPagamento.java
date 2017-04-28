@@ -12,6 +12,7 @@ import apoio.Formatacao;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
 import entidade.FormaPagamento;
+import entidade.FormaPagamentoPagas;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,13 +25,15 @@ import javax.swing.table.DefaultTableModel;
  * @author pc05
  */
 public class JdgFormaPagamento extends javax.swing.JDialog {
-
+    
     private ArrayList<FaturamentoItem> mercs;
     private Faturamento fat;
     private FaturamentoItem fatItem;
     private FormaPagamento fp;
     private ArrayList<FormaPagamento> formas;
     private double totalPago = 0;
+    private FormaPagamentoPagas formasPagas;
+    private ArrayList<FormaPagamentoPagas> ArrayFormasPagas;
 
     /**
      * Creates new form JdgFormaPagamento
@@ -39,7 +42,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-
+    
     public JdgFormaPagamento(java.awt.Frame parent, boolean modal, ArrayList<FaturamentoItem> mercs, Faturamento fat, FaturamentoItem fatItem) {
         super(parent, modal);
         initComponents();
@@ -47,24 +50,47 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         this.mercs = mercs;
         this.fat = fat;
         this.fatItem = fatItem;
+        ArrayFormasPagas = new ArrayList<>();
         listarFormasPagamento();
         valoresDefault();
         atualizarValores();
     }
 
+    private void inserirFormaPagamento() {
+        formasPagas = new FormaPagamentoPagas();
+        formasPagas.setId(Integer.parseInt(tffCodigoPagamento.getText()));
+//        formasPagas.setDescricao(descricao);
+        for (int i = 0; i < formas.size(); i++) {
+            if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
+                formasPagas.setDescricao(formas.get(i).getDescricao());
+            }
+        }
+        formasPagas.setParcelas(Integer.parseInt(tffParcelas.getText()));
+        formasPagas.setValor(Double.parseDouble(tffValorPago.getText().replace(",", ".")));
+        ArrayFormasPagas.add(formasPagas);
+        listarFormasPagamentoPagas();
+    }
+    
+    private void limparCampos(){
+        tffCodigoPagamento.setText("");
+        tffParcelas.setText("1");
+        tffValorPago.setText(lblSaldoPagar.getText());
+        
+    }
+    
     private void valoresDefault() {
         tffParcelas.setEnabled(false);
         tffParcelas.setText("1");
         tffDesconto.setText("0,00");
         lblTotalPago.setText("0,00");
     }
-
+    
     private void atualizarValores() {
-
+        
         lblTotalBruto.setText(String.valueOf(fat.getValorTotal()));
         lblTotalLiquido.setText(String.valueOf(fat.getValorTotal() - Double.parseDouble(tffDesconto.getText().replace(",", "."))));
         tffValorPago.setText(lblTotalLiquido.getText().replace(".", ","));
-
+        
         double saldoAPagar = Double.parseDouble(lblTotalLiquido.getText().replace(",", ".")) - totalPago;
         if (saldoAPagar >= 0) {
             lblSaldo.setText("Saldo a Pagar");
@@ -74,9 +100,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             lblSaldo.setText("Troco");
             lblSaldoPagar.setText(String.valueOf(saldoAPagar));
         }
-
+        
     }
-
+    
     private void listarFormasPagamento() {
         try {
             //setar para tabela modelo de dados
@@ -89,9 +115,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public DefaultTableModel obterDadosParaJTable() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -102,9 +128,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
         fp.setAtivo('T');
-
+        
         formas = fpDAO.consultar(fp);
-
+        
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("FORMA");
@@ -126,22 +152,21 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         return dtm;
     }
     
-    
-        private void listarFormasPagamentoPagas() {
+    private void listarFormasPagamentoPagas() {
         try {
             //setar para tabela modelo de dados
-            tblFormaPagamento.setModel(this.obterDadosParaJTablePagas());
-            tblFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tblFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tblFormaPagamento.getColumnModel().getColumn(2).setPreferredWidth(10);
-//            tblFormaPagamento.getColumnModel().getColumn(3).setPreferredWidth(1);
+            tblFormasPagas.setModel(this.obterDadosParaJTablePagas());
+            tblFormasPagas.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblFormasPagas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblFormasPagas.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tblFormasPagas.getColumnModel().getColumn(3).setPreferredWidth(1);
 
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public DefaultTableModel obterDadosParaJTablePagas() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -150,31 +175,23 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         };
 //adiciona titulo para as colunas
 
-        FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
-        fp.setAtivo('T');
 
-        formas = fpDAO.consultar(fp);
-
-        dtm.addColumn("ID");
+        dtm.addColumn("ID FORMA");
         dtm.addColumn("DESCRIÇÃO");
-        dtm.addColumn("FORMA");
-//        dtm.addColumn("SITUAÇÃO");
+        dtm.addColumn("VALOR");
+        dtm.addColumn("QNT PARCELAS");
 
- for (int i = 0; i < mercs.size(); i++) {
+        for (int i = 0; i < ArrayFormasPagas.size(); i++) {
             //popular tabela
 
-            System.out.println(mercs.get(i).getValorTotal());
-            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
-                mercs.get(i).getMercadoria().getReferencia(),
-                mercs.get(i).getMercadoria().getDescricao(),
-                String.valueOf(mercs.get(i).getQuantidade()),
-                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
-                String.valueOf(mercs.get(i).getDesconto()),
-                String.valueOf(mercs.get(i).getValorTotal())});
+            
+            dtm.addRow(new String[]{String.valueOf(ArrayFormasPagas.get(i).getId()),
+                ArrayFormasPagas.get(i).getDescricao(),
+                String.valueOf(ArrayFormasPagas.get(i).getValor()),
+                String.valueOf(ArrayFormasPagas.get(i).getParcelas())});
             
         }
-        
-        
+
 //retorna o modelo
         return dtm;
     }
@@ -190,7 +207,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblFormasPagas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         tffCodigoPagamento = new javax.swing.JFormattedTextField();
         tffValorPago = new javax.swing.JFormattedTextField();
@@ -217,7 +234,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forma de Pagamento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(51, 0, 255))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblFormasPagas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -236,7 +253,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblFormasPagas);
 
         jLabel1.setText("Código:");
 
@@ -477,8 +494,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 
             } else {
                 tffCodigoPagamento.requestFocus();
+                inserirFormaPagamento();
             }
-
+            
         }
     }//GEN-LAST:event_tffValorPagoKeyReleased
 
@@ -512,9 +530,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         formaPagamento.setId(7);
         fat.setFormaPagamento(formaPagamento);
         String dataAtual = Formatacao.getDataAtual();
-
+        
         fat.setDataEmissao(dataAtual);
-
+        
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
             System.out.println("salvou");
         } else {
@@ -523,21 +541,21 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCodigoPagamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffCodigoPagamentoKeyReleased
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             validarParcela();
             tffDesconto.requestFocus();
-
+            
         }
     }//GEN-LAST:event_tffCodigoPagamentoKeyReleased
-
+    
     private boolean validarParcela() {
         boolean ok = false;
         for (int i = 0; i < formas.size(); i++) {
             if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText()) && formas.get(i).getFormaAvista() == 'F') {
                 ok = true;
             }
-
+            
         }
         if (ok) {
             tffParcelas.setEnabled(true);
@@ -602,13 +620,13 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblSaldoPagar;
     private javax.swing.JLabel lblTotalBruto;
     private javax.swing.JLabel lblTotalLiquido;
     private javax.swing.JLabel lblTotalPago;
     private javax.swing.JTable tblFormaPagamento;
+    private javax.swing.JTable tblFormasPagas;
     private javax.swing.JFormattedTextField tffCodigoPagamento;
     private javax.swing.JFormattedTextField tffDesconto;
     private javax.swing.JFormattedTextField tffParcelas;
