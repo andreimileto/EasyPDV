@@ -68,7 +68,7 @@
                          fase char(1) not null,
                          desconto DOUBLE PRECISION,
                          valor_total DOUBLE PRECISION not null,		
-                         parcelas int not null,
+                         valor_total_liquido double not null,
                          constraint pkfaturamento primary key (id),
                          CONSTRAINT fkid_clientefaturamento foreign key(id_cliente)
                          references cliente,

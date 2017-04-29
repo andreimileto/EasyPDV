@@ -41,15 +41,15 @@ public class FaturamentoDAO {
                 System.out.println("entrou no if == 0 id cliente = "+fat.getCliente().getId()+"...");
                 String sql = "INSERT INTO faturamento VALUES ("
                         + "DEFAULT," + "" + fat.getCliente().getId() + ","
-                        + "" + fat.getFormaPagamento().getId() + ","
+                        
                         + "1,"
                         + "'" + fat.getDataEmissao() + "',"
                         + "'" + fat.getFase() + "',"
                         + "" + fat.getDesconto() + ","
                         + "" + fat.getValorTotal() + ","
-                        + "" + fat.getParcelas() + ""
+                        + "" + fat.getValorTotalLiquido()
                         + ")";
-                System.out.println("inser faturamento..... \n"+sql);
+                System.out.println("insert faturamento..... \n"+sql);
                 
                 int resultado = st.executeUpdate(sql);
 
@@ -58,19 +58,20 @@ public class FaturamentoDAO {
                  ResultSet resulSelect = st.executeQuery(sql);
                  resulSelect.next();
                 
-                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max") + 1));
+                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max")+ ( 1)));
                 mercs.add(fatItem);
                 for (int i = 0; i < mercs.size(); i++) {
                     
-                    sql = "INSERT INTO faturamento_item VALUES ("
-                            + mercs.get(i).getId() + ","
+                    sql = "INSERT INTO faturamento_item VALUES (DEFAULT,"
+                            
                             + fatItem.getIdFaturamento() + ","
+                            
                             + mercs.get(i).getMercadoria().getId() + ","
                             + mercs.get(i).getQuantidade() + ","
                             + mercs.get(i).getMercadoria().getPrecoVenda() + ","
                             + mercs.get(i).getDesconto() + ","
-                            + mercs.get(i).getValorTotal() + ")";
-                    System.out.println("inser faturamento item..... \n"+sql);
+                            + mercs.get(i).getValorTotal()  + ")";
+                    System.out.println("insert faturamento item..... \n"+sql);
                     resultado = st.executeUpdate(sql);
                      
                 }

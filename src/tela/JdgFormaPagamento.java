@@ -528,7 +528,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
         formaPagamento.setId(7);
-        fat.setFormaPagamento(formaPagamento);
+        fat.setValorTotalLiquido(Double.parseDouble(lblTotalLiquido.getText()));
         String dataAtual = Formatacao.getDataAtual();
         
         fat.setDataEmissao(dataAtual);

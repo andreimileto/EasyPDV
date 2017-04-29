@@ -10,13 +10,17 @@
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/FaturamentoItem.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/CidadeDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/MercadoriaDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgCadastroFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListaCidade.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/Faturamento.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/FormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgPedidoVenda.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FormaPagamentoDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListaFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgCadastroCliente.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/apoio/Formatacao.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/FormaPagamentoPagas.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FaturamentoItemDAO.java</file>
         </group>
     </open-files>

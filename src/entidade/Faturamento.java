@@ -12,15 +12,24 @@ import java.sql.Date;
  * @author pc05
  */
 public class Faturamento {
+
     private int id;
     private Cliente cliente;
     private FormaPagamento formaPagamento;
     private Empresa empresa;
-    private String  dataEmissao;
+    private String dataEmissao;
     private int fase;
     private double valorTotal;
     private double desconto;
-    private int parcelas;
+    private double valorTotalLiquido;
+
+    public double getValorTotalLiquido() {
+        return valorTotalLiquido;
+    }
+
+    public void setValorTotalLiquido(double valorTotalLiquido) {
+        this.valorTotalLiquido = valorTotalLiquido;
+    }
 
     public int getId() {
         return id;
@@ -86,11 +95,4 @@ public class Faturamento {
         this.desconto = desconto;
     }
 
-    public int getParcelas() {
-        return parcelas;
-    }
-
-    public void setParcelas(int parcelas) {
-        this.parcelas = parcelas;
-    }
 }
