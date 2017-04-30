@@ -58,8 +58,10 @@ public class FaturamentoDAO {
                  ResultSet resulSelect = st.executeQuery(sql);
                  resulSelect.next();
                 
-                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max")+ ( 1)));
-                mercs.add(fatItem);
+                fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max")));
+//                fatItem.setIdFaturamento(fatItem.getIdFaturamento()+1);
+//                mercs.add(fatItem);
+                
                 for (int i = 0; i < mercs.size(); i++) {
                     
                     sql = "INSERT INTO faturamento_item VALUES (DEFAULT,"
@@ -71,11 +73,14 @@ public class FaturamentoDAO {
                             + mercs.get(i).getMercadoria().getPrecoVenda() + ","
                             + mercs.get(i).getDesconto() + ","
                             + mercs.get(i).getValorTotal()  + ")";
+                    System.out.println(mercs.get(i).getMercadoria().getReferencia()+"...referencia insert");
                     System.out.println("insert faturamento item..... \n"+sql);
                     resultado = st.executeUpdate(sql);
                      
                 }
                 
+                sql = "update faturamento set fase = 'e' where id =" +fatItem.getIdFaturamento();
+                resultado = st.executeUpdate(sql);
                 
 
 //            } else {

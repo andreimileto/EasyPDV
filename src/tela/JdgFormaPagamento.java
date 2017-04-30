@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -534,9 +535,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         fat.setDataEmissao(dataAtual);
         
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
-            System.out.println("salvou");
+            JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
         } else {
-            System.out.println("não salvou");
+            JOptionPane.showMessageDialog(rootPane, "Erro retornado pelo sistema: \nFalha ao finalizar a venda");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
