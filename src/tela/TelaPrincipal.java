@@ -114,6 +114,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_list.png"))); // NOI18N
         jMenuItem6.setText("Listagem de vendas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -171,6 +176,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         JdgPedidoVenda pedido = new JdgPedidoVenda(this, true);
         pedido.setVisible(true);
     }//GEN-LAST:event_imnPDVActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        JdgListagemVendas vendas = new JdgListagemVendas(this, true);
+        vendas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

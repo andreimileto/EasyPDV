@@ -17,7 +17,7 @@
                         );
 
             CREATE TABLE cliente (id serial ,
-                         id_cidade int not null,
+                         id_cidade int,
                          razao_social varchar(150) not null,
                          tipo_cadastro CHAR(1) not null,
                          cpf_cnpj varchar(18) unique,

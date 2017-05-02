@@ -18,7 +18,9 @@ public class Faturamento {
     private FormaPagamento formaPagamento;
     private Empresa empresa;
     private String dataEmissao;
-    private int fase;
+    private String dataEmissaoInicio;
+    private String dataEmissaoFim;
+    private char fase = '0';
     private double valorTotal;
     private double desconto;
     private double valorTotalLiquido;
@@ -71,11 +73,11 @@ public class Faturamento {
         this.dataEmissao = dataEmissao;
     }
 
-    public int getFase() {
+    public char getFase() {
         return fase;
     }
 
-    public void setFase(int fase) {
+    public void setFase(char fase) {
         this.fase = fase;
     }
 
@@ -93,6 +95,22 @@ public class Faturamento {
 
     public void setDesconto(double desconto) {
         this.desconto = desconto;
+    }
+
+    public String getDataEmissaoInicio() {
+        return dataEmissaoInicio;
+    }
+
+    public void setDataEmissaoInicio(String dataEmissaoInicio) {
+        this.dataEmissaoInicio = dataEmissaoInicio;
+    }
+
+    public String getDataEmissaoFim() {
+        return dataEmissaoFim;
+    }
+
+    public void setDataEmissaoFim(String dataEmissaoFim) {
+        this.dataEmissaoFim = dataEmissaoFim;
     }
 
 }

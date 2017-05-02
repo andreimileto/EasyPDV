@@ -113,6 +113,23 @@ public class Formatacao {
         return (dataFormatada);
     }
 
+    public static String ajustaDataDMAExtenso(String data) {
+        String dataFormatada = null;
+        try {
+
+            // Tue, 09 Jan 2002 22:14:02 -0500
+            Date dataAMD = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH).parse(data);
+//            Date dataDMA = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z");
+            dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataAMD);
+//            s = formatter.format(date);
+//            System.out.println(s);
+        } catch (Exception e) {
+            System.err.println(e);
+
+        }
+        return dataFormatada;
+    }
+
     public static String ajustaDataAMD(String data) {
         String dataFormatada = null;
         try {
@@ -138,7 +155,7 @@ public class Formatacao {
         Date now = new Date();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataHoje = df.format(now);
-        
+
         return dataHoje;
     }
 }

@@ -528,10 +528,10 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
-        formaPagamento.setId(7);
+//        formaPagamento.setId(7);
         fat.setValorTotalLiquido(Double.parseDouble(lblTotalLiquido.getText()));
         String dataAtual = Formatacao.getDataAtual();
-        
+        fat.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
         fat.setDataEmissao(dataAtual);
         
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {

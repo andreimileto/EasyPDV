@@ -6,6 +6,9 @@
 package DAO;
 
 import apoio.ConexaoBD;
+import apoio.Formatacao;
+import apoio.Validacao;
+import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
@@ -83,17 +86,6 @@ public class FaturamentoDAO {
                 resultado = st.executeUpdate(sql);
                 
 
-//            } else {
-//                String sql = "UPDATE cliente set id_cidade='" + cli.getCidade().getId()
-//                        + "', razao_social ='" + cli.getRazaoSocial()
-//                        + "', tipo_cadastro ='" + cli.getTipoCadastro()
-//                        + "', cpf_cnpj ='" + cli.getCpfCnpj()
-//                        + "', endereco ='" + cli.getEndereco()
-//                        + "', telefone ='" + cli.getTelefone()
-//                        + "', ativo ='" + cli.getAtivo()
-//                        + "' where id =" + cli.getId();
-//
-//                int resultado = st.executeUpdate(sql);
             }
             return true;
         } catch (Exception e) {
@@ -102,4 +94,83 @@ public class FaturamentoDAO {
         }
         return false;
     }
+    
+    public ArrayList<Faturamento> consultar(Faturamento fat) {
+        this.fat = fat;
+        ArrayList<Faturamento> vendas = new ArrayList<>();
+        String sql = "";
+        JOptionPane.showMessageDialog(null, fat.getValorTotal());
+        if (fat.getFase() == 'e' || fat.getFase() == 'c' 
+                && fat.getDataEmissaoInicio().equals(null) && fat.getDataEmissaoFim().equals(null)) {
+            
+            sql = "select  f.id,f.id_cliente,cli.cpf_cnpj, cli.razao_social,f.id_empresa, f.data_emissao,f.valor_total,f.desconto,f.valor_total_liquido,f.fase "
+                    + "from faturamento f, cliente cli "
+                    + "where f.fase = '"+fat.getFase()+"' "
+                    + "order by f.id";
+            
+        }else if (fat.getFase() == 'e' || fat.getFase() == 'c' 
+                && fat.getDataEmissaoInicio()!= null && fat.getDataEmissaoFim() != null) {
+            sql = "select  f.id,f.id_cliente,cli.cpf_cnpj, cli.razao_social,f.id_empresa, f.data_emissao,f.valor_total,f.desconto,f.valor_total_liquido,f.fase "
+                    + "from faturamento f, cliente cli "
+                    + "where f.fase = '"+fat.getFase()+"' "
+                    + "and f.data_emissao >= '"+fat.getDataEmissaoInicio()+"'"
+                    + "and f.data_eissao <= '"+fat.getDataEmissaoFim()+" 23:59:59' "
+                    + "order by f.id";
+            
+        }else{
+            sql = "select  f.id,f.id_cliente,cli.cpf_cnpj, cli.razao_social,f.id_empresa, f.data_emissao,f.valor_total,f.desconto,f.valor_total_liquido,f.fase "
+                    + "from faturamento f, cliente cli "
+                    + "where f.data_emissao >= '"+fat.getDataEmissaoInicio()+"'"
+                    + "and f.data_eissao <= '"+fat.getDataEmissaoFim()+" 23:59:59' "
+                    + "order by f.id";
+        }
+        
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            System.out.println(sql);
+            ResultSet resultado = st.executeQuery(sql);
+            while (resultado.next()) {
+                Faturamento fats = new Faturamento();
+                Cidade cid = new Cidade();
+                Cliente cliente = new Cliente(cid);
+                
+                cliente.setId(resultado.getInt("id_cliente"));
+                cliente.setRazaoSocial(resultado.getString("razao_social"));
+                   
+                cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));
+                fats.setCliente(cliente);
+                fats.setId(resultado.getInt("id"));
+                fats.setDataEmissao(Formatacao.ajustaDataDMA("data_emissao"));
+                fats.setFase(resultado.getString("fase").charAt(0));
+                fats.setValorTotal(resultado.getDouble("valor_total"));
+                fats.setDesconto(resultado.getDouble("desconto"));
+                fats.setValorTotalLiquido(resultado.getDouble("valor_total_liquido"));
+//                fats.setEmpresa(empresa);
+                
+//                if (resultado.getString("telefone").equals("null")) {
+//                    
+//                    cliente.setTelefone("");
+//                } else {
+//                    cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+//                }
+//                cliente.setTipoCadastro((resultado.getString("tipo_cadastro").charAt(0)));
+//                if (resultado.getString("endereco").equals("null")) {
+//                    cliente.setEndereco("");
+//                } else {
+//                    cliente.setEndereco(String.valueOf(resultado.getString("endereco")));
+//                }
+//                cliente.setAtivo(resultado.getString("ativo").charAt(0));
+                vendas.add(fats);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar Venda " + e);
+        }
+        
+        
+        
+        
+        return vendas;
+    }
+    
 }

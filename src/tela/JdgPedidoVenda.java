@@ -955,16 +955,15 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
 
-        for (int i = 0; i < mercs.size(); i++) {
-            System.out.println("referencia " + i + " " + mercs.get(i).getMercadoria().getReferencia());
-
+     
+        if (cliente.getId() == 0) {
+            cliente.setId(1);
         }
-
         fatItemDAO.consultar(faturamentoItem, mercs);
         System.out.println("id cliente = " + cliente.getId());
         faturamento.setCliente(cliente);
         faturamentoItem.setMercadoria(mercadoria);
-
+        
         System.out.println("id cliente = " + faturamento.getCliente().getId());
         JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
         forPag.setVisible(true);
