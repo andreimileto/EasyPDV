@@ -28,17 +28,16 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     /**
      * Creates new form JdgListagemVendas
      */
-    
     Faturamento fat;
+
     public JdgListagemVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         Faturamento fat = new Faturamento();
         this.fat = fat;
-        
-        fat.setFase('t');
+        fat.setFase('e');
         listarVendas();
-        
+
     }
 
     /**
@@ -292,11 +291,18 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-     private void listarVendas() {
-         
-//         if (fat.getFase()== '0') {
-//             fat.setFase('t');
-//         }
+    private void listarVendas() {
+
+        if (rbtFinalizadas.isSelected() && rbtCanceladas.isSelected()) {
+            fat.setFase('t');
+        } else if (rbtFinalizadas.isSelected() && !rbtCanceladas.isSelected()) {
+            fat.setFase('e');
+        } else if (!rbtFinalizadas.isSelected() && rbtCanceladas.isSelected()) {
+            fat.setFase('c');
+        } else {
+            fat.setFase(' ');
+        }
+
         try {
             //setar para tabela modelo de dados
             tblListaVendas.setModel(this.obterDadosParaTabelaCompleto());
@@ -326,7 +332,6 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
 //        ClienteDAO cliDAO = new ClienteDAO();
 //        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
-
         dtm.addColumn("N° VENDA");
         dtm.addColumn("CLIENTE");
         dtm.addColumn("DATA EMISSÃO");
@@ -355,33 +360,45 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
-    
-    
+
+
     private void rbtFiltroDataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtFiltroDataItemStateChanged
         if (rbtFiltroData.isSelected()) {
-            
+
             tffDataFim.setEnabled(true);
             tffDataInicio.setEnabled(true);
-            
+
         } else {
-            
+
             tffDataFim.setCalendar(null);
             tffDataInicio.setCalendar(null);
             tffDataFim.setEnabled(false);
             tffDataInicio.setEnabled(false);
-            
+
         }
-        
+
     }//GEN-LAST:event_rbtFiltroDataItemStateChanged
 
     private void tffDataInicioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDataInicioKeyReleased
- 
+
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        fat.setDataEmissaoInicio((Formatacao.ajustaDataDMAExtenso(String.valueOf(tffDataInicio.getCalendar()))));
-        JOptionPane.showMessageDialog(rootPane, fat.getDataEmissaoInicio());
-        listarVendas();
+
+        if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
+            JOptionPane.showMessageDialog(rootPane, "entrou no if");
+            String dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
+            String dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
+            fat.setDataEmissaoInicio(dataInicio);
+            fat.setDataEmissaoFim(dataFim);
+            listarVendas();
+        } else {
+            fat.setDataEmissaoInicio(null);
+            fat.setDataEmissaoFim(null);
+            JOptionPane.showMessageDialog(rootPane, "entrou no else");
+            listarVendas();
+        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -398,16 +415,24 @@ public class JdgListagemVendas extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JdgListagemVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListagemVendas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JdgListagemVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListagemVendas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JdgListagemVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListagemVendas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JdgListagemVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListagemVendas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
