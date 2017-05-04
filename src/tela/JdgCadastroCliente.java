@@ -46,7 +46,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         mascaraCpfCnpj();
         mascaraTelefone();
         atualizarCamposFormatados();
-
+        limparCampos();
     }
 
     private void mascaraCpfCnpj() {

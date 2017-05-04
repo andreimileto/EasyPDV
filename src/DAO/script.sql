@@ -127,10 +127,11 @@ BEGIN
     update mercadoria m set estoque = (estoque - f.quantidade  )
     from faturamento_item f, faturamento fa
     where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+
     
  end if;
     if (NEW.fase = 'c') then
-    update mercadoria m set estoque = estoque 
+  update mercadoria m set estoque = estoque
     from faturamento_item f, faturamento fa
     where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
 end if;

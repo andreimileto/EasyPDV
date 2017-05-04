@@ -41,6 +41,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     Faturamento faturamento = new Faturamento();
     int idFaturamentoItem = 0;
     ArrayList<FaturamentoItem> mercs;
+    double valorTotalVenda;
 
     /**
      * Creates new form JdgPedidoVenda
@@ -588,13 +589,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tfdReferencia.setText("");
         tfdDescricao.setText("");
         tffDesconto.setText("0,00");
-        tffPrecoUnitario.setText("");
+        tffPrecoUnitario.setText("0,00");
 
     }
-
-  
-
-    
 
     private void listarMercadorias() {
         try {
@@ -644,9 +641,9 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
                 String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
                 String.valueOf(mercs.get(i).getDesconto()),
                 String.valueOf(mercs.get(i).getValorTotal())});
-            
+
         }
-        
+
         idFaturamentoItem++;
 
 //        mercadoria = new Mercadoria();
@@ -747,7 +744,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             lblReferencia.setForeground(Color.black);
             lblRetornoMercadoria.setText("");
             tfdDescricao.setText(mercadoria.getDescricao());
-            
+
             tffQuantidade.setText("1,00");
             tffDesconto.setText("0,00");
             tffQuantidade.requestFocus();
@@ -815,7 +812,6 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             atualizarTotais();
             confirmarItem();
 
-            
         } catch (Exception ex) {
             Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -830,7 +826,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             double valorTotalItem = Double.parseDouble(tffValorTotal.getText().replace(",", ".")) - Double.parseDouble(tffDesconto.getText().replace(",", "."));
             tffValorTotal.setText(String.valueOf(valorTotalItem));
 
-            double valorTotalVenda = 0;
+             valorTotalVenda = 0;
 
             valorTotalVenda = faturamento.getValorTotal() + Double.parseDouble(tffValorTotal.getText());
             tffTotalVenda.setText(String.valueOf(valorTotalVenda));
@@ -955,7 +951,6 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
 
-     
         if (cliente.getId() == 0) {
             cliente.setId(1);
         }
@@ -963,11 +958,38 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         System.out.println("id cliente = " + cliente.getId());
         faturamento.setCliente(cliente);
         faturamentoItem.setMercadoria(mercadoria);
-        
+
         System.out.println("id cliente = " + faturamento.getCliente().getId());
         JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
         forPag.setVisible(true);
+
+        novaVenda();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void novaVenda() {
+        mercadoria = new Mercadoria();
+        faturamentoItem = new FaturamentoItem();
+        faturamento = new Faturamento();
+        cliente = new Cliente(cid);
+        valorTotalVenda = 0.00;
+        tffTotalDesconto.setText("0,00");
+        tfdId.setText("");
+        tfdRazaoSocial.setText("");
+        tffCpfCNPJ.setText("");
+        tffTotalVenda.setText(String.valueOf(valorTotalVenda));
+        tffValorTotal.setText("0,00");
+        
+        mercs = new ArrayList<>();
+//        atualizarTotais();
+        try {
+            limparCampos();
+            listarMercadorias();
+            tffCpfCNPJ.requestFocus();
+        } catch (Exception ex) {
+            Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     private void tfdReferenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdReferenciaKeyPressed
         // TODO add your handling code here:
@@ -979,7 +1001,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         int row = tblMercadorias.getSelectedRow();
         System.out.println("linha selecionada" + row);
 
-        faturamento.setValorTotal(faturamento.getValorTotal() - mercs.get(row ).getValorTotal());
+        faturamento.setValorTotal(faturamento.getValorTotal() - mercs.get(row).getValorTotal());
         faturamento.setDesconto(faturamento.getDesconto() - mercs.get(row).getDesconto());
         tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
         tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".", ","));
@@ -995,8 +1017,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         mercs.get(row).getMercadoria().setDescricao(mercs.get(row).getMercadoria().getDescricao() + " *** CANCELADO ***");
         System.out.println("tamanho array..." + mercs.size());
 
-       listarMercadorias();
-       tfdReferencia.requestFocus();
+        listarMercadorias();
+        tfdReferencia.requestFocus();
 
     }
 

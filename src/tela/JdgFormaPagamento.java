@@ -55,6 +55,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         listarFormasPagamento();
         valoresDefault();
         atualizarValores();
+        listarFormasPagamentoPagas();
     }
 
     private void inserirFormaPagamento() {
@@ -355,6 +356,11 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         jButton2.setText("Sair");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -496,6 +502,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             } else {
                 tffCodigoPagamento.requestFocus();
                 inserirFormaPagamento();
+                
             }
             
         }
@@ -536,6 +543,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
             JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
+            dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro retornado pelo sistema: \nFalha ao finalizar a venda");
         }
@@ -549,6 +557,10 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             
         }
     }//GEN-LAST:event_tffCodigoPagamentoKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     private boolean validarParcela() {
         boolean ok = false;

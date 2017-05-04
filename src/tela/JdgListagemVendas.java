@@ -13,6 +13,7 @@ import apoio.Validacao;
 import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
+import entidade.FaturamentoItem;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,14 +30,20 @@ public class JdgListagemVendas extends javax.swing.JDialog {
      * Creates new form JdgListagemVendas
      */
     Faturamento fat;
+    Cliente cli;
+    ArrayList<Faturamento> vendas;
 
     public JdgListagemVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         Faturamento fat = new Faturamento();
+        Cidade cid = new Cidade();
+        cli = new Cliente(cid);
         this.fat = fat;
         fat.setFase('e');
+        vendas = new ArrayList<>();
         listarVendas();
+        tfdBuscar.setText("");
 
     }
 
@@ -74,7 +81,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de vendas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Período", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
@@ -105,13 +112,16 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tffDataFim, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(rbtFiltroData, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tffDataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tffDataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rbtFiltroData, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 27, Short.MAX_VALUE))
+                    .addComponent(tffDataFim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,6 +172,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         btnAcessarVenda.setText("Acessar Venda");
 
         btnCancelarVenda.setText("Cancelar Venda");
+        btnCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarVendaActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
 
@@ -328,7 +343,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //adiciona titulo para as colunas
 
         FaturamentoDAO fatDAO = new FaturamentoDAO();
-        ArrayList<Faturamento> vendas = fatDAO.consultar(fat);
+        ArrayList<Faturamento> vendas = fatDAO.consultar(fat, cli);
 
 //        ClienteDAO cliDAO = new ClienteDAO();
 //        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
@@ -384,9 +399,24 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (tfdBuscar.getText().length() > 0) {
 
+            cli.setRazaoSocial(tfdBuscar.getText());
+            fat.setCliente(cli);
+            try {
+                fat.setId(Integer.parseInt(tfdBuscar.getText()));
+
+            } catch (Exception e) {
+
+            }
+
+        } else {
+            tfdBuscar.setText("");
+            cli.setRazaoSocial(tfdBuscar.getText());
+            fat.setId(0);
+        }
         if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
-            JOptionPane.showMessageDialog(rootPane, "entrou no if");
+            
             String dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
             String dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
             fat.setDataEmissaoInicio(dataInicio);
@@ -395,11 +425,44 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         } else {
             fat.setDataEmissaoInicio(null);
             fat.setDataEmissaoFim(null);
-            JOptionPane.showMessageDialog(rootPane, "entrou no else");
+//            JOptionPane.showMessageDialog(rootPane, "entrou no else");
             listarVendas();
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
+        FaturamentoDAO fatDAO = new FaturamentoDAO();
+        vendas = fatDAO.consultar(fat, cli);
+        int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
+                + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
+                + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
+        );
+        
+        if (op == 0) {
+            try {
+                JOptionPane.showMessageDialog(rootPane, "linha selecionada = "+tblListaVendas.getSelectedRow());
+                cancelarVenda();
+                
+            } catch (Exception ex) {
+                Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnCancelarVendaActionPerformed
+
+    private void cancelarVenda() {
+        int row = tblListaVendas.getSelectedRow();
+        JOptionPane.showMessageDialog(rootPane, "linha selecionada = "+row);
+        fat.setId(vendas.get(row).getId());
+        JOptionPane.showMessageDialog(rootPane, "id selecionada = "+fat.getId());
+        FaturamentoDAO fatDAO = new FaturamentoDAO();
+        if(fatDAO.salvar(fat, null, null)){
+            JOptionPane.showMessageDialog(rootPane, "Cancelamento da venda realizado com sucesso!");
+            listarVendas();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "erro retornado pelo sistema:\nErro ao cancelar venda.");
+        }
+    }
 
     /**
      * @param args the command line arguments
