@@ -8,6 +8,7 @@ package tela;
 import DAO.ClienteDAO;
 import DAO.FaturamentoItemDAO;
 import DAO.MercadoriaDAO;
+import apoio.Formatacao;
 import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
@@ -789,6 +790,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }
     private void tffQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            
             quantidadeItem();
 
         }
@@ -800,8 +802,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 //            faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
             faturamentoItem.setValorTotal(mercadoria.getPrecoVenda() * Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
             tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
+            
             tffDesconto.requestFocus();
         } else {
+            
             tffQuantidade.requestFocus();
         }
 

@@ -260,11 +260,17 @@
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Finalizadas"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rbtFinalizadasItemStateChanged"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="rbtCanceladas">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Canceladas"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rbtCanceladasItemStateChanged"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -277,6 +283,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Acessar Venda"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAcessarVendaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCancelarVenda">
               <Properties>
@@ -292,6 +301,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfdBuscar">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tfdBuscarKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnBuscar">
               <Properties>
@@ -356,6 +368,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblListaVendasMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

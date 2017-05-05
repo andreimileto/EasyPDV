@@ -143,8 +143,18 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
         rbtFinalizadas.setSelected(true);
         rbtFinalizadas.setText("Finalizadas");
+        rbtFinalizadas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtFinalizadasItemStateChanged(evt);
+            }
+        });
 
         rbtCanceladas.setText("Canceladas");
+        rbtCanceladas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtCanceladasItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -170,6 +180,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         btnRelatorios.setText("Relatórios");
 
         btnAcessarVenda.setText("Acessar Venda");
+        btnAcessarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcessarVendaActionPerformed(evt);
+            }
+        });
 
         btnCancelarVenda.setText("Cancelar Venda");
         btnCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +194,12 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         });
 
         btnSair.setText("Sair");
+
+        tfdBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfdBuscarKeyReleased(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -245,6 +266,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblListaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListaVendasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblListaVendas);
@@ -399,7 +425,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (tfdBuscar.getText().length() > 0) {
+        buscar();
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+private void buscar(){
+            if (tfdBuscar.getText().length() > 0) {
 
             cli.setRazaoSocial(tfdBuscar.getText());
             fat.setCliente(cli);
@@ -416,7 +446,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             fat.setId(0);
         }
         if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
-            
+
             String dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
             String dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
             fat.setDataEmissaoInicio(dataInicio);
@@ -428,38 +458,83 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(rootPane, "entrou no else");
             listarVendas();
         }
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
+}
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
         FaturamentoDAO fatDAO = new FaturamentoDAO();
         vendas = fatDAO.consultar(fat, cli);
-        int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
+        try {
+                    int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
                 + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
                 + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
         );
-        
+
         if (op == 0) {
             try {
-                JOptionPane.showMessageDialog(rootPane, "linha selecionada = "+tblListaVendas.getSelectedRow());
+                
                 cancelarVenda();
                 
+
             } catch (Exception ex) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Nenhuma Linha da tabela Selecionada");
+        }
+
     }//GEN-LAST:event_btnCancelarVendaActionPerformed
 
+    private void btnAcessarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarVendaActionPerformed
+        acessarVenda();
+
+    }//GEN-LAST:event_btnAcessarVendaActionPerformed
+
+    private void tblListaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaVendasMouseClicked
+        int row = tblListaVendas.getSelectedRow();
+        if (tblListaVendas.getValueAt(row, 6) == "Cancelado") {
+            btnCancelarVenda.setEnabled(false);
+        }else{
+            btnCancelarVenda.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblListaVendasMouseClicked
+
+    private void rbtCanceladasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtCanceladasItemStateChanged
+        listarVendas();
+    }//GEN-LAST:event_rbtCanceladasItemStateChanged
+
+    private void rbtFinalizadasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtFinalizadasItemStateChanged
+        listarVendas();
+    }//GEN-LAST:event_rbtFinalizadasItemStateChanged
+
+    private void tfdBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdBuscarKeyReleased
+        buscar();
+    }//GEN-LAST:event_tfdBuscarKeyReleased
+
+    private void acessarVenda(){
+        fat.setId(0);
+        vendas.removeAll(vendas);
+       int row = tblListaVendas.getSelectedRow();
+       FaturamentoDAO fatDAO = new FaturamentoDAO();
+       
+       vendas = fatDAO.consultar(fat, cli);
+        fat.setId(vendas.get(row).getId()); 
+        
+        JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true,fat);
+        vendaRegistrada.setVisible(true);
+    }
+    
+    
     private void cancelarVenda() {
         int row = tblListaVendas.getSelectedRow();
-        JOptionPane.showMessageDialog(rootPane, "linha selecionada = "+row);
+
         fat.setId(vendas.get(row).getId());
-        JOptionPane.showMessageDialog(rootPane, "id selecionada = "+fat.getId());
+
         FaturamentoDAO fatDAO = new FaturamentoDAO();
-        if(fatDAO.salvar(fat, null, null)){
+        if (fatDAO.salvar(fat, null, null)) {
             JOptionPane.showMessageDialog(rootPane, "Cancelamento da venda realizado com sucesso!");
+            fat.setId(0);
             listarVendas();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "erro retornado pelo sistema:\nErro ao cancelar venda.");
         }
     }
