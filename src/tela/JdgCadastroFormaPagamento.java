@@ -107,14 +107,14 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 64, -1, -1));
 
         rbtAvista.setText("Avista");
-        jPanel1.add(rbtAvista, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 88, -1, -1));
+        jPanel1.add(rbtAvista, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
 
         rbtPrazo.setText("Prazo");
-        jPanel1.add(rbtPrazo, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 88, -1, -1));
+        jPanel1.add(rbtPrazo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
-        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
@@ -123,7 +123,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnLocalizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLocalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+        jPanel1.add(btnLocalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -132,7 +132,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, -1, -1));
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -141,7 +141,7 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
                 btnSairActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 79, -1));
+        jPanel1.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 79, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,9 +154,9 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

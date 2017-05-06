@@ -61,7 +61,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
                 rbtAtivoActionPerformed(evt);
             }
         });
-        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         tfdDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

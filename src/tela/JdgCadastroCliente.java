@@ -76,14 +76,15 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
     private void atualizarCamposFormatados() {
         tffCpfCnpj.setValue(null);
+        lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("")));
         if (cbxTipo.getSelectedIndex() == 0) {
-            lblRazaoSocial.setText("Nome:");
-            lblCpfCnpj.setText("CPF:");
+            lblRazaoSocial.setText("Nome*");
+            lblCpfCnpj.setText("CPF*");
             tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
 
         } else {
-            lblRazaoSocial.setText("Razão Social:");
-            lblCpfCnpj.setText("CNPJ:");
+            lblRazaoSocial.setText("Razão S.*");
+            lblCpfCnpj.setText("CNPJ*");
             tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCnpj));
         }
     }
@@ -100,7 +101,6 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tfdId = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         cbxTipo = new javax.swing.JComboBox<>();
         rbtAtivo = new javax.swing.JRadioButton();
         lblSituacaoCPFCNPJ = new javax.swing.JLabel();
@@ -126,25 +126,22 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Código");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         tfdId.setEditable(false);
         jPanel1.add(tfdId, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 55, -1));
-
-        jLabel3.setText("Tipo");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         cbxTipo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxTipoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cbxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 113, -1));
+        jPanel1.add(cbxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 113, -1));
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
-        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
-        jPanel1.add(lblSituacaoCPFCNPJ, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 10, -1));
+        jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+        jPanel1.add(lblSituacaoCPFCNPJ, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 20, 20));
 
         try {
             tffCpfCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -161,13 +158,13 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 tffCpfCnpjActionPerformed(evt);
             }
         });
-        jPanel1.add(tffCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 122, -1));
+        jPanel1.add(tffCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 130, -1));
 
         lblCpfCnpj.setText("CPF*");
-        jPanel1.add(lblCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        jPanel1.add(lblCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         lblTelefone.setText("Telefone");
-        jPanel1.add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
+        jPanel1.add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, -1, -1));
 
         try {
             tffTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -189,17 +186,17 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 tffTelefoneKeyReleased(evt);
             }
         });
-        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 99, -1));
+        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 99, -1));
 
         lblRazaoSocial.setText("Nome*");
-        jPanel1.add(lblRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel1.add(lblRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
         jPanel1.add(tfdRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 310, -1));
 
         lblCidade.setText("Cidade*");
-        jPanel1.add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        jPanel1.add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
         tfdCidade.setEditable(false);
-        jPanel1.add(tfdCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 184, -1));
+        jPanel1.add(tfdCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 184, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -207,17 +204,17 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 30, 23));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 30, 23));
 
         lblEndereco.setText("Endereço");
-        jPanel1.add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        jPanel1.add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         tfdEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfdEnderecoActionPerformed(evt);
             }
         });
-        jPanel1.add(tfdEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 298, -1));
+        jPanel1.add(tfdEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 298, -1));
 
         btnLocalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Lupa3.png"))); // NOI18N
         btnLocalizar.setText("Localizar");
@@ -226,7 +223,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 btnLocalizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLocalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
+        jPanel1.add(btnLocalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -250,15 +247,15 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -284,7 +281,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         } else {
             cidade.setId(auxIdCidade);
         }
-
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -388,10 +385,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private void tffCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCnpjFocusLost
         if (tffCpfCnpj.getText().length() > 14) {
             if (Validacao.validarCNPJ(Formatacao.removerFormatacao(tffCpfCnpj.getText()))) {
-                System.out.println("ok");
+                
                 lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
             } else {
-                System.out.println("false");
+                
                 lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_button_cancel.png")));
             }
         } else {
@@ -564,7 +561,6 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCpfCnpj;
