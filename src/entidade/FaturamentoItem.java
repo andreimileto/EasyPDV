@@ -18,7 +18,7 @@ public class FaturamentoItem {
     private double quantidade;
     private double desconto;
     private double valorTotal;
-
+    private double valorUnitario;
     public int getId() {
         return id;
     }
@@ -65,6 +65,14 @@ public class FaturamentoItem {
 
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 
 }

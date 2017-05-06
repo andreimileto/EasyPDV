@@ -5,8 +5,12 @@
  */
 package tela;
 
+import DAO.CidadeDAO;
+import DAO.ClienteDAO;
 import DAO.FaturamentoDAO;
+import DAO.FaturamentoItemDAO;
 import apoio.Formatacao;
+import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
@@ -70,6 +74,8 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         tfdNumero = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         tffCpfCnpj = new javax.swing.JFormattedTextField();
+        jLabel8 = new javax.swing.JLabel();
+        tfdSituação = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMercadorias = new javax.swing.JTable();
@@ -125,6 +131,10 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setText("Situação:");
+
+        tfdSituação.setEditable(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -136,17 +146,21 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(tfdNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfdDataEmissao))
-                        .addComponent(tfdNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfdSituação))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(tfdNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfdDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdNomeCliente))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
@@ -178,7 +192,9 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tffCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(tfdSituação, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -231,6 +247,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         );
 
         btnCancelarVenda.setText("Cancelar venda");
+        btnCancelarVenda.setEnabled(false);
 
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -335,13 +352,13 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
             //setar para tabela modelo de dados
 
             tblMercadorias.setModel(this.obterDadosParaTabelaCompleto());
-            tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(3).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(4).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(5).setPreferredWidth(0);
-            tblMercadorias.getColumnModel().getColumn(6).setPreferredWidth(0);
+            
 
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
@@ -358,7 +375,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
 //adiciona titulo para as colunas
 //        MercadoriaDAO mercDAO = new MercadoriaDAO();
 
-        dtm.addColumn("SEQUÊNCIA");
+//        dtm.addColumn("SEQUÊNCIA");
         dtm.addColumn("REFERÊNCIA");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("QNT");
@@ -374,8 +391,10 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         faturamento = fatDAO.consultar(fat, cli);
         tfdNomeCliente.setText(faturamento.get(0).getCliente().getRazaoSocial());
         tfdDataEmissao.setText(faturamento.get(0).getDataEmissao());
-        tfdValorBruto.setText(String.valueOf(faturamento.get(0).getValorTotal()));
-        tfdValorLiquido.setText(String.valueOf(faturamento.get(0).getValorTotalLiquido()));
+        tfdValorBruto.setText(String.valueOf(faturamento.get(0).getValorTotal()).replace(".", ","));
+        tfdValorLiquido.setText(String.valueOf(faturamento.get(0).getValorTotalLiquido()).replace(".", ","));
+        tfdNumero.setText(String.valueOf(faturamento.get(0).getId()));
+        tfdDesconto.setText(String.valueOf(faturamento.get(0).getDesconto()).replace(".", ","));
         if (faturamento.get(0).getCliente().getCpfCnpj().length() > 11) {
 
 //            tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCnpj));
@@ -388,26 +407,63 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
             Formatacao.reformatarCpf(tffCpfCnpj);
             tffCpfCnpj.setText(faturamento.get(0).getCliente().getCpfCnpj());
         }
-        for (int i = 0; i < mercs.size(); i++) {
-            //popular tabela
-
-            System.out.println(mercs.get(i).getValorTotal());
-            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
-                mercs.get(i).getMercadoria().getReferencia(),
-                mercs.get(i).getMercadoria().getDescricao(),
-                String.valueOf(mercs.get(i).getQuantidade()),
-                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
-                String.valueOf(mercs.get(i).getDesconto()),
-                String.valueOf(mercs.get(i).getValorTotal())});
-
+        
+        if (faturamento.get(0).getFase()=='e') {
+            tfdSituação.setText("Encerrado");
+            btnCancelarVenda.setEnabled(true);
+        }else{
+            tfdSituação.setText("Cancelado");
+            btnCancelarVenda.setEnabled(false);
         }
+        
+        
+         FaturamentoItem fatItem = new FaturamentoItem();
+         FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
+         fatItem.setIdFaturamento(fat.getId());
+        ArrayList<FaturamentoItem> itensVendidos = fatItemDAO.consultar(fatItem);
+//
+//        ClienteDAO cliDAO = new ClienteDAO();
+//        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
 
-//        idFaturamentoItem++;
-//        mercadoria = new Mercadoria();
-//        faturamentoItem = new FaturamentoItem();
+        
+
+        for (int i = 0; i < itensVendidos.size(); i++) {
+            //popular tabela
+            
+
+            dtm.addRow(new String[]{String.valueOf(itensVendidos.get(i).getMercadoria().getReferencia()),
+                itensVendidos.get(i).getMercadoria().getDescricao(),
+                String.valueOf(itensVendidos.get(i).getQuantidade()),
+                String.valueOf(itensVendidos.get(i).getValorUnitario()),
+                String.valueOf(itensVendidos.get(i).getDesconto()),
+                String.valueOf(itensVendidos.get(i).getValorTotal())
+                
+            });
+        }
 //retorna o modelo
         return dtm;
     }
+        
+//        for (int i = 0; i < mercs.size(); i++) {
+//            //popular tabela
+//
+//            System.out.println(mercs.get(i).getValorTotal());
+//            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
+//                mercs.get(i).getMercadoria().getReferencia(),
+//                mercs.get(i).getMercadoria().getDescricao(),
+//                String.valueOf(mercs.get(i).getQuantidade()),
+//                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
+//                String.valueOf(mercs.get(i).getDesconto()),
+//                String.valueOf(mercs.get(i).getValorTotal())});
+//
+//        }
+//
+////        idFaturamentoItem++;
+////        mercadoria = new Mercadoria();
+////        faturamentoItem = new FaturamentoItem();
+////retorna o modelo
+//        return dtm;
+//    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -459,6 +515,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -468,6 +525,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     private javax.swing.JTextField tfdDesconto;
     private javax.swing.JTextField tfdNomeCliente;
     private javax.swing.JTextField tfdNumero;
+    private javax.swing.JTextField tfdSituação;
     private javax.swing.JTextField tfdValorBruto;
     private javax.swing.JTextField tfdValorLiquido;
     private javax.swing.JFormattedTextField tffCpfCnpj;

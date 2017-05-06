@@ -194,6 +194,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         tfdBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -486,7 +491,7 @@ private void buscar(){
 
     private void btnAcessarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarVendaActionPerformed
         acessarVenda();
-
+        
     }//GEN-LAST:event_btnAcessarVendaActionPerformed
 
     private void tblListaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaVendasMouseClicked
@@ -510,6 +515,10 @@ private void buscar(){
         buscar();
     }//GEN-LAST:event_tfdBuscarKeyReleased
 
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
     private void acessarVenda(){
         fat.setId(0);
         vendas.removeAll(vendas);
@@ -521,6 +530,7 @@ private void buscar(){
         
         JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true,fat);
         vendaRegistrada.setVisible(true);
+        fat.setId(0);
     }
     
     

@@ -20,13 +20,17 @@ import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -57,6 +61,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         listarMercadorias();
 
         tffCpfCNPJ.requestFocus();
+
     }
 
     /**
@@ -148,10 +153,15 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         jLabel2.setText("Descrição");
 
-        tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##.##"))));
+        tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         tffQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tffQuantidadeFocusLost(evt);
+            }
+        });
+        tffQuantidade.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tffQuantidadePropertyChange(evt);
             }
         });
         tffQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -788,24 +798,28 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         return ok;
     }
+
     private void tffQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            
+            tffQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+            tffQuantidade.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
             quantidadeItem();
 
         }
 
     }//GEN-LAST:event_tffQuantidadeKeyReleased
     private void quantidadeItem() {
+
         if (Double.parseDouble(tffQuantidade.getText().replace(",", ".")) > 0.00) {
 
 //            faturamentoItem.setValorTotal(faturamentoItem.getMercadoria().getPrecoVenda() * faturamentoItem.getQuantidade());
             faturamentoItem.setValorTotal(mercadoria.getPrecoVenda() * Double.parseDouble(tffQuantidade.getText().replace(",", ".")));
             tffValorTotal.setText(String.valueOf(faturamentoItem.getValorTotal()));
-            
+
             tffDesconto.requestFocus();
         } else {
-            
+
             tffQuantidade.requestFocus();
         }
 
@@ -830,7 +844,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             double valorTotalItem = Double.parseDouble(tffValorTotal.getText().replace(",", ".")) - Double.parseDouble(tffDesconto.getText().replace(",", "."));
             tffValorTotal.setText(String.valueOf(valorTotalItem));
 
-             valorTotalVenda = 0;
+            valorTotalVenda = 0;
 
             valorTotalVenda = faturamento.getValorTotal() + Double.parseDouble(tffValorTotal.getText());
             tffTotalVenda.setText(String.valueOf(valorTotalVenda));
@@ -872,6 +886,8 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+            tffDesconto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             try {
 
                 atualizarTotais();
@@ -900,7 +916,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJFocusLost
 
     private void tffQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffQuantidadeFocusLost
-//        quantidadeItem();
+
     }//GEN-LAST:event_tffQuantidadeFocusLost
 
     private void tffCpfCNPJFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCNPJFocusGained
@@ -908,10 +924,14 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCNPJFocusGained
 
     private void tffQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffQuantidadeKeyPressed
+
         if (evt.getKeyCode() != KeyEvent.VK_ENTER && evt.getKeyCode() != KeyEvent.VK_TAB
                 && tffQuantidade.getText().equals("1,00")) {
+
             tffQuantidade.setText("");
         }
+
+
     }//GEN-LAST:event_tffQuantidadeKeyPressed
 
     private void tfdReferenciaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfdReferenciaFocusGained
@@ -959,7 +979,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
             cliente.setId(1);
         }
         fatItemDAO.consultar(faturamentoItem, mercs);
-        System.out.println("id cliente = " + cliente.getId());
+
         faturamento.setCliente(cliente);
         faturamentoItem.setMercadoria(mercadoria);
 
@@ -982,7 +1002,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tffCpfCNPJ.setText("");
         tffTotalVenda.setText(String.valueOf(valorTotalVenda));
         tffValorTotal.setText("0,00");
-        
+
         mercs = new ArrayList<>();
 //        atualizarTotais();
         try {
@@ -998,6 +1018,10 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
     private void tfdReferenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdReferenciaKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdReferenciaKeyPressed
+
+    private void tffQuantidadePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tffQuantidadePropertyChange
+
+    }//GEN-LAST:event_tffQuantidadePropertyChange
 
     private void cancelarItem() throws Exception {
 

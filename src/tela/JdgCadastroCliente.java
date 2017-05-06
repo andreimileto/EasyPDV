@@ -126,7 +126,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Código");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         tfdId.setEditable(false);
         jPanel1.add(tfdId, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 55, -1));
@@ -144,7 +144,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
         jPanel1.add(rbtAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
-        jPanel1.add(lblSituacaoCPFCNPJ, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
+        jPanel1.add(lblSituacaoCPFCNPJ, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 10, -1));
 
         try {
             tffCpfCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -161,13 +161,13 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 tffCpfCnpjActionPerformed(evt);
             }
         });
-        jPanel1.add(tffCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 122, -1));
+        jPanel1.add(tffCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 122, -1));
 
         lblCpfCnpj.setText("CPF*");
-        jPanel1.add(lblCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel1.add(lblCpfCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         lblTelefone.setText("Telefone");
-        jPanel1.add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, -1));
+        jPanel1.add(lblTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
 
         try {
             tffTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -189,14 +189,14 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 tffTelefoneKeyReleased(evt);
             }
         });
-        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 99, -1));
+        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 99, -1));
 
         lblRazaoSocial.setText("Nome*");
-        jPanel1.add(lblRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        jPanel1.add(lblRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
         jPanel1.add(tfdRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 310, -1));
 
         lblCidade.setText("Cidade*");
-        jPanel1.add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        jPanel1.add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         tfdCidade.setEditable(false);
         jPanel1.add(tfdCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 184, -1));
@@ -210,7 +210,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 30, 23));
 
         lblEndereco.setText("Endereço");
-        jPanel1.add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jPanel1.add(lblEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         tfdEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,10 +250,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
