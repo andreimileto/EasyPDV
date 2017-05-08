@@ -8,17 +8,30 @@ package tela;
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
 import DAO.FaturamentoDAO;
+import apoio.ConexaoBD;
 import apoio.Formatacao;
 import apoio.Validacao;
 import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+//import dori.jasper.*;
+//import dori.jasper.view.JasperViewer;
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -178,6 +191,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         );
 
         btnRelatorios.setText("Relatórios");
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
 
         btnAcessarVenda.setText("Acessar Venda");
         btnAcessarVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -433,8 +451,8 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         buscar();
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-private void buscar(){
-            if (tfdBuscar.getText().length() > 0) {
+    private void buscar() {
+        if (tfdBuscar.getText().length() > 0) {
 
             cli.setRazaoSocial(tfdBuscar.getText());
             fat.setCliente(cli);
@@ -463,26 +481,25 @@ private void buscar(){
 //            JOptionPane.showMessageDialog(rootPane, "entrou no else");
             listarVendas();
         }
-}
+    }
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
         FaturamentoDAO fatDAO = new FaturamentoDAO();
         vendas = fatDAO.consultar(fat, cli);
         try {
-                    int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
-                + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
-                + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
-        );
+            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
+                    + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
+                    + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
+            );
 
-        if (op == 0) {
-            try {
-                
-                cancelarVenda();
-                
+            if (op == 0) {
+                try {
 
-            } catch (Exception ex) {
-                Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+                    cancelarVenda();
+
+                } catch (Exception ex) {
+                    Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Nenhuma Linha da tabela Selecionada");
         }
@@ -491,14 +508,14 @@ private void buscar(){
 
     private void btnAcessarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarVendaActionPerformed
         acessarVenda();
-        
+
     }//GEN-LAST:event_btnAcessarVendaActionPerformed
 
     private void tblListaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaVendasMouseClicked
         int row = tblListaVendas.getSelectedRow();
         if (tblListaVendas.getValueAt(row, 6) == "Cancelado") {
             btnCancelarVenda.setEnabled(false);
-        }else{
+        } else {
             btnCancelarVenda.setEnabled(true);
         }
     }//GEN-LAST:event_tblListaVendasMouseClicked
@@ -519,21 +536,55 @@ private void buscar(){
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void acessarVenda(){
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            if (ConexaoBD.getInstance()
+                    .getConnection() != null) {
+                JOptionPane.showMessageDialog(rootPane, "entrou no if");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "entrou no else");
+            }
+
+            String sql = "select * from faturamento f, cliente c where f.id_cliente = c.id ";
+            HashMap parametros = new HashMap();
+            parametros.put("datainicio", fat.getDataEmissaoInicio()); // datainicio é o parâmetro que eu usei no iReport
+            parametros.put("datafinal", fat.getDataEmissaoFim()); // datafinal é o parâmetro que eu usei no iReport
+            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper", parametros); // Coloca ai o local, 
+            JasperViewer jv = new JasperViewer(print, false);
+            jv.setVisible(true); //chama o formulario para visualização
+            jv.toFront(); //set o formulario a frente da aplicação
+
+//            HashMap map = new HashMap();
+//            String arquivoJasper = "C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper";
+//                String arquivoJasper = "/libs/Relatórios/Faturamento.jasper";
+//            map.put("Data_emissao_inicial", fat.getDataEmissaoInicio());
+//            map.put("Data_emissao_final", fat.getDataEmissaoInicio());
+//            JasperPrint rel = JasperFillManager.fillReport(arquivoJasper, map);
+//            JasperViewer.viewReport(arquivoJasper, true);
+        } catch (SQLException ex) {
+            Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void acessarVenda() {
         fat.setId(0);
         vendas.removeAll(vendas);
-       int row = tblListaVendas.getSelectedRow();
-       FaturamentoDAO fatDAO = new FaturamentoDAO();
-       
-       vendas = fatDAO.consultar(fat, cli);
-        fat.setId(vendas.get(row).getId()); 
-        
-        JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true,fat);
+        int row = tblListaVendas.getSelectedRow();
+        FaturamentoDAO fatDAO = new FaturamentoDAO();
+
+        vendas = fatDAO.consultar(fat, cli);
+        fat.setId(vendas.get(row).getId());
+
+        JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
         vendaRegistrada.setVisible(true);
         fat.setId(0);
     }
-    
-    
+
     private void cancelarVenda() {
         int row = tblListaVendas.getSelectedRow();
 
