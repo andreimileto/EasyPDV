@@ -550,7 +550,10 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             HashMap parametros = new HashMap();
             parametros.put("datainicio", fat.getDataEmissaoInicio()); // datainicio é o parâmetro que eu usei no iReport
             parametros.put("datafinal", fat.getDataEmissaoFim()); // datafinal é o parâmetro que eu usei no iReport
-            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper", parametros); // Coloca ai o local, 
+            String fileName ="\\relatorios\\Faturamento.jasper";
+            //"C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper"
+            JasperPrint print; 
+            print = JasperFillManager.fillReport(fileName, parametros);
             JasperViewer jv = new JasperViewer(print, false);
             jv.setVisible(true); //chama o formulario para visualização
             jv.toFront(); //set o formulario a frente da aplicação
@@ -564,11 +567,10 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //            JasperViewer.viewReport(arquivoJasper, true);
         } catch (SQLException ex) {
             Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
+    
         } catch (JRException ex) {
             Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void acessarVenda() {
