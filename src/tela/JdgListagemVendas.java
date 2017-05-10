@@ -15,23 +15,26 @@ import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-//import net.sf.jasperreports.engine.JRException;
-//import net.sf.jasperreports.engine.JasperFillManager;
-//import net.sf.jasperreports.engine.JasperPrint;
-//import net.sf.jasperreports.view.JasperViewer;
-//import dori.jasper.*;
-//import dori.jasper.view.JasperViewer;
-//import net.sf.jasperreports.engine.JRException;
-//import net.sf.jasperreports.engine.JasperFillManager;
-//import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -538,37 +541,28 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
         try {
-            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-            if (ConexaoBD.getInstance()
-                    .getConnection() != null) {
-                JOptionPane.showMessageDialog(rootPane, "entrou no if");
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "entrou no else");
-            }
+            // Compila o relatorio//
+            
+            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/Relatórios/Faturamento.jrxml"));
 
-            String sql = "select * from faturamento f, cliente c where f.id_cliente = c.id ";
-            HashMap parametros = new HashMap();
-            parametros.put("datainicio", fat.getDataEmissaoInicio()); // datainicio é o parâmetro que eu usei no iReport
-            parametros.put("datafinal", fat.getDataEmissaoFim()); // datafinal é o parâmetro que eu usei no iReport
-            String fileName ="\\relatorios\\Faturamento.jasper";
-            //"C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper"
-            JasperPrint print; 
-            print = JasperFillManager.fillReport(fileName, parametros);
-            JasperViewer jv = new JasperViewer(print, false);
-            jv.setVisible(true); //chama o formulario para visualização
-            jv.toFront(); //set o formulario a frente da aplicação
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+            Map parametros = new HashMap();
 
-//            HashMap map = new HashMap();
-//            String arquivoJasper = "C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\libs\\Relatórios\\Faturamento.jasper";
-//                String arquivoJasper = "/libs/Relatórios/Faturamento.jasper";
-//            map.put("Data_emissao_inicial", fat.getDataEmissaoInicio());
-//            map.put("Data_emissao_final", fat.getDataEmissaoInicio());
-//            JasperPrint rel = JasperFillManager.fillReport(arquivoJasper, map);
-//            JasperViewer.viewReport(arquivoJasper, true);
-        } catch (SQLException ex) {
-            Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
-    
+            // Executa relatoio
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            System.out.println(e);
         }
+
+        
+        
+        
+
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void acessarVenda() {
