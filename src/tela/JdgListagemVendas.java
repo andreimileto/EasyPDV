@@ -23,10 +23,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.view.JasperViewer;
 //import dori.jasper.*;
 //import dori.jasper.view.JasperViewer;
 //import net.sf.jasperreports.engine.JRException;
@@ -568,8 +568,6 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
     
-        } catch (JRException ex) {
-            Logger.getLogger(JdgListagemVendas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
