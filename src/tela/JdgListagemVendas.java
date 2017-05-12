@@ -11,6 +11,7 @@ import DAO.FaturamentoDAO;
 import apoio.ConexaoBD;
 import apoio.Formatacao;
 import apoio.Validacao;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
@@ -20,11 +21,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -542,14 +546,23 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
         try {
             // Compila o relatorio//
-            
+            JOptionPane.showMessageDialog(rootPane, fat.getDataEmissaoInicio());
             //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/Relatórios/Faturamento.jrxml"));
+//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
 
             // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-            Map parametros = new HashMap();
-
+                   SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date data = formato.parse(fat.getDataEmissaoInicio());
+            Date dataFim = formato.parse(fat.getDataEmissaoFim());
+            Map parametros = new HashMap();           
+            parametros.put("Data_emissao_inicial", data);
+            parametros.put("Data_emissao_final", dataFim);
             // Executa relatoio
+            
+            JOptionPane.showMessageDialog(rootPane, formato.format(data));
+            JOptionPane.showMessageDialog(rootPane, formato.format(dataFim));
+
             JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
 
             // Exibe resultado em video
@@ -559,9 +572,6 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             System.out.println(e);
         }
 
-        
-        
-        
 
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 

@@ -178,7 +178,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_imnPDVActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        JdgListagemVendas vendas = new JdgListagemVendas(this, true);
+        JdgListagemVendas vendas = new JdgListagemVendas(this, false);
         vendas.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 

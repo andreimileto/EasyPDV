@@ -114,6 +114,10 @@
 
 insert into usuario values(default,'usuario','123456');
 
+INSERT INTO public.cliente(
+	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+	VALUES (1, null, ?, 'Cliente Balcão', 'F', null, null, 'T');
+
 --------procedure e triggers---------------
 
 ---atualiza estoque quando o pedido é encerrado ou cancelado
