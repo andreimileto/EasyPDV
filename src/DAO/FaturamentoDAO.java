@@ -55,12 +55,11 @@ public class FaturamentoDAO {
                             + "" + fat.getValorTotal() + ","
                             + "" + fat.getValorTotalLiquido()
                             + ")";
-                    System.out.println("insert faturamento..... \n" + sql);
 
                     int resultado = st.executeUpdate(sql);
 
                     sql = "select max(id) from faturamento ";
-                    System.out.println("select max..... \n" + sql);
+
                     ResultSet resulSelect = st.executeQuery(sql);
                     resulSelect.next();
 
@@ -195,10 +194,9 @@ public class FaturamentoDAO {
 
             return vendas;
         } else {
-            
 
-             sql = "select f.id,f.id_cliente, c.razao_social,c.cpf_cnpj, f.valor_total,f.id_empresa,f.fase,f.data_emissao,f.valor_total,f.desconto,f.valor_total_liquido"
-                     + " from faturamento f,cliente c where f.id_cliente = c.id and f.id =" + fat.getId();
+            sql = "select f.id,f.id_cliente, c.razao_social,c.cpf_cnpj, f.valor_total,f.id_empresa,f.fase,f.data_emissao,f.valor_total,f.desconto,f.valor_total_liquido"
+                    + " from faturamento f,cliente c where f.id_cliente = c.id and f.id =" + fat.getId();
 
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
@@ -209,7 +207,6 @@ public class FaturamentoDAO {
                     Cidade cid = new Cidade();
                     Cliente cliente = new Cliente(cid);
 
-                    
                     cliente.setRazaoSocial(resultado.getString("razao_social"));
 
                     cliente.setCpfCnpj(String.valueOf(resultado.getString("cpf_cnpj")));

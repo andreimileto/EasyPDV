@@ -114,9 +114,17 @@
 
 insert into usuario values(default,'usuario','123456');
 
+INSERT INTO public.cidade(
+	id, descricao, ativo)
+	VALUES (1, 'Lajeado', 'T');
+
 INSERT INTO public.cliente(
 	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
 	VALUES (1, null, ?, 'Cliente Balcão', 'F', null, null, 'T');
+
+INSERT INTO public.empresa(
+	id, id_cidade, razao_social, cnpj, inscricao_estadual, endereco, telefone, ativo)
+	VALUES (1, 1, 'Atacado de Doces LTDA', '77157937000108', '2058042772', 'Rua Alberto Silva, 222', '5199898998', 'T');
 
 --------procedure e triggers---------------
 

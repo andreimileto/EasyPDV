@@ -547,19 +547,27 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         try {
             // Compila o relatorio//
             JOptionPane.showMessageDialog(rootPane, fat.getDataEmissaoInicio());
+            JOptionPane.showMessageDialog(rootPane, fat.getFase() + " fase");
             //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
 //            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
             JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
 
             // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-                   SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date data = formato.parse(fat.getDataEmissaoInicio());
             Date dataFim = formato.parse(fat.getDataEmissaoFim());
-            Map parametros = new HashMap();           
+            Map parametros = new HashMap();
             parametros.put("Data_emissao_inicial", data);
             parametros.put("Data_emissao_final", dataFim);
+            if (fat.getFase() == 't') {
+                parametros.put("Fase", "");
+                JOptionPane.showMessageDialog(rootPane, "entrou no if");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "entrou no else");
+                parametros.put("Fase", fat.getFase());
+            }
+
             // Executa relatoio
-            
             JOptionPane.showMessageDialog(rootPane, formato.format(data));
             JOptionPane.showMessageDialog(rootPane, formato.format(dataFim));
 
