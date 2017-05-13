@@ -555,7 +555,9 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             // Mapeia campos de parametros para o relatorio, mesmo que nao existam
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date data = formato.parse(fat.getDataEmissaoInicio());
+            
             Date dataFim = formato.parse(fat.getDataEmissaoFim());
+            dataFim.setDate(dataFim.getDate()+1);
             Map parametros = new HashMap();
             parametros.put("Data_emissao_inicial", data);
             parametros.put("Data_emissao_final", dataFim);
