@@ -248,6 +248,11 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
 
         btnCancelarVenda.setText("Cancelar venda");
         btnCancelarVenda.setEnabled(false);
+        btnCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarVendaActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -332,6 +337,10 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
 
     }//GEN-LAST:event_tffCpfCnpjActionPerformed
+
+    private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
+        
+    }//GEN-LAST:event_btnCancelarVendaActionPerformed
 
     /**
      * @param args the command line arguments
