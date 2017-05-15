@@ -55,7 +55,7 @@ public class FaturamentoDAO {
                             + "" + fat.getValorTotal() + ","
                             + "" + fat.getValorTotalLiquido()
                             + ")";
-
+                    System.out.println(sql);
                     int resultado = st.executeUpdate(sql);
 
                     sql = "select max(id) from faturamento ";
@@ -98,7 +98,7 @@ public class FaturamentoDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "update faturamento set fase = 'c' where id =" + fat.getId();
                 int resultado = st.executeUpdate(sql);
-
+                
                 return true;
             } catch (Exception e) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, e);

@@ -61,8 +61,7 @@
                          );              
 
             CREATE TABLE faturamento(id serial,
-                         id_cliente int not null,
-                         id_forma_pagamento int not null,
+                         id_cliente int not null,                         
                          id_empresa int not null,
                          data_emissao timestamp not null,
                          fase char(1) not null,
@@ -120,7 +119,7 @@ INSERT INTO public.cidade(
 
 INSERT INTO public.cliente(
 	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
-	VALUES (1, null, ?, 'Cliente Balcão', 'F', null, null, 'T');
+	VALUES (default, null, 'Cliente Balcão', 'F', '', '','', 'T');
 
 INSERT INTO public.empresa(
 	id, id_cidade, razao_social, cnpj, inscricao_estadual, endereco, telefone, ativo)
@@ -150,29 +149,34 @@ end if;
 RETURN null;
 END;
 $$ LANGUAGE plpgsql;
+-----ou---- USAR ESTE DE BAIXO
+CREATE OR REPLACE FUNCTION fatuaizaestoque()
+RETURNS trigger
+AS $$
+ 
+BEGIN
 
+	if (NEW.fase = 'e') then
+    update mercadoria m set estoque = (estoque - f.quantidade  )
+    from faturamento_item f, faturamento fa
+    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+
+    
+ end if;
+    if (NEW.fase = 'c') then
+  update mercadoria m set estoque = (estoque + f.quantidade)
+    from faturamento_item f, faturamento fa
+    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+end if;
+RETURN null;
+END;
+$$ LANGUAGE plpgsql;
+
+
+------------------
 CREATE  TRIGGER tatuaizaestoquecancelamento
 AFTER  UPDATE ON faturamento
 FOR EACH ROW
 EXECUTE PROCEDURE fatuaizaestoquecancelamento ()
 
 
---------testes---------------
-update faturamento f set fase = 'c' where f.id = 9
-
-update empresa e set id =1
-delete from faturamento
-update mercadoria m set estoque = (estoque - f.quantidade  )from faturamento_item f where m.id = f.id_mercadoria
-
-select * from mercadoria 
-
-select * from faturamento
-select max(id) id from faturamento 
-
-INSERT INTO public.faturamento(
-	id, id_cliente, id_forma_pagamento, id_empresa, data_emissao, fase, desconto, valor_total, parcelas)
-	VALUES (default, 10, 16, 2, '10/02/2017', '', 0, 100, 1);
-    
-    INSERT INTO public.faturamento_item(
-	id, id_faturamento, id_mercadoria, quantidade, valor_unitario, desconto, valor_total)
-	VALUES (default, 9, 6, 6, 16, 0, 32);

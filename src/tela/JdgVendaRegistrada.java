@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -339,9 +340,44 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCnpjActionPerformed
 
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
-        
+//      FaturamentoDAO fatDAO = new FaturamentoDAO();
+//        vendas = fatDAO.consultar(fat, cli);
+        try {
+            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
+                    + "ID: " + tfdNumero.getText() + "\n"
+                    + "Cliente: " + tfdNomeCliente.getText()
+            );
+
+            if (op == 0) {
+                try {
+
+                    cancelarVenda();
+                    listarMercadorias();
+                } catch (Exception ex) {
+                    Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Nenhuma Linha da tabela Selecionada");
+        }
+
     }//GEN-LAST:event_btnCancelarVendaActionPerformed
 
+     private void cancelarVenda() {
+
+
+        FaturamentoDAO fatDAO = new FaturamentoDAO();
+        fat.setFase('c');
+        fat.setId(Integer.parseInt(tfdNumero.getText()));
+        if (fatDAO.salvar(fat, null, null)) {
+            JOptionPane.showMessageDialog(rootPane, "Cancelamento da venda realizado com sucesso!");
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "erro retornado pelo sistema:\nErro ao cancelar venda.");
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
