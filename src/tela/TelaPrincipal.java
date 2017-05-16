@@ -42,6 +42,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         imnPDV = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        imnAlterarSenha = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EasyPDV");
@@ -126,6 +128,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Financeiro");
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setText("Configurações");
+
+        imnAlterarSenha.setText("Alterar senha");
+        imnAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnAlterarSenhaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(imnAlterarSenha);
+
+        jMenuBar1.add(jMenu4);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -184,6 +198,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         vendas.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void imnAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnAlterarSenhaActionPerformed
+        JdgAlteracaoSenha alteracaoSenha = new JdgAlteracaoSenha(this,true);
+        alteracaoSenha.setVisible(true);
+    }//GEN-LAST:event_imnAlterarSenhaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -220,6 +239,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem imnAlterarSenha;
     private javax.swing.JMenuItem imnCidades;
     private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;
@@ -228,6 +248,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;

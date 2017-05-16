@@ -35,9 +35,24 @@ public class UsuarioDAO {
 
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar cidades " + e);
+            System.out.println("Erro ao consultar Usuarios " + e);
         }
 
     }
 
+    public boolean salvar(Usuario user) {
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            String sql = "update usuario set senha ='" + user.getSenha()+"'";
+            System.out.println(sql);
+            int resultado = st.executeUpdate(sql);
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar Usuario " + e);
+
+        }
+        return false;
+
+    }
 }

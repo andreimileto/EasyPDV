@@ -111,7 +111,7 @@
 
 ---------------insert-------------------
 
-insert into usuario values(default,'usuario','123456');
+insert into usuario values(default,'usuario','e10adc3949ba59abbe56e057f20f883e');
 
 INSERT INTO public.cidade(
 	id, descricao, ativo)
