@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Faturamento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac30587-3fda-4c4a-b30e-92de6d9c8563">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="56"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -98,10 +98,6 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 				</textElement>
 				<text><![CDATA[Listagem de Vendas]]></text>
 			</staticText>
-			<image>
-				<reportElement x="0" y="10" width="48" height="46" uuid="f4f46664-7472-4827-84ca-ef03e5b4dc55"/>
-				<imageExpression><![CDATA["C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\src\\imagens\\icon_shopping_trolley.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -166,7 +162,7 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 	<detail>
 		<band height="124" splitType="Stretch">
 			<textField>
-				<reportElement x="119" y="40" width="100" height="20" uuid="0741b67e-0a5b-46bf-a21a-66faefd29246"/>
+				<reportElement x="129" y="40" width="100" height="20" uuid="0741b67e-0a5b-46bf-a21a-66faefd29246"/>
 				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
@@ -174,11 +170,11 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 				<textFieldExpression><![CDATA[$F{valor_total}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="151" y="90" width="100" height="20" uuid="63855464-c8cd-40be-b51d-520919ba21f8"/>
+				<reportElement x="130" y="90" width="100" height="20" uuid="63855464-c8cd-40be-b51d-520919ba21f8"/>
 				<textFieldExpression><![CDATA[$F{desconto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="248" y="90" width="100" height="20" uuid="5735c81f-41db-48bd-ad6d-9b27563c78a6"/>
+				<reportElement x="295" y="90" width="100" height="20" uuid="5735c81f-41db-48bd-ad6d-9b27563c78a6"/>
 				<textFieldExpression><![CDATA[$F{valor_total_liquido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
@@ -200,7 +196,7 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 				<text><![CDATA[Data Emissão:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="119" y="20" width="100" height="20" uuid="d618a0c9-a22a-472f-bc85-c90c9b1dc9c9"/>
+				<reportElement x="129" y="20" width="100" height="20" uuid="d618a0c9-a22a-472f-bc85-c90c9b1dc9c9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -214,14 +210,14 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 				<text><![CDATA[Valor Bruto:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="70" width="100" height="20" uuid="4d8b422c-c44e-4713-93f9-ebdea0652c52"/>
+				<reportElement x="130" y="70" width="100" height="20" uuid="4d8b422c-c44e-4713-93f9-ebdea0652c52"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor Desconto:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="248" y="70" width="100" height="20" uuid="fb2c5fa8-277d-46e6-911a-8b63fff553d1"/>
+				<reportElement x="295" y="70" width="100" height="20" uuid="fb2c5fa8-277d-46e6-911a-8b63fff553d1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -233,14 +229,14 @@ and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_em
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="330" y="70" width="100" height="20" uuid="5709f93a-8b53-4aaa-b7b5-e94f2314fd0b"/>
+				<reportElement x="412" y="70" width="100" height="20" uuid="5709f93a-8b53-4aaa-b7b5-e94f2314fd0b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Situação:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="330" y="90" width="100" height="20" uuid="3eae8bb3-561d-4b60-880c-68fd05c9e996"/>
+				<reportElement x="412" y="90" width="100" height="20" uuid="3eae8bb3-561d-4b60-880c-68fd05c9e996"/>
 				<textFieldExpression><![CDATA[$F{cativo}]]></textFieldExpression>
 			</textField>
 			<staticText>
