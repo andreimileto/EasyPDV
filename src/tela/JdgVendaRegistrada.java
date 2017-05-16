@@ -340,8 +340,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     }//GEN-LAST:event_tffCpfCnpjActionPerformed
 
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
-//      FaturamentoDAO fatDAO = new FaturamentoDAO();
-//        vendas = fatDAO.consultar(fat, cli);
+
         try {
             int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
                     + "ID: " + tfdNumero.getText() + "\n"
@@ -358,7 +357,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Nenhuma Linha da tabela Selecionada");
+            JOptionPane.showMessageDialog(rootPane, "Erro retornado pelo sistema: \nProblema ao cancelar venda,\n entre em contato com o suporte");
         }
 
     }//GEN-LAST:event_btnCancelarVendaActionPerformed

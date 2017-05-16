@@ -160,7 +160,7 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
             }else{
                 tfdDescricao.requestFocus();
                 JOptionPane.showMessageDialog(null, "Erro ao salvar Cidade: \n"
-                            + "Descrição da mercadoria em branco ou maior que 150 caracteres");
+                            + "Cidade já cadastrada");
             }
         } catch (SQLException ex) {
             Logger.getLogger(JdgCadastroCidade.class.getName()).log(Level.SEVERE, null, ex);

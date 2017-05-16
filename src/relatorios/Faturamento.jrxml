@@ -98,10 +98,6 @@ end
 				</textElement>
 				<text><![CDATA[Empresa:]]></text>
 			</staticText>
-			<textField pattern="##.###.###/####-##">
-				<reportElement x="185" y="23" width="100" height="20" uuid="95bb4ef4-3a23-40c0-af1f-e03bafc59094"/>
-				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="185" y="3" width="100" height="20" uuid="d8e60336-e26a-4bf0-a0cd-68401a987056"/>
 				<textElement>
@@ -142,6 +138,10 @@ end
 				</textElement>
 				<text><![CDATA[Endereço:]]></text>
 			</staticText>
+			<textField pattern="">
+				<reportElement x="185" y="23" width="100" height="20" uuid="38cc6952-0a4c-453d-8211-b793f011499f"/>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
