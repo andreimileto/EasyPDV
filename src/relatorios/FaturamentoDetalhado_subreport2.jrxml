@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FaturamentoDetalhado_subreport2" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dd037be4-26a0-4b6b-8c8d-b2a72b485d64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from faturamento_item fi
+left join faturamento f
+on f.id = fi.id_faturamento
+left join mercadoria m
+on m.id = fi.id_mercadoria]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="id_faturamento" class="java.lang.Integer"/>
+	<field name="id_mercadoria" class="java.lang.Integer"/>
+	<field name="quantidade" class="java.lang.Double"/>
+	<field name="valor_unitario" class="java.lang.Double"/>
+	<field name="desconto" class="java.lang.Double"/>
+	<field name="valor_total" class="java.lang.Double"/>
+	<field name="id_cliente" class="java.lang.Integer"/>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="data_emissao" class="java.sql.Timestamp"/>
+	<field name="fase" class="java.lang.String"/>
+	<field name="valor_total_liquido" class="java.lang.Double"/>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="estoque" class="java.lang.Double"/>
+	<field name="preco_custo" class="java.lang.Double"/>
+	<field name="preco_venda" class="java.lang.Double"/>
+	<field name="ativo" class="java.lang.String"/>
+	<group name="id">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="47" y="2" width="100" height="20" uuid="a28eb25b-f93a-4b74-bdda-0f53189d468f"/>
+				<text><![CDATA[id_mercadoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="2" width="100" height="20" uuid="b7c3be0a-450f-4c7c-962e-35531cd7b853"/>
+				<text><![CDATA[referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="2" width="100" height="20" uuid="ee79e6a2-bfba-46c1-a4cd-9994efd66ab1"/>
+				<text><![CDATA[descricao]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="47" y="25" width="100" height="20" uuid="6bc6b15d-3f6f-4145-919b-1b8809ec4950"/>
+				<textFieldExpression><![CDATA[$F{id_mercadoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="35" width="100" height="20" uuid="62286fab-906e-4cd1-af8a-95b721f626e7"/>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="34" width="100" height="20" uuid="c08b775c-7df6-4785-a219-4bdc5aed23e4"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
