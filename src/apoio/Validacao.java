@@ -4,6 +4,7 @@
  */
 package apoio;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -72,4 +73,50 @@ public class Validacao {
             Formatacao.reformatarTelefone(campo);
         }
     }
+    
+    public static boolean validadeFiltroDeData(JDateChooser tffDataInicio,JDateChooser tffDataFim){
+        boolean ok = true;
+        String dataInicio = "";
+        String dataFim = "";
+        
+        dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
+        dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
+        
+        if (!validarDataFormatada(dataInicio)) {
+            ok = false;
+        }
+
+        if(!validarDataFormatada(dataFim)){
+            ok = false;
+        }
+        
+        if (!verDataMaior(dataInicio,dataFim)) {
+            ok = false;
+        }
+        
+        return ok;
+    }
+    
+    private static boolean verDataMaior(String dataInicial, String dataFinal){
+        boolean ok = false;
+        String arrayDataInicio[] = new String[3];
+        arrayDataInicio = dataInicial.split("/");
+        
+        String arrayDataFim[] = new String[3];
+        arrayDataFim = dataFinal.split("/");
+        
+        if (Integer.parseInt(arrayDataFim[2]) >= Integer.parseInt(arrayDataInicio[2])) {
+            if (Integer.parseInt(arrayDataFim[1]) >= Integer.parseInt(arrayDataInicio[1])) {
+                if (Integer.parseInt(arrayDataFim[0]) >= Integer.parseInt(arrayDataInicio[0])) {
+                    ok = true;
+                }
+            }
+        }else{
+            ok = false;
+        }
+            
+        
+        return ok;
+    }
+    
 }

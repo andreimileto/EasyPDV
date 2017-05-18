@@ -209,6 +209,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
             }
         ));
         tblListaClientes.setFocusable(false);
+        tblListaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListaClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblListaClientes);
 
         btnConfirmar.setText("Editar");
@@ -306,6 +311,18 @@ public class JdgListaCliente extends javax.swing.JDialog {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void tblListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaClientesMouseClicked
+                if (evt.getClickCount() > 1) {
+            int linhaSelecionada = tblListaClientes.getSelectedRow();
+                    try {
+                        selecionado();
+                    } catch (Exception ex) {
+                        Logger.getLogger(JdgListaCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            dispose();
+        }
+    }//GEN-LAST:event_tblListaClientesMouseClicked
 
     /**
      * @param args the command line arguments

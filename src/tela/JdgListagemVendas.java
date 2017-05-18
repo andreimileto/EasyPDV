@@ -98,8 +98,10 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         tblListaVendas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Listagem de vendas");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de vendas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel1.setToolTipText("");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -460,7 +462,9 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscar();
+
+        validarTipoDeBusca();
+
 
     }//GEN-LAST:event_btnBuscarActionPerformed
     private void buscar() {
@@ -493,6 +497,25 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(rootPane, "entrou no else");
             listarVendas();
         }
+    }
+
+    private void validarTipoDeBusca() {
+
+        if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
+            try {
+                if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
+                    buscar();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta");
+            }
+
+        } else {
+            buscar();
+        }
+
     }
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
         FaturamentoDAO fatDAO = new FaturamentoDAO();
@@ -530,6 +553,13 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         } else {
             btnCancelarVenda.setEnabled(true);
         }
+
+        if (evt.getClickCount() > 1) {
+            int linhaSelecionada = tblListaVendas.getSelectedRow();
+            acessarVenda();
+
+        }
+
     }//GEN-LAST:event_tblListaVendasMouseClicked
 
     private void rbtCanceladasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtCanceladasItemStateChanged
@@ -541,7 +571,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_rbtFinalizadasItemStateChanged
 
     private void tfdBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdBuscarKeyReleased
-        buscar();
+        validarTipoDeBusca();
     }//GEN-LAST:event_tfdBuscarKeyReleased
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -550,38 +580,50 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
         try {
-            // Compila o relatorio//
-            JOptionPane.showMessageDialog(rootPane, fat.getDataEmissaoInicio());
-            JOptionPane.showMessageDialog(rootPane, fat.getFase() + " fase");
-            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+            if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
+                if (rbtCanceladas.isSelected() || rbtFinalizadas.isSelected()) {
+
+                    buscar();
+                    //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
 //            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+                    JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
 
-            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            Date data = formato.parse(fat.getDataEmissaoInicio());
-            
-            Date dataFim = formato.parse(fat.getDataEmissaoFim());
-            dataFim.setDate(dataFim.getDate()+1);
-            Map parametros = new HashMap();
-            parametros.put("Data_emissao_inicial", data);
-            parametros.put("Data_emissao_final", dataFim);
-            if (fat.getFase() == 't') {
-                parametros.put("Fase", "");
-                JOptionPane.showMessageDialog(rootPane, "entrou no if");
+                    // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                    Date data = formato.parse(fat.getDataEmissaoInicio());
+
+                    Date dataFim = formato.parse(fat.getDataEmissaoFim());
+                    dataFim.setDate(dataFim.getDate() + 1);
+                    Map parametros = new HashMap();
+                    parametros.put("Data_emissao_inicial", data);
+                    parametros.put("Data_emissao_final", dataFim);
+                    if (fat.getFase() == 't') {
+                        parametros.put("Fase", "");
+
+                    } else {
+
+                        parametros.put("Fase", fat.getFase());
+                    }
+
+                    // Executa relatoio
+                    JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+                    // Exibe resultado em video
+                    JasperViewer.viewReport(impressao, false);
+                }else{
+                JOptionPane.showMessageDialog(rootPane, "Nenhuma fase do pedido selecionada!\n para gerar o relatório precisa selecionar\numa fase ou mais");    
+                }
+
             } else {
-                JOptionPane.showMessageDialog(rootPane, "entrou no else");
-                parametros.put("Fase", fat.getFase());
+                JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
+        }
 
-            // Executa relatoio
-            JOptionPane.showMessageDialog(rootPane, formato.format(data));
-            JOptionPane.showMessageDialog(rootPane, formato.format(dataFim));
+        try {
+            // Compila o relatorio//
 
-            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
-
-            // Exibe resultado em video
-            JasperViewer.viewReport(impressao, false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
             System.out.println(e);
@@ -602,6 +644,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
         vendaRegistrada.setVisible(true);
         fat.setId(0);
+        listarVendas();
     }
 
     private void cancelarVenda() {

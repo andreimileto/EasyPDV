@@ -58,6 +58,7 @@ public class JdgAlteracaoSenha extends javax.swing.JDialog {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Alteração de senha");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alteração de senha do usuário", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 153))); // NOI18N
 

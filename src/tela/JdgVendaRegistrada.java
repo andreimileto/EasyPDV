@@ -84,6 +84,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Venda Registrada");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registro Venda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
 
