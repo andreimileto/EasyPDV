@@ -247,6 +247,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
                 .addGap(164, 164, 164))
         );
 
+        btnCancelarVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
         btnCancelarVenda.setText("Cancelar venda");
         btnCancelarVenda.setEnabled(false);
         btnCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +256,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
             }
         });
 
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

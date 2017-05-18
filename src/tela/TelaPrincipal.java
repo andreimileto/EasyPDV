@@ -6,6 +6,16 @@
 package tela;
 
 import apoio.ConexaoBD;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -42,6 +52,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         imnPDV = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        imnLFormasPagamentos = new javax.swing.JMenuItem();
+        imnLMercadorias = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         imnAlterarSenha = new javax.swing.JMenuItem();
 
@@ -58,7 +71,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGap(0, 407, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Cadastros");
@@ -128,8 +141,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Financeiro");
         jMenuBar1.add(jMenu3);
 
+        jMenu5.setText("Listagem");
+
+        imnLFormasPagamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_credit_cards48.png"))); // NOI18N
+        imnLFormasPagamentos.setText("Formas de pagamento");
+        imnLFormasPagamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnLFormasPagamentosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(imnLFormasPagamentos);
+
+        imnLMercadorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Iconbox48.png"))); // NOI18N
+        imnLMercadorias.setText("Mercadorias");
+        imnLMercadorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnLMercadoriasActionPerformed(evt);
+            }
+        });
+        jMenu5.add(imnLMercadorias);
+
+        jMenuBar1.add(jMenu5);
+
         jMenu4.setText("Configurações");
 
+        imnAlterarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/preferences_desktop_user_password (2).png"))); // NOI18N
         imnAlterarSenha.setText("Alterar senha");
         imnAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,6 +239,58 @@ public class TelaPrincipal extends javax.swing.JFrame {
         alteracaoSenha.setVisible(true);
     }//GEN-LAST:event_imnAlterarSenhaActionPerformed
 
+    private void imnLFormasPagamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnLFormasPagamentosActionPerformed
+         try {
+            // Compila o relatorio//
+
+            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/ListagemFormaPagamento.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+
+            Map parametros = new HashMap();
+
+
+            // Executa relatoio
+
+
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_imnLFormasPagamentosActionPerformed
+
+    private void imnLMercadoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnLMercadoriasActionPerformed
+        try {
+            // Compila o relatorio//
+
+            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/ListagemDeMercadoria.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+
+            Map parametros = new HashMap();
+
+
+            // Executa relatoio
+
+
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_imnLMercadoriasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -243,12 +331,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem imnCidades;
     private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;
+    private javax.swing.JMenuItem imnLFormasPagamentos;
+    private javax.swing.JMenuItem imnLMercadorias;
     private javax.swing.JMenuItem imnMercadoria;
     private javax.swing.JMenuItem imnPDV;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;

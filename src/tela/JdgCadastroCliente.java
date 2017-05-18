@@ -376,8 +376,10 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
         clientes.setVisible(true);
         if (cliente.getId() > 0) {
             tffCpfCnpj.setEnabled(false);
+            cbxTipo.setEnabled(false);
         }else{
            tffCpfCnpj.setEnabled(true); 
+           
         }
         verificarCadastroSelecionado();
     }//GEN-LAST:event_btnLocalizarActionPerformed
