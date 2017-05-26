@@ -42,10 +42,10 @@ substr(cpf_cnpj, 1, 3) || '.' ||
 from faturamento f, empresa e, cliente c
 where c.id = f.id_cliente
  and e.id = f.id_empresa
-and f.data_emissao >= $P{Data_emissao_inicial}  and f.data_emissao <= $P{Data_emissao_final}
+and f.data_emissao >=  $P{Data_emissao_inicial}
+ and f.data_emissao <= $P{Data_emissao_final}
  and f.fase like '%' ||$P{Fase}||'%'
-order by f.id
-]]>
+order by f.id]]>
 	</queryString>
 	<field name="razao_empresa" class="java.lang.String"/>
 	<field name="telefone_empresa" class="java.lang.String"/>
@@ -78,18 +78,68 @@ order by f.id
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="167" splitType="Stretch">
 			<textField>
-				<reportElement x="13" y="37" width="100" height="20" uuid="5b1bf0d1-a862-4a69-a73e-e3539be297ff"/>
+				<reportElement x="56" y="76" width="100" height="20" uuid="5b1bf0d1-a862-4a69-a73e-e3539be297ff"/>
 				<textFieldExpression><![CDATA[$F{razao_empresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="254" y="37" width="100" height="20" uuid="0721ce5c-c19f-43e9-a023-7c0067acf435"/>
+				<reportElement x="240" y="117" width="100" height="20" uuid="0721ce5c-c19f-43e9-a023-7c0067acf435"/>
 				<textFieldExpression><![CDATA[$F{inscricao_estadual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="134" y="37" width="100" height="20" uuid="a0da462e-8955-4245-8866-2c5a702f1613"/>
+				<reportElement x="240" y="75" width="100" height="20" uuid="a0da462e-8955-4245-8866-2c5a702f1613"/>
 				<textFieldExpression><![CDATA[$F{cnpj_formatado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="47" forecolor="#0000CC" uuid="ff331867-c640-4c1c-af65-ca58f40f5758"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de venda Detalhada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="57" width="100" height="20" uuid="8054f46f-8609-4c25-ad8c-c1b927f7b48f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="57" width="100" height="20" uuid="d307bab2-094a-45dd-9e98-23dd8ed7c731"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNPJ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="98" width="100" height="20" uuid="fd093160-f498-49bd-8b35-19bf595e140f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inscrição Estadual:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="74" width="100" height="20" uuid="3e8aa7f8-5781-4133-9740-ff51d518a6e8"/>
+				<textFieldExpression><![CDATA[$F{telefone_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="54" width="100" height="20" uuid="3b048c80-8a56-485d-84bd-0f4bc7569852"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="99" width="100" height="20" uuid="860dc546-7553-4ca5-913c-543fbf3cb69f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="121" width="100" height="20" uuid="109b3c25-bfa3-4e68-ae6a-aa17587356ed"/>
+				<textFieldExpression><![CDATA[$F{endereco_empresa}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
