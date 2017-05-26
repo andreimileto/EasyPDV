@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author pc05
  */
 public class JdgFormaPagamento extends javax.swing.JDialog {
-    
+
     private ArrayList<FaturamentoItem> mercs;
     private Faturamento fat;
     private FaturamentoItem fatItem;
@@ -43,7 +43,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
+
     public JdgFormaPagamento(java.awt.Frame parent, boolean modal, ArrayList<FaturamentoItem> mercs, Faturamento fat, FaturamentoItem fatItem) {
         super(parent, modal);
         initComponents();
@@ -72,27 +72,27 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         ArrayFormasPagas.add(formasPagas);
         listarFormasPagamentoPagas();
     }
-    
-    private void limparCampos(){
+
+    private void limparCampos() {
         tffCodigoPagamento.setText("");
         tffParcelas.setText("1");
         tffValorPago.setText(lblSaldoPagar.getText());
-        
+
     }
-    
+
     private void valoresDefault() {
         tffParcelas.setEnabled(false);
         tffParcelas.setText("1");
         tffDesconto.setText("0,00");
         lblTotalPago.setText("0,00");
     }
-    
+
     private void atualizarValores() {
-        
+
         lblTotalBruto.setText(String.valueOf(fat.getValorTotal()));
         lblTotalLiquido.setText(String.valueOf(fat.getValorTotal() - Double.parseDouble(tffDesconto.getText().replace(",", "."))));
         tffValorPago.setText(lblTotalLiquido.getText().replace(".", ","));
-        
+
         double saldoAPagar = Double.parseDouble(lblTotalLiquido.getText().replace(",", ".")) - totalPago;
         if (saldoAPagar >= 0) {
             lblSaldo.setText("Saldo a Pagar");
@@ -102,9 +102,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             lblSaldo.setText("Troco");
             lblSaldoPagar.setText(String.valueOf(saldoAPagar));
         }
-        
+
     }
-    
+
     private void listarFormasPagamento() {
         try {
             //setar para tabela modelo de dados
@@ -117,9 +117,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public DefaultTableModel obterDadosParaJTable() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -130,9 +130,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         FormaPagamentoDAO fpDAO = new FormaPagamentoDAO();
         fp.setAtivo('T');
-        
+
         formas = fpDAO.consultar(fp);
-        
+
         dtm.addColumn("ID");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("FORMA");
@@ -153,7 +153,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
-    
+
     private void listarFormasPagamentoPagas() {
         try {
             //setar para tabela modelo de dados
@@ -166,9 +166,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public DefaultTableModel obterDadosParaJTablePagas() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -176,7 +176,6 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             }
         };
 //adiciona titulo para as colunas
-
 
         dtm.addColumn("ID FORMA");
         dtm.addColumn("DESCRIÇÃO");
@@ -186,12 +185,11 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         for (int i = 0; i < ArrayFormasPagas.size(); i++) {
             //popular tabela
 
-            
             dtm.addRow(new String[]{String.valueOf(ArrayFormasPagas.get(i).getId()),
                 ArrayFormasPagas.get(i).getDescricao(),
                 String.valueOf(ArrayFormasPagas.get(i).getValor()),
                 String.valueOf(ArrayFormasPagas.get(i).getParcelas())});
-            
+
         }
 
 //retorna o modelo
@@ -496,13 +494,13 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             atualizarValores();
             if (validarParcela()) {
                 tffParcelas.requestFocus();
-                
+
             } else {
                 tffCodigoPagamento.requestFocus();
                 inserirFormaPagamento();
-                
+
             }
-            
+
         }
     }//GEN-LAST:event_tffValorPagoKeyReleased
 
@@ -538,7 +536,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         String dataAtual = Formatacao.getDataAtual();
         fat.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
         fat.setDataEmissao(dataAtual);
-        
+
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
             JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
             dispose();
@@ -548,25 +546,28 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tffCodigoPagamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffCodigoPagamentoKeyReleased
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+//            tffCodigoPagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+//            tffCodigoPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             validarParcela();
+
             tffDesconto.requestFocus();
-            
+
         }
     }//GEN-LAST:event_tffCodigoPagamentoKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private boolean validarParcela() {
         boolean ok = false;
         for (int i = 0; i < formas.size(); i++) {
             if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText()) && formas.get(i).getFormaAvista() == 'F') {
                 ok = true;
             }
-            
+
         }
         if (ok) {
             tffParcelas.setEnabled(true);
