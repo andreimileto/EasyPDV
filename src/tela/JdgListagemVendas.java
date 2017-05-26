@@ -52,7 +52,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     Faturamento fat;
     Cliente cli;
     ArrayList<Faturamento> vendas;
-
+    
     public JdgListagemVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -64,7 +64,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         vendas = new ArrayList<>();
         listarVendas();
         tfdBuscar.setText("");
-
+        
     }
 
     /**
@@ -370,7 +370,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listarVendas() {
-
+        
         if (rbtFinalizadas.isSelected() && rbtCanceladas.isSelected()) {
             fat.setFase('t');
         } else if (rbtFinalizadas.isSelected() && !rbtCanceladas.isSelected()) {
@@ -380,7 +380,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         } else {
             fat.setFase(' ');
         }
-
+        
         try {
             //setar para tabela modelo de dados
             tblListaVendas.setModel(this.obterDadosParaTabelaCompleto());
@@ -391,12 +391,12 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             tblListaVendas.getColumnModel().getColumn(4).setPreferredWidth(40);
             tblListaVendas.getColumnModel().getColumn(5).setPreferredWidth(40);
             tblListaVendas.getColumnModel().getColumn(6).setPreferredWidth(0);
-
+            
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private DefaultTableModel obterDadosParaTabelaCompleto() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -417,7 +417,7 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         dtm.addColumn("DESCONTO");
         dtm.addColumn("VALOR LÍQUIDO");
         dtm.addColumn("FASE");
-
+        
         for (int i = 0; i < vendas.size(); i++) {
             //popular tabela
             String fase = "";
@@ -438,21 +438,21 @@ public class JdgListagemVendas extends javax.swing.JDialog {
 //retorna o modelo
         return dtm;
     }
-
+    
 
     private void rbtFiltroDataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtFiltroDataItemStateChanged
         if (rbtFiltroData.isSelected()) {
-
+            
             tffDataFim.setEnabled(true);
             tffDataInicio.setEnabled(true);
-
+            
         } else {
-
+            
             tffDataFim.setCalendar(null);
             tffDataInicio.setCalendar(null);
             tffDataFim.setEnabled(false);
             tffDataInicio.setEnabled(false);
-
+            
         }
 
     }//GEN-LAST:event_rbtFiltroDataItemStateChanged
@@ -462,30 +462,30 @@ public class JdgListagemVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        
         validarTipoDeBusca();
-
+        
 
     }//GEN-LAST:event_btnBuscarActionPerformed
     private void buscar() {
         if (tfdBuscar.getText().length() > 0) {
-
+            
             cli.setRazaoSocial(tfdBuscar.getText());
             fat.setCliente(cli);
             try {
                 fat.setId(Integer.parseInt(tfdBuscar.getText()));
-
+                
             } catch (Exception e) {
-
+                
             }
-
+            
         } else {
             tfdBuscar.setText("");
             cli.setRazaoSocial(tfdBuscar.getText());
             fat.setId(0);
         }
         if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
-
+            
             String dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
             String dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
             fat.setDataEmissaoInicio(dataInicio);
@@ -498,9 +498,9 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             listarVendas();
         }
     }
-
+    
     private void validarTipoDeBusca() {
-
+        
         if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
             try {
                 if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
@@ -511,11 +511,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta");
             }
-
+            
         } else {
             buscar();
         }
-
+        
     }
     private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
         FaturamentoDAO fatDAO = new FaturamentoDAO();
@@ -525,12 +525,12 @@ public class JdgListagemVendas extends javax.swing.JDialog {
                     + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
                     + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
             );
-
+            
             if (op == 0) {
                 try {
-
+                    
                     cancelarVenda();
-
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -553,11 +553,11 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         } else {
             btnCancelarVenda.setEnabled(true);
         }
-
+        
         if (evt.getClickCount() > 1) {
             int linhaSelecionada = tblListaVendas.getSelectedRow();
             acessarVenda();
-
+            
         }
 
     }//GEN-LAST:event_tblListaVendasMouseClicked
@@ -582,45 +582,51 @@ public class JdgListagemVendas extends javax.swing.JDialog {
         try {
             if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
                 if (rbtCanceladas.isSelected() || rbtFinalizadas.isSelected()) {
-
+                    
                     buscar();
-                    //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+
 //            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
-                    JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+//                    JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+//
+//                    // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+//                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//                    Date data = formato.parse(fat.getDataEmissaoInicio());
+//
+//                    Date dataFim = formato.parse(fat.getDataEmissaoFim());
+//                    dataFim.setDate(dataFim.getDate() + 1);
+//                    Map parametros = new HashMap();
+//                    parametros.put("Data_emissao_inicial", data);
+//                    parametros.put("Data_emissao_final", dataFim);
+//                    if (fat.getFase() == 't') {
+//                        parametros.put("Fase", "");
+//
+//                    } else {
+//
+//                        parametros.put("Fase", fat.getFase());
+//                    }
+//
+//                    // Executa relatoio
+//                    JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+//
+//                    // Exibe resultado em video
+//                    JasperViewer.viewReport(impressao, false);
 
-                    // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                    Date data = formato.parse(fat.getDataEmissaoInicio());
 
-                    Date dataFim = formato.parse(fat.getDataEmissaoFim());
-                    dataFim.setDate(dataFim.getDate() + 1);
-                    Map parametros = new HashMap();
-                    parametros.put("Data_emissao_inicial", data);
-                    parametros.put("Data_emissao_final", dataFim);
-                    if (fat.getFase() == 't') {
-                        parametros.put("Fase", "");
-
-                    } else {
-
-                        parametros.put("Fase", fat.getFase());
-                    }
-
-                    // Executa relatoio
-                    JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
-
-                    // Exibe resultado em video
-                    JasperViewer.viewReport(impressao, false);
-                }else{
-                JOptionPane.showMessageDialog(rootPane, "Nenhuma fase do pedido selecionada!\n para gerar o relatório precisa selecionar\numa fase ou mais");    
+                    JdgRelatoriosVendas relatorioVendas = new JdgRelatoriosVendas(null, false, fat);
+                    
+                    relatorioVendas.setVisible(true);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Nenhuma fase do pedido selecionada!\n para gerar o relatório precisa selecionar\numa fase ou mais");                    
                 }
-
+                
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
         }
-
+        
         try {
             // Compila o relatorio//
 
@@ -628,30 +634,30 @@ public class JdgListagemVendas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
             System.out.println(e);
         }
-
+        
 
     }//GEN-LAST:event_btnRelatoriosActionPerformed
-
+    
     private void acessarVenda() {
         fat.setId(0);
         vendas.removeAll(vendas);
         int row = tblListaVendas.getSelectedRow();
         FaturamentoDAO fatDAO = new FaturamentoDAO();
-
+        
         vendas = fatDAO.consultar(fat, cli);
         fat.setId(vendas.get(row).getId());
-
+        
         JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
         vendaRegistrada.setVisible(true);
         fat.setId(0);
         listarVendas();
     }
-
+    
     private void cancelarVenda() {
         int row = tblListaVendas.getSelectedRow();
-
+        
         fat.setId(vendas.get(row).getId());
-
+        
         FaturamentoDAO fatDAO = new FaturamentoDAO();
         if (fatDAO.salvar(fat, null, null)) {
             JOptionPane.showMessageDialog(rootPane, "Cancelamento da venda realizado com sucesso!");
@@ -676,21 +682,21 @@ public class JdgListagemVendas extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(JdgListagemVendas.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(JdgListagemVendas.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(JdgListagemVendas.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JdgListagemVendas.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
