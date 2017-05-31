@@ -23,10 +23,10 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Mileto
  */
-
-
 public class JdgRelatoriosVendas extends javax.swing.JDialog {
+
     Faturamento fat;
+
     /**
      * Creates new form JdgRelatoriosVendas
      */
@@ -34,17 +34,18 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-     public JdgRelatoriosVendas(java.awt.Frame parent, boolean modal,Faturamento fat) {
+
+    public JdgRelatoriosVendas(java.awt.Frame parent, boolean modal, Faturamento fat) {
         super(parent, modal);
         initComponents();
         this.fat = fat;
         popularGroupButton();
     }
-     
-         private void popularGroupButton() {
+
+    private void popularGroupButton() {
         rbgRelatorios.add(rbtRelatVendaDetalhado);
         rbgRelatorios.add(rbtRelatVendaSimplificado);
-        
+
     }
 
     /**
@@ -75,6 +76,7 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
             }
         });
 
+        btnVisualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
         btnVisualizar.setText("Visualizar");
         btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +91,7 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
             }
         });
 
-        rbtRelatVendaDetalhado.setText("Relatório de vendas simplificado");
+        rbtRelatVendaDetalhado.setText("Relatório de vendas detalhado");
         rbtRelatVendaDetalhado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtRelatVendaDetalhadoActionPerformed(evt);
@@ -158,11 +160,9 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
 //            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
             if (rbtRelatVendaSimplificado.isSelected()) {
 
-                 relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+                relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
             } else if (rbtRelatVendaDetalhado.isSelected()) {
-                 relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/FaturamentoDetalhado.jrxml"));
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Nenhum relatório selecionado!");
+                relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/FaturamentoDetalhado.jrxml"));
             }
             // Mapeia campos de parametros para o relatorio, mesmo que nao existam
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -186,9 +186,15 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
 
             // Exibe resultado em video
             JasperViewer.viewReport(impressao, false);
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
+            if (rbtRelatVendaDetalhado.isSelected() || rbtRelatVendaSimplificado.isSelected()) {
+                JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
+            } else {
+
+                JOptionPane.showMessageDialog(rootPane, "Nenhum relatório selecionado!");
+            }
+
         }
 
         try {
@@ -198,7 +204,7 @@ public class JdgRelatoriosVendas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
             System.out.println(e);
         }
-        
+
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void rbtRelatVendaSimplificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtRelatVendaSimplificadoActionPerformed

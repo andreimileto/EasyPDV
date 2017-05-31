@@ -107,6 +107,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnVisualizar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/print.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Visualizar"/>
           </Properties>
           <Events>
@@ -123,7 +126,7 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbtRelatVendaDetalhado">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de vendas simplificado"/>
+            <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de vendas detalhado"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtRelatVendaDetalhadoActionPerformed"/>

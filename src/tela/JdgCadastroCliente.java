@@ -186,11 +186,11 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 tffTelefoneKeyReleased(evt);
             }
         });
-        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 99, -1));
+        jPanel1.add(tffTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 110, -1));
 
         lblRazaoSocial.setText("Nome*");
         jPanel1.add(lblRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
-        jPanel1.add(tfdRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 310, -1));
+        jPanel1.add(tfdRazaoSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 320, -1));
 
         lblCidade.setText("Cidade*");
         jPanel1.add(lblCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
@@ -232,7 +232,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 100, -1));
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 100, -1));
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_Schutdown16.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -241,16 +241,16 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 btnSairActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 81, -1));
+        jPanel1.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 81, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,6 +313,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 } else {
                     cliente.setAtivo('F');
                 }
+                
                 ClienteDAO clienteDAO = new ClienteDAO();
                 clienteDAO.salvar(cliente);
 
@@ -330,6 +331,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
     private void limparCampos() {
         cliente.setId(0);
         cidade.setId(0);
+        cliente.setAtivo('0');
         cliente.setCpfCnpj("");
         tfdId.setText("");
         tffCpfCnpj.setText("");
@@ -430,17 +432,32 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
         if (cbxTipo.getSelectedIndex() == 0) {
             System.out.println("antes do if..."+tffCpfCnpj.getText());
+            try {
+                
+            
             if (!Validacao.validarCPF(Formatacao.removerFormatacao(tffCpfCnpj.getText()))){
                 System.out.println("entrou no if do cpf como certo");
                 ok = false;
                 lblCpfCnpj.setForeground(Color.red);
 
             }
+            } catch (Exception e) {
+                ok = false;
+                lblCpfCnpj.setForeground(Color.red);
+            }
+            
         } else {
+            try{
             if (!Validacao.validarCNPJ(Formatacao.removerFormatacao(tffCpfCnpj.getText()))){
                 
                 ok = false;
+                lblCpfCnpj.setForeground(Color.red);    
+            }
+            } catch (Exception e) {
+                ok = false;
                 lblCpfCnpj.setForeground(Color.red);
+            
+            
 
             }
             System.out.println("ok..."+ok);

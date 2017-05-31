@@ -67,14 +67,12 @@
                          fase char(1) not null,
                          desconto DOUBLE PRECISION,
                          valor_total DOUBLE PRECISION not null,		
-                         valor_total_liquido double not null,
+                         valor_total_liquido double PRECISION not null,
                          constraint pkfaturamento primary key (id),
                          CONSTRAINT fkid_clientefaturamento foreign key(id_cliente)
                          references cliente,
                          constraint fkid_empresafaturamento foreign key(id_empresa)
-                         references empresa,
-                         constraint fkid_forma_pagamento foreign key (id_forma_pagamento)
-                         references forma_pagamento
+                         references empresa
                          );
                                                   
             CREATE TABLE faturamento_item(id serial,
@@ -128,27 +126,27 @@ INSERT INTO public.empresa(
 --------procedure e triggers---------------
 
 ---atualiza estoque quando o pedido é encerrado ou cancelado
-CREATE OR REPLACE FUNCTION fatuaizaestoque()
-RETURNS trigger
-AS $$
+--CREATE OR REPLACE FUNCTION fatuaizaestoque()
+--RETURNS trigger
+--AS $$
  
-BEGIN
+--BEGIN
 
-	if (NEW.fase = 'e') then
-    update mercadoria m set estoque = (estoque - f.quantidade  )
-    from faturamento_item f, faturamento fa
-    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+	--if (NEW.fase = 'e') then
+   -- update mercadoria m set estoque = (estoque - f.quantidade  )
+   -- from faturamento_item f, faturamento fa
+   -- where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
 
     
- end if;
-    if (NEW.fase = 'c') then
-  update mercadoria m set estoque = estoque
-    from faturamento_item f, faturamento fa
-    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
-end if;
-RETURN null;
-END;
-$$ LANGUAGE plpgsql;
+ --end if;
+--    if (NEW.fase = 'c') then
+  --update mercadoria m set estoque = estoque
+    --from faturamento_item f, faturamento fa
+  --  where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+--end if;
+--RETURN null;
+--END;
+--$$ LANGUAGE plpgsql;
 -----ou---- USAR ESTE DE BAIXO
 CREATE OR REPLACE FUNCTION fatuaizaestoque()
 RETURNS trigger
@@ -174,9 +172,9 @@ $$ LANGUAGE plpgsql;
 
 
 ------------------
-CREATE  TRIGGER tatuaizaestoquecancelamento
+CREATE  TRIGGER tatuaizaestoque
 AFTER  UPDATE ON faturamento
 FOR EACH ROW
-EXECUTE PROCEDURE fatuaizaestoquecancelamento ()
+EXECUTE PROCEDURE fatuaizaestoque()
 
 
