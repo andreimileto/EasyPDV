@@ -64,6 +64,7 @@ public class FaturamentoItemDAO {
                 fatItem.setQuantidade(resultado.getDouble("quantidade"));
                 fatItem.setValorUnitario(resultado.getDouble("valor_unitario"));
                 fatItem.setValorTotal(resultado.getDouble("valor_total"));
+                fatItem.setDesconto(resultado.getDouble("desconto"));
                 fatItem.setMercadoria(merc);
 //                cliente.getCidade().getDescricao();
                 mercs.add(fatItem);
