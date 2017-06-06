@@ -585,32 +585,6 @@ public class JdgListagemVendas extends javax.swing.JDialog {
                     
                     buscar();
 
-//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
-//                    JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Faturamento.jrxml"));
-//
-//                    // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-//                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-//                    Date data = formato.parse(fat.getDataEmissaoInicio());
-//
-//                    Date dataFim = formato.parse(fat.getDataEmissaoFim());
-//                    dataFim.setDate(dataFim.getDate() + 1);
-//                    Map parametros = new HashMap();
-//                    parametros.put("Data_emissao_inicial", data);
-//                    parametros.put("Data_emissao_final", dataFim);
-//                    if (fat.getFase() == 't') {
-//                        parametros.put("Fase", "");
-//
-//                    } else {
-//
-//                        parametros.put("Fase", fat.getFase());
-//                    }
-//
-//                    // Executa relatoio
-//                    JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
-//
-//                    // Exibe resultado em video
-//                    JasperViewer.viewReport(impressao, false);
-
 
                     JdgRelatoriosVendas relatorioVendas = new JdgRelatoriosVendas(null, false, fat);
                     

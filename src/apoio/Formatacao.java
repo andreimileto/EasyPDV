@@ -169,6 +169,26 @@ public class Formatacao {
     }
     
     
+    public static String ajustaDataDMAJCalendar(Date tffDataInicio) {
+        String dataFormatada = "";
+        
+        if (tffDataInicio.getDate()<10) {
+            dataFormatada = "0"+tffDataInicio.getDate()+"/";
+        }else{
+            dataFormatada = dataFormatada+tffDataInicio.getDate()+"/";
+        }
+        
+        if ((tffDataInicio.getMonth()+1)<10) {
+            dataFormatada = dataFormatada +"0"+(tffDataInicio.getMonth()+1)+"/";
+        }else{
+            dataFormatada = dataFormatada +(tffDataInicio.getMonth()+1)+"/";
+        }
+        dataFormatada= (dataFormatada+(tffDataInicio.getYear()+1900));
+        
+        return dataFormatada;
+    }
+    
+    
     public static String ajustaDataAMD(String data) {
         String dataFormatada = null;
         try {

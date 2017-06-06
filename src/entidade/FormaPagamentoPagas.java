@@ -5,15 +5,29 @@
  */
 package entidade;
 
+import java.util.Date;
+
 /**
  *
  * @author Mileto
  */
 public class FormaPagamentoPagas {
+
     private int id;
     private String descricao;
     private double valor;
     private int parcelas;
+    private String vencimento;
+
+    
+    
+    public String getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(String vencimento) {
+        this.vencimento = vencimento;
+    }
 
     public int getId() {
         return id;
@@ -46,5 +60,5 @@ public class FormaPagamentoPagas {
     public void setParcelas(int parcelas) {
         this.parcelas = parcelas;
     }
-    
+
 }
