@@ -95,11 +95,11 @@
                          numero_titulo varchar(10) not null,
                          data_emissao timestamp not null,
                          data_vencimento timestamp not null,
-                         valor_provisorio DOUBLE PRECISION,
+                         --valor_provisorio DOUBLE PRECISION,
                          valor_titulo DOUBLE PRECISION,
                          valor_pago DOUBLE PRECISION,
                          quitado char(1),
-                         recebido char(1) not null,
+                         --recebido char(1) not null,
                          ativo char(1) not null,
                          constraint pkfinanceiro primary key (id),
           		 constraint fkid_faturamentofaturamento foreign key(id_faturamento)

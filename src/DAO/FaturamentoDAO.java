@@ -98,7 +98,7 @@ public class FaturamentoDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "update faturamento set fase = 'c' where id =" + fat.getId();
                 int resultado = st.executeUpdate(sql);
-                
+
                 return true;
             } catch (Exception e) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, e);
@@ -231,4 +231,21 @@ public class FaturamentoDAO {
 
     }
 
+    public int ultimaVenda() {
+        int ultimaVenda = 0;
+
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            String sql = "select max(id) from faturamento ";
+
+            ResultSet resulSelect = st.executeQuery(sql);
+            resulSelect.next();
+            ultimaVenda = Integer.parseInt(resulSelect.getString("max"));
+            
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar a ultima venda" + e);
+        }
+        return ultimaVenda;
+    }
 }

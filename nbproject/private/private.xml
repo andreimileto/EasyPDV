@@ -5,15 +5,16 @@
         <group>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/Senha.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgRelatoriosVendas.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FaturamentoDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/script.sql</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListagemVendas.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FinanceiroReceberDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgVendaRegistrada.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgPedidoVenda.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FormaPagamentoDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgAlteracaoSenha.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/TelaPrincipal.java</file>
-            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/apoio/Formatacao.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/FormaPagamentoPagas.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FaturamentoItemDAO.java</file>
         </group>
