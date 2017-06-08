@@ -97,6 +97,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 formasPagas.setNumeroTitulo(ultimaVenda + "-" + numeroParcela);
                 numeroParcela++;
                 formasPagas.setQuitado('F');
+                formasPagas.setCliente(fat.getCliente());
                 formasPagas.setAtivo('T');
                 formasPagas.setValorPago(0);
                 formasPagas.setDataEmissao(Formatacao.getDataAtual());
@@ -141,6 +142,8 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             formasPagas.setValorPago(Double.parseDouble(tffValorPago.getText().replace(",", ".")));
             formasPagas.setDataEmissao(Formatacao.getDataAtual());
             formasPagas.setAtivo('T');
+            formasPagas.setCliente(fat.getCliente());
+            formasPagas.setDataPagamento(dataFormatada);
             double valor = Double.parseDouble(tffValorPago.getText().replace(",", "."));
             formasPagas.setValor(Double.parseDouble(tffValorPago.getText().replace(",", ".")));
             JOptionPane.showMessageDialog(rootPane, tffValorPago.getText().replace(",", "."));

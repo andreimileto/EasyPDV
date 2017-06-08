@@ -52,6 +52,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         imnPDV = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        imnTitulosReceber = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         imnLFormasPagamentos = new javax.swing.JMenuItem();
         imnLMercadorias = new javax.swing.JMenuItem();
@@ -139,6 +140,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Financeiro");
+
+        imnTitulosReceber.setText("Lista Títulos a receber");
+        imnTitulosReceber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnTitulosReceberActionPerformed(evt);
+            }
+        });
+        jMenu3.add(imnTitulosReceber);
+
         jMenuBar1.add(jMenu3);
 
         jMenu5.setText("Listagem");
@@ -291,6 +301,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_imnLMercadoriasActionPerformed
 
+    private void imnTitulosReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnTitulosReceberActionPerformed
+        JdgListagemFinanceiroReceber listaReceber = new JdgListagemFinanceiroReceber(this, true);
+        listaReceber.setVisible(true);
+    }//GEN-LAST:event_imnTitulosReceberActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -335,6 +350,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem imnLMercadorias;
     private javax.swing.JMenuItem imnMercadoria;
     private javax.swing.JMenuItem imnPDV;
+    private javax.swing.JMenuItem imnTitulosReceber;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

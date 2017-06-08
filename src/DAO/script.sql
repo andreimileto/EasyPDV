@@ -90,11 +90,13 @@
                          );
 
 
-            CREATE TABLE financeiro(id serial,
+            CREATE TABLE financeiro_receber(id serial,
                          id_faturamento int not null,
+                         id_cliente int not null,
                          numero_titulo varchar(10) not null,
                          data_emissao timestamp not null,
-                         data_vencimento timestamp not null,
+                         data_vencimento date not null,
+                         data_pagamento date,
                          --valor_provisorio DOUBLE PRECISION,
                          valor_titulo DOUBLE PRECISION,
                          valor_pago DOUBLE PRECISION,
@@ -103,7 +105,9 @@
                          ativo char(1) not null,
                          constraint pkfinanceiro primary key (id),
           		 constraint fkid_faturamentofaturamento foreign key(id_faturamento)
-                         references faturamento
+                         references faturamento,
+                         constraint fkid_clientecliente foreign key(id_cliente)
+                         references cliente
                          );
 
 

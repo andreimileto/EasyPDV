@@ -23,6 +23,25 @@ public class FormaPagamentoPagas {
     private char quitado;
     private double valorPago;
     private char ativo;
+    private String dataPagamento;
+    private Cliente cliente;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
+    public String getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(String dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+    
     
     public char getAtivo() {
         return ativo;
