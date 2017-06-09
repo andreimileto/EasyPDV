@@ -17,6 +17,7 @@ import entidade.Cidade;
 import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
+import entidade.FormaPagamento;
 import entidade.FormaPagamentoPagas;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -63,7 +64,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         cli = new Cliente(cid);
         this.formasPagas = formasPagas;
         //fat.setFase('e');
-        //vendas = new ArrayList<>();
+        arrayFormasPagas = new ArrayList<>();
         //listarVendas();
         tfdBuscar.setText("");
         
@@ -97,7 +98,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblListaVendas = new javax.swing.JTable();
+        tblListaTitulos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("EasyPDV - Listagem de vendas");
@@ -288,7 +289,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vendas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        tblListaVendas.setModel(new javax.swing.table.DefaultTableModel(
+        tblListaTitulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -307,12 +308,12 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblListaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblListaTitulos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblListaVendasMouseClicked(evt);
+                tblListaTitulosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblListaVendas);
+        jScrollPane1.setViewportView(tblListaTitulos);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -385,15 +386,15 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         
         try {
             //setar para tabela modelo de dados
-            tblListaVendas.setModel(this.obterDadosParaTabelaCompleto());
-            tblListaVendas.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblListaVendas.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tblListaVendas.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tblListaVendas.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tblListaVendas.getColumnModel().getColumn(4).setPreferredWidth(20);
-            tblListaVendas.getColumnModel().getColumn(5).setPreferredWidth(40);
-            tblListaVendas.getColumnModel().getColumn(6).setPreferredWidth(0);
-            tblListaVendas.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tblListaTitulos.setModel(this.obterDadosParaTabelaCompleto());
+            tblListaTitulos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblListaTitulos.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblListaTitulos.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tblListaTitulos.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tblListaTitulos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            tblListaTitulos.getColumnModel().getColumn(5).setPreferredWidth(40);
+            tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(0);
             
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
@@ -555,21 +556,21 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnAcessarVendaActionPerformed
 
-    private void tblListaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaVendasMouseClicked
-        int row = tblListaVendas.getSelectedRow();
-        if (tblListaVendas.getValueAt(row, 6) == "Cancelado") {
+    private void tblListaTitulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaTitulosMouseClicked
+        int row = tblListaTitulos.getSelectedRow();
+        if (tblListaTitulos.getValueAt(row, 6) == "Cancelado") {
             btnCancelarVenda.setEnabled(false);
         } else {
             btnCancelarVenda.setEnabled(true);
         }
         
         if (evt.getClickCount() > 1) {
-            int linhaSelecionada = tblListaVendas.getSelectedRow();
+            int linhaSelecionada = tblListaTitulos.getSelectedRow();
             acessarVenda();
             
         }
 
-    }//GEN-LAST:event_tblListaVendasMouseClicked
+    }//GEN-LAST:event_tblListaTitulosMouseClicked
 
     private void rbtAbertosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtAbertosItemStateChanged
         listarTitulos();
@@ -622,18 +623,37 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRelatoriosActionPerformed
     
     private void acessarVenda() {
-//        fat.setId(0);
-//        vendas.removeAll(vendas);
-//        int row = tblListaVendas.getSelectedRow();
-//        FaturamentoDAO fatDAO = new FaturamentoDAO();
-//        
-//        vendas = fatDAO.consultar(fat, cli);
-//        fat.setId(vendas.get(row).getId());
-//        
-//        JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
-//        vendaRegistrada.setVisible(true);
-//        fat.setId(0);
-//        listarTitulos();
+        formasPagas.setId(0);
+        arrayFormasPagas.removeAll(arrayFormasPagas);
+        int row = tblListaTitulos.getSelectedRow();
+        FinanceiroReceberDAO finDAO = new FinanceiroReceberDAO();
+        FormaPagamento formaPagamento = new FormaPagamento();
+        
+        arrayFormasPagas = finDAO.consultar(formasPagas);
+        
+        
+        formaPagamento.setDescricao(arrayFormasPagas.get(row).getFormaPagamento().getDescricao());
+        formasPagas.setFormaPagamento(formaPagamento);
+        formasPagas.setId(arrayFormasPagas.get(row).getId());
+        cli.setRazaoSocial(arrayFormasPagas.get(row).getCliente().getRazaoSocial());
+        formasPagas.setQuitado(arrayFormasPagas.get(row).getQuitado());
+        formasPagas.setDataEmissao(arrayFormasPagas.get(row).getDataEmissao());
+        formasPagas.setDataPagamento(arrayFormasPagas.get(row).getDataPagamento());
+        formasPagas.setVencimento(arrayFormasPagas.get(row).getVencimento());
+        Faturamento fat = new Faturamento();
+        //fat.setId(arrayFormasPagas.get(row).getFaturamento().getId());
+        formasPagas.setNumeroTitulo(arrayFormasPagas.get(row).getNumeroTitulo());
+        formasPagas.setValor(arrayFormasPagas.get(row).getValor());
+        formasPagas.setValorPago(arrayFormasPagas.get(row).getValorPago());
+        formasPagas.setCliente(cli);
+        //JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
+        //vendaRegistrada.setVisible(true);
+        
+        JdgCadastroFinanceiroReceber financeiroReceber = new JdgCadastroFinanceiroReceber(null, true, formasPagas);
+        financeiroReceber.setVisible(true);
+        
+        formasPagas.setId(0);
+        listarTitulos();
     }
     
     private void cancelarVenda() {
@@ -719,7 +739,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbtAbertos;
     private javax.swing.JRadioButton rbtFiltroData;
     private javax.swing.JRadioButton rbtFinalizadas;
-    private javax.swing.JTable tblListaVendas;
+    private javax.swing.JTable tblListaTitulos;
     private javax.swing.JTextField tfdBuscar;
     private com.toedter.calendar.JDateChooser tffDataFim;
     private com.toedter.calendar.JDateChooser tffDataInicio;

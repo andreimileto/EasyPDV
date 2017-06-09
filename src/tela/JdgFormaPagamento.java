@@ -70,25 +70,26 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
         //-----
         Date data;
-        
+
         //fp.setId(Integer.parseInt(tffCodigoPagamento.getText()));
         fp = new FormaPagamento();
         fp.setId(Integer.parseInt(tffCodigoPagamento.getText()));
         fp.setAtivo('T');
         FormaPagamentoDAO formasDAO = new FormaPagamentoDAO();
 
-        formasDAO.consultar(fp);
+        //formasDAO.consultar(fp);
+        formasPagas.setFormaPagamento(fp);
         FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
-         ultimaVenda = (faturamentoDAO.ultimaVenda() + 1);
+        ultimaVenda = (faturamentoDAO.ultimaVenda() + 1);
         if (validarParcela()) {
             double valorTotalTruncado = 0;
 
             for (int i = 0; i < Integer.parseInt(tffParcelas.getText()); i++) {
                 data = new Date();
-                
+
                 data.setDate(data.getDate() + 30 * (i + 1));
                 String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
-                
+
                 formasPagas.setVencimento(dataFormatada);
                 formasPagas.setParcelas(Integer.parseInt(tffParcelas.getText()));
                 double valor = Double.parseDouble(tffValorPago.getText().replace(",", ".")) / Integer.parseInt(tffParcelas.getText());
@@ -101,7 +102,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 formasPagas.setAtivo('T');
                 formasPagas.setValorPago(0);
                 formasPagas.setDataEmissao(Formatacao.getDataAtual());
-
+                formasPagas.setFormaPagamento(fp);
                 valorTotalTruncado = valorTotalTruncado + formasPagas.getValor();
                 if (i + 1 == Integer.parseInt(tffParcelas.getText())) {
 
@@ -116,12 +117,15 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 for (int j = 0; j < formas.size(); j++) {
                     if (formas.get(j).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
                         formasPagas.setDescricao(formas.get(j).getDescricao());
+                        fp.setDescricao(formas.get(j).getDescricao());
+                        formasPagas.setFormaPagamento(fp);
                     }
                 }
                 //            if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
                 //              formasPagas.setDescricao(formas.get(i).getDescricao());
 //                }
 //                formasPagas.setDescricao(fp.getDescricao());
+                
                 ArrayFormasPagas.add(formasPagas);
                 formasPagas = new FormaPagamentoPagas();
             }
@@ -149,16 +153,21 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, tffValorPago.getText().replace(",", "."));
             formasPagas.setId(fp.getId());
             formasPagas.setNumeroTitulo(ultimaVenda + "-" + numeroParcela);
+            formasPagas.setFormaPagamento(fp);
             numeroParcela++;
+
             for (int j = 0; j < formas.size(); j++) {
                 if (formas.get(j).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
                     formasPagas.setDescricao(formas.get(j).getDescricao());
+                        fp.setDescricao(formas.get(j).getDescricao());
+                        formasPagas.setFormaPagamento(fp);
                 }
             }
             //            if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
             //              formasPagas.setDescricao(formas.get(i).getDescricao());
 //                }
 //                formasPagas.setDescricao(fp.getDescricao());
+            
             ArrayFormasPagas.add(formasPagas);
             formasPagas = new FormaPagamentoPagas();
         }
@@ -665,16 +674,17 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
-        
+
         FinanceiroReceberDAO financeiroReceber = new FinanceiroReceberDAO();
-//        formaPagamento.setId(7);
+
         fat.setValorTotalLiquido(Double.parseDouble(lblTotalLiquido.getText()));
         String dataAtual = Formatacao.getDataAtual();
         fat.setDesconto(Double.parseDouble(tffDesconto.getText().replace(",", ".")));
         fat.setDataEmissao(dataAtual);
-        
+
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
-            financeiroReceber.salvar(ArrayFormasPagas, ultimaVenda);
+
+            financeiroReceber.salvar(ArrayFormasPagas, ultimaVenda,formasPagas);
             JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
             dispose();
         } else {

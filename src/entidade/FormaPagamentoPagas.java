@@ -25,6 +25,26 @@ public class FormaPagamentoPagas {
     private char ativo;
     private String dataPagamento;
     private Cliente cliente;
+    private Faturamento faturamento;
+    private FormaPagamento formaPagamento;
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+    
+    
+
+    public Faturamento getFaturamento() {
+        return faturamento;
+    }
+
+    public void setFaturamento(Faturamento faturamento) {
+        this.faturamento = faturamento;
+    }
 
     public Cliente getCliente() {
         return cliente;
@@ -33,7 +53,7 @@ public class FormaPagamentoPagas {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
     public String getDataPagamento() {
         return dataPagamento;
     }
@@ -41,8 +61,7 @@ public class FormaPagamentoPagas {
     public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
-    
-    
+
     public char getAtivo() {
         return ativo;
     }
@@ -50,8 +69,6 @@ public class FormaPagamentoPagas {
     public void setAtivo(char ativo) {
         this.ativo = ativo;
     }
-    
-    
 
     public String getDataEmissao() {
         return dataEmissao;
@@ -76,8 +93,7 @@ public class FormaPagamentoPagas {
     public void setValorPago(double valorPago) {
         this.valorPago = valorPago;
     }
-    
-    
+
     public String getNumeroTitulo() {
         return numeroTitulo;
     }
@@ -85,10 +101,7 @@ public class FormaPagamentoPagas {
     public void setNumeroTitulo(String numeroTitulo) {
         this.numeroTitulo = numeroTitulo;
     }
-    
-     
-    
-    
+
     public String getVencimento() {
         return vencimento;
     }

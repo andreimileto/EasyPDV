@@ -9,6 +9,7 @@ import DAO.CidadeDAO;
 import DAO.FormaPagamentoDAO;
 import entidade.Cidade;
 import entidade.FormaPagamento;
+import entidade.FormaPagamentoPagas;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -30,6 +31,8 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
         verificarCadastroSelecionado();
 
     }
+
+   
 
     private void popularGroupButton() {
         rbg.add(rbtAvista);
