@@ -87,6 +87,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         tffDataInicio = new com.toedter.calendar.JDateChooser();
         tffDataFim = new com.toedter.calendar.JDateChooser();
+        cbxTipoFiltro = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         rbtAbertos = new javax.swing.JRadioButton();
         rbtFinalizadas = new javax.swing.JRadioButton();
@@ -109,7 +110,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Período", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        rbtFiltroData.setText("Filtro data de emissão");
+        rbtFiltroData.setText("Filtro de data");
         rbtFiltroData.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 rbtFiltroDataItemStateChanged(evt);
@@ -135,6 +136,9 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         tffDataFim.setEnabled(false);
 
+        cbxTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data emissão", "Data vencimento", "Data pagamento" }));
+        cbxTipoFiltro.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -143,32 +147,34 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tffDataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tffDataFim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rbtFiltroData, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(tffDataFim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(rbtFiltroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxTipoFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(rbtFiltroData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tffDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tffDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fase", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Situação", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
         rbtAbertos.setSelected(true);
         rbtAbertos.setText("Aberto");
@@ -269,10 +275,10 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfdBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
@@ -282,7 +288,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addComponent(btnRelatorios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vendas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 204))); // NOI18N
@@ -319,13 +325,13 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1082, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -408,7 +414,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 //adiciona titulo para as colunas
 
         FinanceiroReceberDAO formasDAO = new FinanceiroReceberDAO();
-        ArrayList<FormaPagamentoPagas> formas = formasDAO.consultar(formasPagas);
+        ArrayList<FormaPagamentoPagas> formas = formasDAO.consultar(formasPagas,cbxTipoFiltro.getSelectedIndex());
 
 //        ClienteDAO cliDAO = new ClienteDAO();
 //        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
@@ -449,6 +455,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
             tffDataFim.setEnabled(true);
             tffDataInicio.setEnabled(true);
+            cbxTipoFiltro.setEnabled(true);
 
         } else {
 
@@ -456,6 +463,8 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             tffDataInicio.setCalendar(null);
             tffDataFim.setEnabled(false);
             tffDataInicio.setEnabled(false);
+            cbxTipoFiltro.setEnabled(false);
+            cbxTipoFiltro.setSelectedIndex(0);
             formasPagas.setDataInicio(null);
             formasPagas.setDataFim(null);
 
@@ -535,7 +544,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         if (row >= 0) {
             acessarVenda();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Nenhum título selecionado");
+            JOptionPane.showMessageDialog(rootPane, "Erro ao acessar o título: \nNenhum título selecionado");
         }
 
 
@@ -622,7 +631,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         FinanceiroReceberDAO finDAO = new FinanceiroReceberDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
 
-        arrayFormasPagas = finDAO.consultar(formasPagas);
+        arrayFormasPagas = finDAO.consultar(formasPagas,cbxTipoFiltro.getSelectedIndex());
 
         formaPagamento.setDescricao(arrayFormasPagas.get(row).getFormaPagamento().getDescricao());
         formasPagas.setFormaPagamento(formaPagamento);
@@ -719,6 +728,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cbxTipoFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
