@@ -27,6 +27,26 @@ public class FormaPagamentoPagas {
     private Cliente cliente;
     private Faturamento faturamento;
     private FormaPagamento formaPagamento;
+    private String dataInicio;
+    private String dataFim;
+
+    public String getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public String getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
+    }
+    
+    
 
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;

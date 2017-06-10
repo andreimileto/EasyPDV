@@ -107,14 +107,63 @@ public class FinanceiroReceberDAO {
 
     public ArrayList<FormaPagamentoPagas> consultar(FormaPagamentoPagas formaPagamentoPagas) {
         this.formaPagamentoPagas = formaPagamentoPagas;
-        String sql = "select f.id idfinanceiro,f.id_faturamento,f.id_cliente,f.numero_titulo,f.data_emissao,"
+        String sql = "";
+        if ((formaPagamentoPagas.getDataInicio() == null && formaPagamentoPagas.getDataFim() == null)
+                    && (formaPagamentoPagas.getQuitado()== 'T' || formaPagamentoPagas.getQuitado()== 'F')) {
+        
+         sql = "select f.id idfinanceiro,f.id_faturamento,f.id_cliente,f.numero_titulo,f.data_emissao,"
                 + "f.data_vencimento,f.data_pagamento,f.valor_titulo,"
                 + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idcliente,"
                 + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativocliente,"
                 + "fp.descricao "
                 + " from financeiro_receber f, cliente c,forma_pagamento fp "
                 + "where c.id = f.id_cliente"
-                + " and fp.id = f.id_forma_pagamento";
+                + " and fp.id = f.id_forma_pagamento "
+                + " and quitado ='"+formaPagamentoPagas.getQuitado()+"' "
+                + "and (c.razao_social ilike '"+formaPagamentoPagas.getCliente().getRazaoSocial()+"%' "
+                + "or f.numero_titulo ilike '"+formaPagamentoPagas.getNumeroTitulo()+"%')";
+        }else if ((formaPagamentoPagas.getDataInicio() != null && formaPagamentoPagas.getDataFim() != null)
+                    && (formaPagamentoPagas.getQuitado()== 'T' || formaPagamentoPagas.getQuitado()== 'F')){
+             sql = "select f.id idfinanceiro,f.id_faturamento,f.id_cliente,f.numero_titulo,f.data_emissao,"
+                + "f.data_vencimento,f.data_pagamento,f.valor_titulo,"
+                + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idcliente,"
+                + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativocliente,"
+                + "fp.descricao "
+                + " from financeiro_receber f, cliente c,forma_pagamento fp "
+                + "where c.id = f.id_cliente"
+                + " and fp.id = f.id_forma_pagamento "
+                + " and quitado ='"+formaPagamentoPagas.getQuitado()+"' "
+                     + "and f.data_emissao >='"+formaPagamentoPagas.getDataInicio()+"' "
+                     + "and f.data_emissao <= '"+formaPagamentoPagas.getDataFim()+" 23:59:59' "
+                + "and (c.razao_social ilike '"+formaPagamentoPagas.getCliente().getRazaoSocial()+"%' "
+                + "or f.numero_titulo ilike '"+formaPagamentoPagas.getNumeroTitulo()+"%')";
+        }else if ((formaPagamentoPagas.getDataInicio() == null && formaPagamentoPagas.getDataFim() == null)
+                    && (formaPagamentoPagas.getQuitado()== 'A')) {
+            sql = "select f.id idfinanceiro,f.id_faturamento,f.id_cliente,f.numero_titulo,f.data_emissao,"
+                + "f.data_vencimento,f.data_pagamento,f.valor_titulo,"
+                + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idcliente,"
+                + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativocliente,"
+                + "fp.descricao "
+                + " from financeiro_receber f, cliente c,forma_pagamento fp "
+                + "where c.id = f.id_cliente"
+                + " and fp.id = f.id_forma_pagamento "
+                + "and (c.razao_social ilike '"+formaPagamentoPagas.getCliente().getRazaoSocial()+"%' "
+                + "or f.numero_titulo ilike '"+formaPagamentoPagas.getNumeroTitulo()+"%')";
+        }else if ((formaPagamentoPagas.getDataInicio() != null && formaPagamentoPagas.getDataFim() != null)
+                    && (formaPagamentoPagas.getQuitado()== 'A')){
+            sql = "select f.id idfinanceiro,f.id_faturamento,f.id_cliente,f.numero_titulo,f.data_emissao,"
+                + "f.data_vencimento,f.data_pagamento,f.valor_titulo,"
+                + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idcliente,"
+                + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativocliente,"
+                + "fp.descricao "
+                + " from financeiro_receber f, cliente c,forma_pagamento fp "
+                + "where c.id = f.id_cliente"
+                + " and fp.id = f.id_forma_pagamento "
+                     + "and f.data_emissao >='"+formaPagamentoPagas.getDataInicio()+"' "
+                     + "and f.data_emissao <= '"+formaPagamentoPagas.getDataFim()+" 23:59:59' "
+                + "and (c.razao_social ilike '"+formaPagamentoPagas.getCliente().getRazaoSocial()+"%' "
+                + "or f.numero_titulo ilike '"+formaPagamentoPagas.getNumeroTitulo()+"%')";
+        }
         ArrayList<FormaPagamentoPagas> formas = new ArrayList<>();
         //faz consulta e adiciona os valores para o array...
         try {
@@ -168,3 +217,4 @@ public class FinanceiroReceberDAO {
         return formas;
     }
 }
+    

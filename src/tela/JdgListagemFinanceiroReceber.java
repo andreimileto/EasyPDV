@@ -55,7 +55,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     FormaPagamentoPagas formasPagas;
     Cliente cli;
     ArrayList<FormaPagamentoPagas> arrayFormasPagas;
-    
+
     public JdgListagemFinanceiroReceber(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -67,7 +67,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         arrayFormasPagas = new ArrayList<>();
         //listarVendas();
         tfdBuscar.setText("");
-        
+        buscar();
     }
 
     /**
@@ -88,11 +88,10 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         tffDataInicio = new com.toedter.calendar.JDateChooser();
         tffDataFim = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
-        rbtFinalizadas = new javax.swing.JRadioButton();
         rbtAbertos = new javax.swing.JRadioButton();
+        rbtFinalizadas = new javax.swing.JRadioButton();
         btnRelatorios = new javax.swing.JButton();
-        btnAcessarVenda = new javax.swing.JButton();
-        btnCancelarVenda = new javax.swing.JButton();
+        btnAcessarTitulo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         tfdBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -110,10 +109,15 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Período", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        rbtFiltroData.setText("Filtro de data");
+        rbtFiltroData.setText("Filtro data de emissão");
         rbtFiltroData.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 rbtFiltroDataItemStateChanged(evt);
+            }
+        });
+        rbtFiltroData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtFiltroDataActionPerformed(evt);
             }
         });
 
@@ -144,7 +148,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                             .addComponent(rbtFiltroData, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 27, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(tffDataFim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -166,18 +170,23 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fase", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
-        rbtFinalizadas.setSelected(true);
+        rbtAbertos.setSelected(true);
+        rbtAbertos.setText("Aberto");
+        rbtAbertos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbtAbertosItemStateChanged(evt);
+            }
+        });
+        rbtAbertos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtAbertosActionPerformed(evt);
+            }
+        });
+
         rbtFinalizadas.setText("Finalizadas");
         rbtFinalizadas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 rbtFinalizadasItemStateChanged(evt);
-            }
-        });
-
-        rbtAbertos.setText("Canceladas");
-        rbtAbertos.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbtAbertosItemStateChanged(evt);
             }
         });
 
@@ -188,18 +197,18 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtFinalizadas)
-                    .addComponent(rbtAbertos))
+                    .addComponent(rbtAbertos)
+                    .addComponent(rbtFinalizadas))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rbtFinalizadas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtAbertos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                .addComponent(rbtFinalizadas)
+                .addContainerGap())
         );
 
         btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
@@ -210,19 +219,11 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             }
         });
 
-        btnAcessarVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png"))); // NOI18N
-        btnAcessarVenda.setText("Acessar Venda");
-        btnAcessarVenda.addActionListener(new java.awt.event.ActionListener() {
+        btnAcessarTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png"))); // NOI18N
+        btnAcessarTitulo.setText("Acessar Título");
+        btnAcessarTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcessarVendaActionPerformed(evt);
-            }
-        });
-
-        btnCancelarVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconcancel3.png"))); // NOI18N
-        btnCancelarVenda.setText("Cancelar Venda");
-        btnCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarVendaActionPerformed(evt);
+                btnAcessarTituloActionPerformed(evt);
             }
         });
 
@@ -258,8 +259,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAcessarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAcessarTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfdBuscar)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -277,14 +277,12 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAcessarVenda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelarVenda)
+                .addComponent(btnAcessarTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRelatorios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair)
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vendas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 204))); // NOI18N
@@ -319,9 +317,9 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -373,7 +371,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listarTitulos() {
-        
+
         if (rbtFinalizadas.isSelected() && rbtAbertos.isSelected()) {
             formasPagas.setQuitado('A');
         } else if (rbtFinalizadas.isSelected() && !rbtAbertos.isSelected()) {
@@ -383,7 +381,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         } else {
             formasPagas.setQuitado(' ');
         }
-        
+
         try {
             //setar para tabela modelo de dados
             tblListaTitulos.setModel(this.obterDadosParaTabelaCompleto());
@@ -395,12 +393,12 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             tblListaTitulos.getColumnModel().getColumn(5).setPreferredWidth(40);
             tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(0);
             tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(0);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private DefaultTableModel obterDadosParaTabelaCompleto() throws Exception {
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
@@ -419,11 +417,10 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         dtm.addColumn("DATA EMISSÃO");
         dtm.addColumn("DATA VENCIMENTO");
         dtm.addColumn("VALOR TÍTULO");
-        dtm.addColumn("DATA PAGAMENTO");        
+        dtm.addColumn("DATA PAGAMENTO");
         dtm.addColumn("VALOR PAGO");
         dtm.addColumn("SITUAÇÃO");
 
-        
         for (int i = 0; i < formas.size(); i++) {
             //popular tabela
             String fase = "";
@@ -432,36 +429,36 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             } else {
                 fase = "Aberto";
             }
-            
+
             dtm.addRow(new String[]{String.valueOf(formas.get(i).getNumeroTitulo()),
                 String.valueOf(formas.get(i).getCliente().getRazaoSocial()),
                 formas.get(i).getDataEmissao(),
                 formas.get(i).getVencimento(),
                 String.valueOf(formas.get(i).getValor()),
-                
                 String.valueOf(formas.get(i).getDataPagamento()),
                 String.valueOf(formas.get(i).getValorPago()),
-                fase,
-            });
+                fase,});
         }
 //retorna o modelo
         return dtm;
     }
-    
+
 
     private void rbtFiltroDataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbtFiltroDataItemStateChanged
         if (rbtFiltroData.isSelected()) {
-            
+
             tffDataFim.setEnabled(true);
             tffDataInicio.setEnabled(true);
-            
+
         } else {
-            
+
             tffDataFim.setCalendar(null);
             tffDataInicio.setCalendar(null);
             tffDataFim.setEnabled(false);
             tffDataInicio.setEnabled(false);
-            
+            formasPagas.setDataInicio(null);
+            formasPagas.setDataFim(null);
+
         }
 
     }//GEN-LAST:event_rbtFiltroDataItemStateChanged
@@ -471,9 +468,9 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     }//GEN-LAST:event_tffDataInicioKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
         validarTipoDeBusca();
-        
+
 
     }//GEN-LAST:event_btnBuscarActionPerformed
     private void buscar() {
@@ -506,14 +503,20 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 ////            JOptionPane.showMessageDialog(rootPane, "entrou no else");
 //            listarTitulos();
 //        }
+
+        cli.setRazaoSocial(tfdBuscar.getText());
+        formasPagas.setNumeroTitulo(tfdBuscar.getText());
+        formasPagas.setCliente(cli);
         listarTitulos();
     }
-    
+
     private void validarTipoDeBusca() {
-        
+
         if (tffDataInicio.getCalendar() != null && tffDataFim.getCalendar() != null) {
             try {
                 if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
+                    formasPagas.setDataInicio(Formatacao.ajustaDataDMAJCalendar(tffDataInicio));
+                    formasPagas.setDataFim(Formatacao.ajustaDataDMAJCalendar(tffDataFim));
                     buscar();
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta");
@@ -521,53 +524,35 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta");
             }
-            
+
         } else {
             buscar();
         }
-        
+
     }
-    private void btnCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVendaActionPerformed
-//        FaturamentoDAO fatDAO = new FaturamentoDAO();
-//        vendas = fatDAO.consultar(fat, cli);
-//        try {
-//            int op = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja cancelar a venda? \n"
-//                    + "ID: " + vendas.get(tblListaVendas.getSelectedRow()).getId() + "\n"
-//                    + "Cliente: " + vendas.get(tblListaVendas.getSelectedRow()).getCliente().getRazaoSocial()
-//            );
-//            
-//            if (op == 0) {
-//                try {
-//                    
-//                    cancelarVenda();
-//                    
-//                } catch (Exception ex) {
-//                    Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(rootPane, "Nenhuma Linha da tabela Selecionada");
-//        }
+    private void btnAcessarTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarTituloActionPerformed
+        int row = tblListaTitulos.getSelectedRow();
+        if (row >= 0) {
+            acessarVenda();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Nenhum título selecionado");
+        }
 
-    }//GEN-LAST:event_btnCancelarVendaActionPerformed
 
-    private void btnAcessarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarVendaActionPerformed
-        acessarVenda();
-
-    }//GEN-LAST:event_btnAcessarVendaActionPerformed
+    }//GEN-LAST:event_btnAcessarTituloActionPerformed
 
     private void tblListaTitulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaTitulosMouseClicked
         int row = tblListaTitulos.getSelectedRow();
-        if (tblListaTitulos.getValueAt(row, 6) == "Cancelado") {
-            btnCancelarVenda.setEnabled(false);
-        } else {
-            btnCancelarVenda.setEnabled(true);
-        }
-        
+//        if (tblListaTitulos.getValueAt(row, 6) == "Cancelado") {
+//            btnCancelarVenda.setEnabled(false);
+//        } else {
+//            btnCancelarVenda.setEnabled(true);
+//        }
+
         if (evt.getClickCount() > 1) {
             int linhaSelecionada = tblListaTitulos.getSelectedRow();
             acessarVenda();
-            
+
         }
 
     }//GEN-LAST:event_tblListaTitulosMouseClicked
@@ -621,17 +606,24 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 //        
 
     }//GEN-LAST:event_btnRelatoriosActionPerformed
-    
+
+    private void rbtAbertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAbertosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtAbertosActionPerformed
+
+    private void rbtFiltroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtFiltroDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtFiltroDataActionPerformed
+
     private void acessarVenda() {
         formasPagas.setId(0);
         arrayFormasPagas.removeAll(arrayFormasPagas);
         int row = tblListaTitulos.getSelectedRow();
         FinanceiroReceberDAO finDAO = new FinanceiroReceberDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
-        
+
         arrayFormasPagas = finDAO.consultar(formasPagas);
-        
-        
+
         formaPagamento.setDescricao(arrayFormasPagas.get(row).getFormaPagamento().getDescricao());
         formasPagas.setFormaPagamento(formaPagamento);
         formasPagas.setId(arrayFormasPagas.get(row).getId());
@@ -648,14 +640,14 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         formasPagas.setCliente(cli);
         //JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
         //vendaRegistrada.setVisible(true);
-        
+
         JdgCadastroFinanceiroReceber financeiroReceber = new JdgCadastroFinanceiroReceber(null, true, formasPagas);
         financeiroReceber.setVisible(true);
-        
+
         formasPagas.setId(0);
         listarTitulos();
     }
-    
+
     private void cancelarVenda() {
 //        int row = tblListaVendas.getSelectedRow();
 //        
@@ -685,21 +677,21 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(JdgListagemFinanceiroReceber.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(JdgListagemFinanceiroReceber.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(JdgListagemFinanceiroReceber.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JdgListagemFinanceiroReceber.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -723,9 +715,8 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAcessarVenda;
+    private javax.swing.JButton btnAcessarTitulo;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelarVenda;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
