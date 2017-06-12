@@ -91,7 +91,8 @@ public class FinanceiroReceberDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
                 String sql = "update financeiro_receber set valor_pago = " + formaPagamentoPagas.getValorPago() + ","
                         + " quitado ='" + formaPagamentoPagas.getQuitado() + "',"
-                        + " data_pagamento = '" + formaPagamentoPagas.getDataPagamento() + "'"
+                        + " data_pagamento = '" + formaPagamentoPagas.getDataPagamento() + "',"
+                        + " ativo = '" + formaPagamentoPagas.getAtivo()+"'"
                         + " where id = " + formaPagamentoPagas.getId();
 
                 System.out.println(sql);
@@ -120,6 +121,7 @@ public class FinanceiroReceberDAO {
                     + "where c.id = f.id_cliente"
                     + " and fp.id = f.id_forma_pagamento "
                     + " and quitado ='" + formaPagamentoPagas.getQuitado() + "' "
+                    + "and f.ativo = 'T' "
                     + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                     + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
         } else if ((formaPagamentoPagas.getDataInicio() != null && formaPagamentoPagas.getDataFim() != null)
@@ -136,6 +138,7 @@ public class FinanceiroReceberDAO {
                         + " and quitado ='" + formaPagamentoPagas.getQuitado() + "' "
                         + "and f.data_emissao >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_emissao <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             } else if (tipoFiltro == 1) {
@@ -150,6 +153,7 @@ public class FinanceiroReceberDAO {
                         + " and quitado ='" + formaPagamentoPagas.getQuitado() + "' "
                         + "and f.data_vencimento >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_vencimento <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             } else if (tipoFiltro == 2) {
@@ -164,6 +168,7 @@ public class FinanceiroReceberDAO {
                         + " and quitado ='" + formaPagamentoPagas.getQuitado() + "' "
                         + "and f.data_pagamento >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_pagamento <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             }
@@ -178,6 +183,7 @@ public class FinanceiroReceberDAO {
                     + " from financeiro_receber f, cliente c,forma_pagamento fp "
                     + "where c.id = f.id_cliente"
                     + " and fp.id = f.id_forma_pagamento "
+                    + "and f.ativo = 'T' "
                     + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                     + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
 
@@ -194,6 +200,7 @@ public class FinanceiroReceberDAO {
                         + " and fp.id = f.id_forma_pagamento "
                         + "and f.data_emissao >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_emissao <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             } else if (tipoFiltro == 1) {
@@ -207,6 +214,7 @@ public class FinanceiroReceberDAO {
                         + " and fp.id = f.id_forma_pagamento "
                         + "and f.data_vencimento >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_vencimento <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             } else if (tipoFiltro == 2) {
@@ -220,6 +228,7 @@ public class FinanceiroReceberDAO {
                         + " and fp.id = f.id_forma_pagamento "
                         + "and f.data_pagamento >='" + formaPagamentoPagas.getDataInicio() + "' "
                         + "and f.data_pagamento <= '" + formaPagamentoPagas.getDataFim() + " 23:59:59' "
+                        + "and f.ativo = 'T' "
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             }

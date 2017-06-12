@@ -137,7 +137,7 @@ public class ClienteDAO {
                     
                     cliente.setTelefone("");
                 } else {
-                    cliente.setTelefone(String.valueOf(resultado.getString("telefone")));
+                    cliente.setTelefone(resultado.getString("telefone"));
                 }
                 cliente.setTipoCadastro((resultado.getString("tipo_cadastro").charAt(0)));
                 if (resultado.getString("endereco").equals("null")) {

@@ -29,6 +29,19 @@
                          REFERENCES cidade
                          );
 
+            CREATE TABLE fornecedor (id serial ,
+                         id_cidade int,
+                         razao_social varchar(150) not null,
+                         tipo_cadastro CHAR(1) not null,
+                         cpf_cnpj varchar(18) unique,
+                         endereco varchar(150),
+                         telefone varchar(15),
+                         ativo char(1) not null,
+                         constraint pkfornecedor primary key (id),
+                         constraint fkid_cidadepessoa foreign key (id_cidade)
+                         REFERENCES cidade
+                         );
+
             CREATE TABLE empresa (id serial ,
                           id_cidade int not null,
                           razao_social varchar(150) not null,

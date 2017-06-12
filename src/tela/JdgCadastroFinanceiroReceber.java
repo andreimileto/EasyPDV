@@ -51,22 +51,20 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
         tfdClienteNome.setText(formaPagamentoPagas.getCliente().getRazaoSocial());
         tfdFormaPagamentoNome.setText(formaPagamentoPagas.getFormaPagamento().getDescricao());
         tfdValorPago.setText(String.valueOf(formaPagamentoPagas.getValorPago()));
-        
-            if (formaPagamentoPagas.getQuitado()=='T') {
+
+        if (formaPagamentoPagas.getQuitado() == 'T') {
             tfdSituacao.setText("QUITADO");
             tffValorAReceber.setEnabled(false);
-            
+
             btnReceberTitulo.setEnabled(false);
-            
-                
-            }else{
-                tfdSituacao.setText("EM ABERTO");
-                tffValorAReceber.setEnabled(true);
-            }
+
+        } else {
+            tfdSituacao.setText("EM ABERTO");
+            tffValorAReceber.setEnabled(true);
+        }
         tfdDataEmissao.setText(formaPagamentoPagas.getDataEmissao());
         tfdDataPagamento.setText(formaPagamentoPagas.getDataPagamento());
         tfdDataVencimento.setText(formaPagamentoPagas.getVencimento());
-        
 
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -98,6 +96,7 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
         tffValorAReceber = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         tfdValorPago = new javax.swing.JTextField();
+        btnExcluir = new javax.swing.JButton();
 
         jLabel11.setText("jLabel11");
 
@@ -165,67 +164,73 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
 
         tfdValorPago.setEditable(false);
 
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnReceberTitulo)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tffValorAReceber, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfdFormaPagamentoNome)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(34, 34, 34)
+                                .addComponent(tfdClienteNome, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel10))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tffValorAReceber, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tfdFormaPagamentoNome)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(tfdClienteNome, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addGap(20, 20, 20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfdValor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfdNumeroTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfdValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1))
-                                        .addGap(20, 20, 20))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfdValor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfdNumeroTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfdCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfdValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfdDataPagamento)
+                                    .addComponent(tfdDataVencimento)
+                                    .addComponent(tfdSituacao)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel6))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfdDataPagamento)
-                                            .addComponent(tfdDataVencimento)
-                                            .addComponent(tfdSituacao)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                        .addComponent(tfdDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                .addComponent(tfdDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -280,7 +285,8 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(btnReceberTitulo))
+                    .addComponent(btnReceberTitulo)
+                    .addComponent(btnExcluir))
                 .addContainerGap())
         );
 
@@ -311,50 +317,69 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
 
     private void btnReceberTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceberTituloActionPerformed
         //if (Double.parseDouble(tffValorAReceber.getText().replace(",", "."))>0) {
-            try {
+        try {
             pagarTitulo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "É preciso informar um valor para pagar o título");
         }
-        
-            
-        
-        
+
         listarTitulo();
     }//GEN-LAST:event_btnReceberTituloActionPerformed
-    private void pagarTitulo(){
-        if ((Double.parseDouble(tffValorAReceber.getText().replace(",", ".")))+(Double.parseDouble(tfdValorPago.getText().replace(",", "."))) >= Double.parseDouble(tfdValor.getText().replace(",", "."))) {
-               formaPagamentoPagas.setQuitado('T');
-               formaPagamentoPagas.setValorPago((Double.parseDouble(tffValorAReceber.getText().replace(",", ".")))+(Double.parseDouble(tfdValorPago.getText().replace(",", "."))));
-               Date data = new Date();
-               data.setDate(data.getDate());
-                String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
-                formaPagamentoPagas.setDataPagamento(dataFormatada);
-                FinanceiroReceberDAO financeiroPagamentoDAO = new FinanceiroReceberDAO();
-                
-                if (financeiroPagamentoDAO.salvar(null, 0, formaPagamentoPagas)) {
-                    JOptionPane.showMessageDialog(rootPane, "Pagamento do título registrado com sucesso!");
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Erro ao salvar pagamento do título");
-                }
 
-            }else{
-                 
-               formaPagamentoPagas.setValorPago((Double.parseDouble(tffValorAReceber.getText().replace(",", ".")))+(Double.parseDouble(tfdValorPago.getText().replace(",", "."))));
-               Date data = new Date();
-               data.setDate(data.getDate());
-                String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
-                formaPagamentoPagas.setDataPagamento(dataFormatada);
-                FinanceiroReceberDAO financeiroPagamentoDAO = new FinanceiroReceberDAO();
-                
-                if (financeiroPagamentoDAO.salvar(null, 0, formaPagamentoPagas)) {
-                    JOptionPane.showMessageDialog(rootPane, "Pagamento do título registrado com sucesso!");
-                    tffValorAReceber.setText("");
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Erro ao salvar pagamento do título");
-                }
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        formaPagamentoPagas.setAtivo('F');
+        Date data = new Date();
+        data.setDate(data.getDate());
+        String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
+        formaPagamentoPagas.setDataPagamento(dataFormatada);
+
+        FinanceiroReceberDAO financeiroPagamentoDAO = new FinanceiroReceberDAO();
+        int retorno = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que quer excluir o título\n número :" + formaPagamentoPagas.getNumeroTitulo() + "\n"
+                + " de valor: " + formaPagamentoPagas.getValor());
+        if (retorno == 0) {
+            if (financeiroPagamentoDAO.salvar(null, 0, formaPagamentoPagas)) {
+                JOptionPane.showMessageDialog(rootPane, "Título excluído com sucesso!");
+                dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao excluir o título");
             }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+    private void pagarTitulo() {
+        if ((Double.parseDouble(tffValorAReceber.getText().replace(",", "."))) + (Double.parseDouble(tfdValorPago.getText().replace(",", "."))) >= Double.parseDouble(tfdValor.getText().replace(",", "."))) {
+            formaPagamentoPagas.setQuitado('T');
+            formaPagamentoPagas.setValorPago((Double.parseDouble(tffValorAReceber.getText().replace(",", "."))) + (Double.parseDouble(tfdValorPago.getText().replace(",", "."))));
+            Date data = new Date();
+            data.setDate(data.getDate());
+            String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
+            formaPagamentoPagas.setDataPagamento(dataFormatada);
+            FinanceiroReceberDAO financeiroPagamentoDAO = new FinanceiroReceberDAO();
+
+            if (financeiroPagamentoDAO.salvar(null, 0, formaPagamentoPagas)) {
+                JOptionPane.showMessageDialog(rootPane, "Pagamento do título registrado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao salvar pagamento do título");
+            }
+
+        } else {
+
+            formaPagamentoPagas.setValorPago((Double.parseDouble(tffValorAReceber.getText().replace(",", "."))) + (Double.parseDouble(tfdValorPago.getText().replace(",", "."))));
+            Date data = new Date();
+            data.setDate(data.getDate());
+            String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
+            formaPagamentoPagas.setDataPagamento(dataFormatada);
+            FinanceiroReceberDAO financeiroPagamentoDAO = new FinanceiroReceberDAO();
+
+            if (financeiroPagamentoDAO.salvar(null, 0, formaPagamentoPagas)) {
+                JOptionPane.showMessageDialog(rootPane, "Pagamento do título registrado com sucesso!");
+                tffValorAReceber.setText("");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao salvar pagamento do título");
+            }
+        }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -398,6 +423,7 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnReceberTitulo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

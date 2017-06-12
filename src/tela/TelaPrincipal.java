@@ -48,6 +48,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         imnCidades = new javax.swing.JMenuItem();
         imnMercadoria = new javax.swing.JMenuItem();
         imnFormaPagamento = new javax.swing.JMenuItem();
+        imnFornecedores = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         imnPDV = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -112,6 +113,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(imnFormaPagamento);
+
+        imnFornecedores.setText("Fornecedores");
+        imnFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnFornecedoresActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imnFornecedores);
 
         jMenuBar1.add(jMenu1);
 
@@ -306,6 +315,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         listaReceber.setVisible(true);
     }//GEN-LAST:event_imnTitulosReceberActionPerformed
 
+    private void imnFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnFornecedoresActionPerformed
+        JdgCadastroFornecedor fornecedor = new JdgCadastroFornecedor(this, true);
+        fornecedor.setVisible(true);
+    }//GEN-LAST:event_imnFornecedoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -346,6 +360,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem imnCidades;
     private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;
+    private javax.swing.JMenuItem imnFornecedores;
     private javax.swing.JMenuItem imnLFormasPagamentos;
     private javax.swing.JMenuItem imnLMercadorias;
     private javax.swing.JMenuItem imnMercadoria;

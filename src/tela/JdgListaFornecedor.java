@@ -7,9 +7,11 @@ package tela;
 
 import DAO.CidadeDAO;
 import DAO.ClienteDAO;
+import DAO.FornecedorDAO;
 import DAO.MercadoriaDAO;
 import entidade.Cidade;
 import entidade.Cliente;
+import entidade.Fornecedor;
 import entidade.Mercadoria;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,57 +22,57 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author pc05
  */
-public class JdgListaCliente extends javax.swing.JDialog {
+public class JdgListaFornecedor extends javax.swing.JDialog {
 
     /**
      * Creates new form JdgListaCliente
      */
-    Cliente cliente;
+    Fornecedor fornecedor;
     Cidade cid;
 
-    public JdgListaCliente(java.awt.Frame parent, boolean modal) {
+    public JdgListaFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
     }
 
-    public JdgListaCliente(java.awt.Frame parent, boolean modal, Cliente cliente, Cidade cid) {
+    public JdgListaFornecedor(java.awt.Frame parent, boolean modal, Fornecedor fornecedor, Cidade cid) {
         super(parent, modal);
 
         initComponents();
-        this.cliente = cliente;
+        this.fornecedor = fornecedor;
         this.cid = cid;
-        System.out.println("ativo cliente na listaaaa" + cliente.getAtivo());
-        verificarTipoChamada();
+        System.out.println("ativo cliente na listaaaa" + fornecedor.getAtivo());
+        //verificarTipoChamada();
         popularComboBox();
-        System.out.println("ativo cliente na listaaaa depois do popular" + cliente.getAtivo());
+        System.out.println("ativo cliente na listaaaa depois do popular" + fornecedor.getAtivo());
         
-        listarClientes();
+        listarFornecedores();
 
     }
-
-    private void verificarTipoChamada() {
-        System.out.println("ativo cliente na lista" + cliente.getAtivo());
-        if (cliente.getAtivo() == 'T') {
-            cbxStatus.setEnabled(false);
-            System.out.println("ativo cliente na lista" + cliente.getAtivo());
-            btnConfirmar.setText("Selecionar");
-            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-        } else {
-            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png")));
-            cbxStatus.setEditable(true);
-        }
-    }
+//
+//    private void verificarTipoChamada() {
+//        System.out.println("ativo cliente na lista" + cliente.getAtivo());
+//        if (cliente.getAtivo() == 'T') {
+//            cbxStatus.setEnabled(false);
+//            System.out.println("ativo cliente na lista" + cliente.getAtivo());
+//            btnConfirmar.setText("Selecionar");
+//            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+//        } else {
+//            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png")));
+//            cbxStatus.setEditable(true);
+//        }
+//    }
 
     private void popularComboBox() {
-        System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
+        //System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
         cbxStatus.addItem("Todos");
-        System.out.println("ativo cliente na listaaaa popular fim" + cliente.getAtivo());
+        //System.out.println("ativo cliente na listaaaa popular fim" + cliente.getAtivo());
     }
 
-    private void listarClientes() {
+    private void listarFornecedores() {
         try {
             //setar para tabela modelo de dados
             tblListaClientes.setModel(this.obterDadosParaTabelaCompleto());
@@ -98,8 +100,8 @@ public class JdgListaCliente extends javax.swing.JDialog {
         CidadeDAO cidadeDAO = new CidadeDAO();
         ArrayList<Cidade> cidades = cidadeDAO.consultar(cid);
 
-        ClienteDAO cliDAO = new ClienteDAO();
-        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
+        FornecedorDAO fornDAO = new FornecedorDAO();
+        ArrayList<Fornecedor> fornecedores = fornDAO.consultar(fornecedor);
 
         dtm.addColumn("ID");
         dtm.addColumn("NOME");
@@ -109,20 +111,20 @@ public class JdgListaCliente extends javax.swing.JDialog {
         dtm.addColumn("TELEFONE");
         dtm.addColumn("SITUAÇÃO");
 
-        for (int i = 0; i < clientes.size(); i++) {
+        for (int i = 0; i < fornecedores.size(); i++) {
             //popular tabela
             String result = "";
-            if (String.valueOf(clientes.get(i).getAtivo()).equalsIgnoreCase("T")) {
+            if (String.valueOf(fornecedores.get(i).getAtivo()).equalsIgnoreCase("T")) {
                 result = "Ativo";
             } else {
                 result = "Inativo";
             }
-            dtm.addRow(new String[]{String.valueOf(clientes.get(i).getId()),
-                clientes.get(i).getRazaoSocial(),
-                clientes.get(i).getCpfCnpj(),
-                String.valueOf(clientes.get(i).getCidade().getDescricao()),
-                String.valueOf(clientes.get(i).getEndereco()),
-                String.valueOf(clientes.get(i).getTelefone()),
+            dtm.addRow(new String[]{String.valueOf(fornecedores.get(i).getId()),
+                fornecedores.get(i).getRazaoSocial(),
+                fornecedores.get(i).getCpfCnpj(),
+                String.valueOf(fornecedores.get(i).getCidade().getDescricao()),
+                String.valueOf(fornecedores.get(i).getEndereco()),
+                String.valueOf(fornecedores.get(i).getTelefone()),
                 result
             });
         }
@@ -137,23 +139,23 @@ public class JdgListaCliente extends javax.swing.JDialog {
 
         //seta o ID do objeto da linha selecionada
 //        obterDadosParaTabelaCompleto();
-        this.cliente.setId(Integer.parseInt(tblListaClientes.getValueAt(row, 0).toString()));
+        this.fornecedor.setId(Integer.parseInt(tblListaClientes.getValueAt(row, 0).toString()));
 
-        ClienteDAO cliDAO = new ClienteDAO();
-        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
-        cliente.setCidade(clientes.get(0).getCidade());
-        cliente.setEndereco(clientes.get(0).getEndereco());
-        cliente.setRazaoSocial(clientes.get(0).getRazaoSocial());
-        cliente.setCpfCnpj(clientes.get(0).getCpfCnpj());
-        cliente.setTipoCadastro(clientes.get(0).getTipoCadastro());
-        cliente.setTelefone(clientes.get(0).getTelefone());
+        FornecedorDAO fornDAO = new FornecedorDAO();
+        ArrayList<Fornecedor> fornecedores = fornDAO.consultar(fornecedor);
+        fornecedor.setCidade(fornecedores.get(0).getCidade());
+        fornecedor.setEndereco(fornecedores.get(0).getEndereco());
+        fornecedor.setRazaoSocial(fornecedores.get(0).getRazaoSocial());
+        fornecedor.setCpfCnpj(fornecedores.get(0).getCpfCnpj());
+        fornecedor.setTipoCadastro(fornecedores.get(0).getTipoCadastro());
+        fornecedor.setTelefone(fornecedores.get(0).getTelefone());
 
-        System.out.println("cidade id..." + cliente.getCidade().getId());
+        System.out.println("cidade id..." + fornecedor.getCidade().getId());
 
         if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
-            this.cliente.setAtivo('T');
+            this.fornecedor.setAtivo('T');
         } else {
-            this.cliente.setAtivo('F');
+            this.fornecedor.setAtivo('F');
         }
 
         dispose();
@@ -286,7 +288,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         try {
             selecionado();
         } catch (Exception ex) {
-            Logger.getLogger(JdgListaCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JdgListaFornecedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
@@ -295,18 +297,18 @@ public class JdgListaCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxStatusItemStateChanged
     private void listar() {
         if (cbxStatus.getSelectedIndex() == 0) {
-            cliente.setAtivo('T');
+            fornecedor.setAtivo('T');
         } else if (cbxStatus.getSelectedIndex() == 1) {
-            cliente.setAtivo('F');
+            fornecedor.setAtivo('F');
         } else {
-            cliente.setAtivo(' ');
+            fornecedor.setAtivo(' ');
         }
-        listarClientes();
+        listarFornecedores();
     }
     private void tfdFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfdFiltroKeyReleased
-        cliente.setCpfCnpj(tfdFiltro.getText());
-        cliente.setRazaoSocial(tfdFiltro.getText());
-        listarClientes();
+        fornecedor.setCpfCnpj(tfdFiltro.getText());
+        fornecedor.setRazaoSocial(tfdFiltro.getText());
+        listarFornecedores();
     }//GEN-LAST:event_tfdFiltroKeyReleased
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -319,7 +321,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
                     try {
                         selecionado();
                     } catch (Exception ex) {
-                        Logger.getLogger(JdgListaCliente.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(JdgListaFornecedor.class.getName()).log(Level.SEVERE, null, ex);
                     }
             dispose();
         }
@@ -342,20 +344,21 @@ public class JdgListaCliente extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JdgListaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListaFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JdgListaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListaFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JdgListaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListaFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JdgListaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdgListaFornecedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdgListaCliente dialog = new JdgListaCliente(new javax.swing.JFrame(), true);
+                JdgListaFornecedor dialog = new JdgListaFornecedor(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

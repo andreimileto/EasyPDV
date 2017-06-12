@@ -6,7 +6,10 @@
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/Senha.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgRelatoriosVendas.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FaturamentoDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FornecedorDAO.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListaFornecedor.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/script.sql</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/ClienteDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgCadastroFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgFormaPagamento.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListagemVendas.java</file>
@@ -17,6 +20,10 @@
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FormaPagamentoDAO.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgAlteracaoSenha.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/TelaPrincipal.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgListaCliente.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgCadastroFornecedor.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/Fornecedor.java</file>
+            <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/tela/JdgCadastroFinanceiroReceber.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/entidade/FormaPagamentoPagas.java</file>
             <file>file:/C:/Users/Mileto/Documents/NetBeansProjects/EasyPDV/src/DAO/FaturamentoItemDAO.java</file>
         </group>
