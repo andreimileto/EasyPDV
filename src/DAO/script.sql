@@ -127,6 +127,27 @@
                          );
 
 
+            CREATE TABLE financeiro_pagar(id serial,                         
+                         id_fornecedor int not null,
+                         id_forma_pagamento int not null,
+                         numero_titulo varchar(10) not null,
+                         data_emissao timestamp not null,
+                         data_vencimento date not null,
+                         data_pagamento date,
+                         valor_provisorio DOUBLE PRECISION,
+                         valor_titulo DOUBLE PRECISION,
+                         valor_pago DOUBLE PRECISION,
+                         quitado char(1),
+                         --recebido char(1) not null,
+                         ativo char(1) not null,
+                         constraint pkfinanceiropagar primary key (id),          		 
+                         constraint fkid_fornecedorfornecedor foreign key(id_fornecedor)
+                         references fornecedor,
+                         constraint fkid_forma_pagamentoforma_pagamento foreign key(id_forma_pagamento)
+                         references forma_pagamento
+                         );
+
+
 ---------------insert-------------------
 
 insert into usuario values(default,'usuario','e10adc3949ba59abbe56e057f20f883e');

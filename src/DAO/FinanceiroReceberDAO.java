@@ -12,7 +12,7 @@ import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
 import entidade.FormaPagamento;
-import entidade.FormaPagamentoPagas;
+import entidade.FinanceiroReceber;
 import entidade.Mercadoria;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -28,10 +28,10 @@ import tela.JdgPedidoVenda;
  */
 public class FinanceiroReceberDAO {
 
-    ArrayList<FormaPagamentoPagas> formasPagas;
-    FormaPagamentoPagas formaPagamentoPagas;
+    ArrayList<FinanceiroReceber> formasPagas;
+    FinanceiroReceber formaPagamentoPagas;
 
-    public boolean salvar(ArrayList<FormaPagamentoPagas> formasPagas, int idFaturamento, FormaPagamentoPagas formaPagamentoPagas) {
+    public boolean salvar(ArrayList<FinanceiroReceber> formasPagas, int idFaturamento, FinanceiroReceber formaPagamentoPagas) {
         this.formaPagamentoPagas = formaPagamentoPagas;
         if (this.formaPagamentoPagas.getId() == 0) {
             try {
@@ -106,7 +106,7 @@ public class FinanceiroReceberDAO {
         }
     }
 
-    public ArrayList<FormaPagamentoPagas> consultar(FormaPagamentoPagas formaPagamentoPagas, int tipoFiltro) {
+    public ArrayList<FinanceiroReceber> consultar(FinanceiroReceber formaPagamentoPagas, int tipoFiltro) {
         this.formaPagamentoPagas = formaPagamentoPagas;
         String sql = "";
         if ((formaPagamentoPagas.getDataInicio() == null && formaPagamentoPagas.getDataFim() == null)
@@ -234,14 +234,14 @@ public class FinanceiroReceberDAO {
             }
 
         }
-        ArrayList<FormaPagamentoPagas> formas = new ArrayList<>();
+        ArrayList<FinanceiroReceber> formas = new ArrayList<>();
         //faz consulta e adiciona os valores para o array...
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
-                FormaPagamentoPagas forma = new FormaPagamentoPagas();
+                FinanceiroReceber forma = new FinanceiroReceber();
                 //FaturamentoItem fatItem = new FaturamentoItem();
                 Cidade cid = new Cidade();
                 Cliente cli = new Cliente(cid);

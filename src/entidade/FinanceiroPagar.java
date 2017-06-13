@@ -11,24 +11,31 @@ import java.util.Date;
  *
  * @author Mileto
  */
-public class FormaPagamentoPagas {
+public class FinanceiroPagar {
 
     private int id;
     private String numeroTitulo;
     private String descricao;
+    private double valorProvisorio;
     private double valor;
-    private int parcelas;
     private String vencimento;
     private String dataEmissao;
     private char quitado;
     private double valorPago;
     private char ativo;
     private String dataPagamento;
-    private Cliente cliente;
-    private Faturamento faturamento;
+    private Fornecedor fornecedor;
     private FormaPagamento formaPagamento;
     private String dataInicio;
     private String dataFim;
+    
+    public double getValorProvisorio() {
+        return valorProvisorio;
+    }
+
+    public void setValorProvisorio(double valorProvisorio) {
+        this.valorProvisorio = valorProvisorio;
+    }    
 
     public String getDataInicio() {
         return dataInicio;
@@ -55,23 +62,13 @@ public class FormaPagamentoPagas {
     public void setFormaPagamento(FormaPagamento formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
-    
-    
 
-    public Faturamento getFaturamento() {
-        return faturamento;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setFaturamento(Faturamento faturamento) {
-        this.faturamento = faturamento;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public String getDataPagamento() {
@@ -154,12 +151,5 @@ public class FormaPagamentoPagas {
         this.valor = valor;
     }
 
-    public int getParcelas() {
-        return parcelas;
-    }
-
-    public void setParcelas(int parcelas) {
-        this.parcelas = parcelas;
-    }
 
 }

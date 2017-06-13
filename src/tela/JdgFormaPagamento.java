@@ -13,7 +13,7 @@ import apoio.Formatacao;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
 import entidade.FormaPagamento;
-import entidade.FormaPagamentoPagas;
+import entidade.FinanceiroReceber;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -36,8 +36,8 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private FormaPagamento fp;
     private ArrayList<FormaPagamento> formas;
     private double totalPago = 0;
-    private FormaPagamentoPagas formasPagas;
-    private ArrayList<FormaPagamentoPagas> ArrayFormasPagas;
+    private FinanceiroReceber formasPagas;
+    private ArrayList<FinanceiroReceber> ArrayFormasPagas;
     private int numeroParcela = 1;
     int ultimaVenda = 0;
 
@@ -64,7 +64,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     }
 
     private void inserirFormaPagamento() {
-        formasPagas = new FormaPagamentoPagas();
+        formasPagas = new FinanceiroReceber();
         formasPagas.setId(Integer.parseInt(tffCodigoPagamento.getText()));
 //       formasPagas.setDescricao(descricao);
 
@@ -127,7 +127,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 //                formasPagas.setDescricao(fp.getDescricao());
 
                 ArrayFormasPagas.add(formasPagas);
-                formasPagas = new FormaPagamentoPagas();
+                formasPagas = new FinanceiroReceber();
             }
 
             //----
@@ -169,7 +169,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 //                formasPagas.setDescricao(fp.getDescricao());
 
             ArrayFormasPagas.add(formasPagas);
-            formasPagas = new FormaPagamentoPagas();
+            formasPagas = new FinanceiroReceber();
         }
 
         //----

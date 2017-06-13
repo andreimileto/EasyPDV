@@ -7,7 +7,7 @@ package tela;
 
 import DAO.FinanceiroReceberDAO;
 import apoio.Formatacao;
-import entidade.FormaPagamentoPagas;
+import entidade.FinanceiroReceber;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -20,14 +20,14 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
     /**
      * Creates new form JdgCadastroFinanceiroReceber
      */
-    FormaPagamentoPagas formaPagamentoPagas;
+    FinanceiroReceber formaPagamentoPagas;
 
     public JdgCadastroFinanceiroReceber(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    public JdgCadastroFinanceiroReceber(java.awt.Frame parent, boolean modal, FormaPagamentoPagas formaPagamentoPagas) {
+    public JdgCadastroFinanceiroReceber(java.awt.Frame parent, boolean modal, FinanceiroReceber formaPagamentoPagas) {
         super(parent, modal);
         initComponents();
 

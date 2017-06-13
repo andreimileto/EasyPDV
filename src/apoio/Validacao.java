@@ -46,7 +46,7 @@ public class Validacao {
         return cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString());
     }
 
-    public static boolean validarDataDMA (int d, int m, int a) {
+    public static boolean validarDataDMA(int d, int m, int a) {
         boolean correto = true;
         int[] dias = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if (a < 0 || m < 1 || m > 12) {
@@ -63,7 +63,7 @@ public class Validacao {
         return (correto);
     }
 
-    public static boolean validarDataFormatada (String dataComFormato) {
+    public static boolean validarDataFormatada(String dataComFormato) {
         String[] data = dataComFormato.split("/");
         return (validarDataDMA(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[1])));
     }
@@ -73,50 +73,62 @@ public class Validacao {
             Formatacao.reformatarTelefone(campo);
         }
     }
-    
-    public static boolean validadeFiltroDeData(JDateChooser tffDataInicio,JDateChooser tffDataFim){
+
+    public static boolean validadeFiltroDeData(JDateChooser tffDataInicio, JDateChooser tffDataFim) {
         boolean ok = true;
         String dataInicio = "";
         String dataFim = "";
-        
+
         dataInicio = Formatacao.ajustaDataDMAJCalendar(tffDataInicio);
         dataFim = Formatacao.ajustaDataDMAJCalendar(tffDataFim);
-        
+
         if (!validarDataFormatada(dataInicio)) {
             ok = false;
         }
 
-        if(!validarDataFormatada(dataFim)){
+        if (!validarDataFormatada(dataFim)) {
             ok = false;
         }
-        
-        if (!verDataMaior(dataInicio,dataFim)) {
+
+        if (!verDataMaior(dataInicio, dataFim)) {
             ok = false;
         }
-        
+
         return ok;
     }
-    
-    private static boolean verDataMaior(String dataInicial, String dataFinal){
+
+    public static boolean validadeFiltroDeData(JDateChooser tffDataVencimento) {
+        boolean ok = true;
+        String dataVencimento = "";
+
+        dataVencimento = Formatacao.ajustaDataDMAJCalendar(tffDataVencimento);
+
+        if (!validarDataFormatada(dataVencimento)) {
+            ok = false;
+        }
+
+        return ok;
+    }
+
+    private static boolean verDataMaior(String dataInicial, String dataFinal) {
         boolean ok = false;
         String arrayDataInicio[] = new String[3];
         arrayDataInicio = dataInicial.split("/");
-        
+
         String arrayDataFim[] = new String[3];
         arrayDataFim = dataFinal.split("/");
-        
+
         if (Integer.parseInt(arrayDataFim[2]) >= Integer.parseInt(arrayDataInicio[2])) {
             if (Integer.parseInt(arrayDataFim[1]) >= Integer.parseInt(arrayDataInicio[1])) {
                 if (Integer.parseInt(arrayDataFim[0]) >= Integer.parseInt(arrayDataInicio[0])) {
                     ok = true;
                 }
             }
-        }else{
+        } else {
             ok = false;
         }
-            
-        
+
         return ok;
     }
-    
+
 }

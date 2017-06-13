@@ -9,7 +9,7 @@ import DAO.CidadeDAO;
 import DAO.FormaPagamentoDAO;
 import entidade.Cidade;
 import entidade.FormaPagamento;
-import entidade.FormaPagamentoPagas;
+import entidade.FinanceiroReceber;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;

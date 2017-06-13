@@ -6,6 +6,7 @@
 package tela;
 
 import apoio.ConexaoBD;
+import entidade.FinanceiroPagar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         imnTitulosReceber = new javax.swing.JMenuItem();
+        imnCadastroTituloPagar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         imnLFormasPagamentos = new javax.swing.JMenuItem();
         imnLMercadorias = new javax.swing.JMenuItem();
@@ -157,6 +159,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(imnTitulosReceber);
+
+        imnCadastroTituloPagar.setText("Cadatro Títulos a pagar");
+        imnCadastroTituloPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnCadastroTituloPagarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(imnCadastroTituloPagar);
 
         jMenuBar1.add(jMenu3);
 
@@ -320,6 +330,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         fornecedor.setVisible(true);
     }//GEN-LAST:event_imnFornecedoresActionPerformed
 
+    private void imnCadastroTituloPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnCadastroTituloPagarActionPerformed
+        FinanceiroPagar financeiroPagar = new FinanceiroPagar();
+        JdgCadastroFinanceiroPagar cadastroFinanceiroPagar = new JdgCadastroFinanceiroPagar(this ,true);
+        cadastroFinanceiroPagar.setVisible(true);
+    }//GEN-LAST:event_imnCadastroTituloPagarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -357,6 +373,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem imnAlterarSenha;
+    private javax.swing.JMenuItem imnCadastroTituloPagar;
     private javax.swing.JMenuItem imnCidades;
     private javax.swing.JMenuItem imnClientes;
     private javax.swing.JMenuItem imnFormaPagamento;

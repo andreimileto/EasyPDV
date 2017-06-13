@@ -33,6 +33,11 @@ public class JdgListaFornecedor extends javax.swing.JDialog {
     public JdgListaFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        cid = new Cidade();
+        fornecedor = new Fornecedor(cid);
+        cbxStatus.setEnabled(false);
+        fornecedor.setAtivo('T');
+        listarFornecedores();
 
     }
 

@@ -18,7 +18,7 @@ import entidade.Cliente;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
 import entidade.FormaPagamento;
-import entidade.FormaPagamentoPagas;
+import entidade.FinanceiroReceber;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -52,14 +52,14 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     /**
      * Creates new form JdgListagemVendas
      */
-    FormaPagamentoPagas formasPagas;
+    FinanceiroReceber formasPagas;
     Cliente cli;
-    ArrayList<FormaPagamentoPagas> arrayFormasPagas;
+    ArrayList<FinanceiroReceber> arrayFormasPagas;
 
     public JdgListagemFinanceiroReceber(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        FormaPagamentoPagas formasPagas = new FormaPagamentoPagas();
+        FinanceiroReceber formasPagas = new FinanceiroReceber();
         Cidade cid = new Cidade();
         cli = new Cliente(cid);
         this.formasPagas = formasPagas;
@@ -414,7 +414,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 //adiciona titulo para as colunas
 
         FinanceiroReceberDAO formasDAO = new FinanceiroReceberDAO();
-        ArrayList<FormaPagamentoPagas> formas = formasDAO.consultar(formasPagas,cbxTipoFiltro.getSelectedIndex());
+        ArrayList<FinanceiroReceber> formas = formasDAO.consultar(formasPagas,cbxTipoFiltro.getSelectedIndex());
 
 //        ClienteDAO cliDAO = new ClienteDAO();
 //        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
