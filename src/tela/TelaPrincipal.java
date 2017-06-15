@@ -56,6 +56,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         imnTitulosReceber = new javax.swing.JMenuItem();
         imnCadastroTituloPagar = new javax.swing.JMenuItem();
+        imnTitulosPagar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         imnLFormasPagamentos = new javax.swing.JMenuItem();
         imnLMercadorias = new javax.swing.JMenuItem();
@@ -167,6 +168,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(imnCadastroTituloPagar);
+
+        imnTitulosPagar.setText("Listagem Títulos a pagar");
+        imnTitulosPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnTitulosPagarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(imnTitulosPagar);
 
         jMenuBar1.add(jMenu3);
 
@@ -336,6 +345,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastroFinanceiroPagar.setVisible(true);
     }//GEN-LAST:event_imnCadastroTituloPagarActionPerformed
 
+    private void imnTitulosPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnTitulosPagarActionPerformed
+        
+        JdgListagemFinanceiroPagar listagemFinanceiroPagar = new JdgListagemFinanceiroPagar(this, true);
+        listagemFinanceiroPagar.setVisible(true);
+        
+    }//GEN-LAST:event_imnTitulosPagarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -382,6 +398,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem imnLMercadorias;
     private javax.swing.JMenuItem imnMercadoria;
     private javax.swing.JMenuItem imnPDV;
+    private javax.swing.JMenuItem imnTitulosPagar;
     private javax.swing.JMenuItem imnTitulosReceber;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
