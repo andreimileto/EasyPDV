@@ -15,7 +15,13 @@ import entidade.FinanceiroReceber;
 import entidade.FormaPagamento;
 import entidade.Fornecedor;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,7 +42,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
         bloquearCampos();
     }
 
-    public JdgCadastroFinanceiroPagar(java.awt.Frame parent, boolean modal, FinanceiroPagar formaPagamentoPagas) {
+    public JdgCadastroFinanceiroPagar(java.awt.Frame parent, boolean modal, FinanceiroPagar formaPagamentoPagas) throws ParseException {
         super(parent, modal);
         initComponents();
 
@@ -49,21 +55,33 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
         try {
             if (formaPagamentoPagas.getId() > 0) {
                 tfdNumeroTitulo.setEditable(false);
-                tffValor.setEditable(false);
-                //   tfdDataVencimento.setEditable(false);
-              //  tfdDataEmissao.setEditable(false);
+                tffDataVencimento.setEnabled(false);
+                try {
+                    if (Double.parseDouble(tffValor.getText()) > 0) {
+                        tffValor.setEditable(false);
+                        btnConfirmar.setEnabled(false);
+                    } else {
+                        tffValor.setEditable(true);
+                        btnConfirmar.setEnabled(true);
+                    }
+
+                } catch (Exception e) {
+                    tffValor.setEditable(true);
+                    btnConfirmar.setEnabled(true);
+                }
+
                 btnExcluir.setEnabled(false);
                 btnLocalizarCliente.setEnabled(false);
                 btnLocalizarFormaDePagamento.setEnabled(false);
-                btnConfirmar.setEnabled(false);
+
                 tffValorPrevisto.setEditable(false);
                 tffValorAReceber.setEditable(true);
-                //btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+
             } else {
                 tfdNumeroTitulo.setEditable(true);
                 tffValor.setEditable(true);
-                //tfdDataVencimento.setEditable(true);
-               // tfdDataEmissao.setEditable(true);
+                tffDataVencimento.setEnabled(true);
+
                 btnExcluir.setEnabled(true);
                 btnLocalizarCliente.setEnabled(true);
                 btnLocalizarFormaDePagamento.setEnabled(true);
@@ -71,16 +89,13 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 btnExcluir.setEnabled(false);
                 btnPagarTitulo.setEnabled(false);
                 tffValorPrevisto.setEditable(true);
-               // tffValorAReceber.setEditable(true);
-                //btnIncluir.setEnabled(false);
-                //btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/more.png")));
-                //btnIncluir.setText("Confirmar");
+
             }
         } catch (Exception e) {
             tfdNumeroTitulo.setEditable(true);
             tffValor.setEditable(true);
-            // tfdDataVencimento.setEditable(true);
-           // tfdDataEmissao.setEditable(true);
+            tffDataVencimento.setEnabled(true);
+
             btnExcluir.setEnabled(true);
             btnLocalizarCliente.setEnabled(true);
             btnLocalizarFormaDePagamento.setEnabled(true);
@@ -88,10 +103,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             btnExcluir.setEnabled(false);
             btnPagarTitulo.setEnabled(false);
             tffValorPrevisto.setEditable(true);
-            //tffValorAReceber.setEditable(true);
-            //btnIncluir.setEnabled(false);
-            // btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-            //btnIncluir.setText("Confirmar");
+
         }
     }
 
@@ -102,16 +114,23 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
 
-    private void listarTitulo() {
+    private void listarTitulo() throws ParseException {
         tffValorAReceber.setText("");
         tfdCodigo.setText(String.valueOf(formaPagamentoPagas.getId()));
         tfdNumeroTitulo.setText(formaPagamentoPagas.getNumeroTitulo());
+        tffValorPrevisto.setText(String.valueOf(formaPagamentoPagas.getValorProvisorio()));
         tffValor.setText(String.valueOf(formaPagamentoPagas.getValor()));
         tfdValorPago.setText(String.valueOf(formaPagamentoPagas.getValorPago()));
         tfdFornecedorNome.setText(formaPagamentoPagas.getFornecedor().getRazaoSocial());
         tfdFormaPagamentoNome.setText(formaPagamentoPagas.getFormaPagamento().getDescricao());
         tfdValorPago.setText(String.valueOf(formaPagamentoPagas.getValorPago()));
+        //tffDataVencimento.setToolTipText(String.valueOf(formaPagamentoPagas.getVencimento()));
 
+        //String strDate = "01/07/1990";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.setTime(sdf.parse(formaPagamentoPagas.getVencimento()));
+        tffDataVencimento.setCalendar(c);
         if (formaPagamentoPagas.getQuitado() == 'T') {
             tfdSituacao.setText("QUITADO");
             tffValorAReceber.setEnabled(false);
@@ -436,13 +455,25 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
     private void btnPagarTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarTituloActionPerformed
         //if (Double.parseDouble(tffValorAReceber.getText().replace(",", "."))>0) {
+        formaPagamentoPagas.setAtivo('T');
         try {
-            pagarTitulo();
+            if (Double.parseDouble(tffValor.getText()) > 0) {
+                formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
+                pagarTitulo();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "1 Erro ao efetuar o pagamento do título: \n é preciso que o título tenha um valor maior que zero.");
+            }
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "É preciso informar um valor para pagar o título");
+            //   JOptionPane.showMessageDialog(rootPane, "É preciso informar um valor para pagar o título");
+            JOptionPane.showMessageDialog(rootPane, " Erro ao efetuar o pagamento do título: \n é preciso que o título tenha um valor maior que zero.");
         }
 
-        listarTitulo();
+        try {
+            listarTitulo();
+        } catch (ParseException ex) {
+            Logger.getLogger(JdgCadastroFinanceiroPagar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnPagarTituloActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
@@ -457,49 +488,92 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 //            btnExcluir.setEnabled(false);
 //            btnIncluir.setText("Confirmar");
 //            btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-        if (validarCampos()) {
-            Date data = new Date();
-            data.setDate(data.getDate());
-            String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
+        if (formaPagamentoPagas.getId() == 0) {
             formaPagamentoPagas.setNumeroTitulo(tfdNumeroTitulo.getText());
-            formaPagamentoPagas.setValorProvisorio(Double.parseDouble(tffValorPrevisto.getText()));
             FinanceiroPagarDAO financeiroPagarDAO = new FinanceiroPagarDAO();
-            
-            if (tffValor.getText()!= "") {
-                try {
-                    formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
-                } catch (Exception e) {
-                    formaPagamentoPagas.setValor(0);
+            ArrayList<FinanceiroPagar> arrayFormasPagas;
+            arrayFormasPagas = financeiroPagarDAO.consultar(formaPagamentoPagas);
+
+            lblFornecedor.setForeground(Color.black);
+            lblFormaDePagamento.setForeground(Color.black);
+            lblValorPrevisto.setForeground(Color.black);
+            lblDataVencimento.setForeground(Color.black);
+            lblNumeroTitulo.setForeground(Color.black);
+
+            if (arrayFormasPagas.size() > 0) {
+                // bloquearCampos();
+                JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título: Número de título já utilizado em outro cadastro.");
+                lblNumeroTitulo.setForeground(Color.red);
+
+            } else {
+
+                if (validarCampos()) {
+                    Date data = new Date();
+                    data.setDate(data.getDate());
+                    String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
+                    formaPagamentoPagas.setNumeroTitulo(tfdNumeroTitulo.getText());
+                    formaPagamentoPagas.setValorProvisorio(Double.parseDouble(tffValorPrevisto.getText()));
+
+                    if (tffValor.getText() != "") {
+                        try {
+                            formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
+                        } catch (Exception e) {
+                            formaPagamentoPagas.setValor(0);
+                        }
+                    } else {
+                        formaPagamentoPagas.setValor(0);
+                    }
+                    //formaPagamentoPagas.setDataEmissao(dataFormatada);
+                    formaPagamentoPagas.setDataEmissao(Formatacao.getDataAtual());
+                    //formaPagamentoPagas.setDataEmissao("20/10/2017 23:23:23");
+                    formaPagamentoPagas.setAtivo('T');
+
+                    formaPagamentoPagas.setQuitado('F');
+                    if (financeiroPagarDAO.salvar(formaPagamentoPagas)) {
+                        JOptionPane.showMessageDialog(rootPane, "Título cadastrado com sucesso");
+                        dispose();
+                        bloquearCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título, campos nulos ou inválidos");
+
                 }
-            }else{
-                formaPagamentoPagas.setValor(0);
             }
-            //formaPagamentoPagas.setDataEmissao(dataFormatada);
-            formaPagamentoPagas.setDataEmissao(Formatacao.getDataAtual());
-            //formaPagamentoPagas.setDataEmissao("20/10/2017 23:23:23");
-            formaPagamentoPagas.setAtivo('T');
-           
-            formaPagamentoPagas.setQuitado('F');
-            if (financeiroPagarDAO.salvar(formaPagamentoPagas)) {
-                JOptionPane.showMessageDialog(rootPane, "Título cadastrado com sucesso");
-                bloquearCampos();
-            }else{
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "id maior que zero");
+            try {
+                formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
+                FinanceiroPagarDAO financeiroPagarDAO = new FinanceiroPagarDAO();
+                if (financeiroPagarDAO.salvar(formaPagamentoPagas)) {
+                    JOptionPane.showMessageDialog(rootPane, "Título salvo com sucesso");
+                    bloquearCampos();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título");
+                }
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título");
             }
 
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Erro ao salvar título, campos nulos ou inválidos");
         }
 
         //bloquearCampos();
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
     private boolean validarCampos() {
+
         boolean ok = true;
         if (tfdFornecedorNome.getText().equals("")) {
             ok = false;
             lblFornecedor.setForeground(Color.red);
         }
+        if (tfdFormaPagamentoNome.getText().equals("")) {
+            ok = false;
+            lblFormaDePagamento.setForeground(Color.red);
+        }
+
         if (tffValorPrevisto != null) {
             try {
                 if (Double.parseDouble(tffValorPrevisto.getText()) <= 0) {
@@ -515,7 +589,6 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             ok = false;
             lblValorPrevisto.setForeground(Color.red);
         }
-    
 
         if (tffDataVencimento.getCalendar() != null) {
             try {
@@ -537,6 +610,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             ok = false;
             lblNumeroTitulo.setForeground(Color.red);
         }
+
         return ok;
     }
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -567,7 +641,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
     private void btnLocalizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarClienteActionPerformed
         Cidade cid = new Cidade();
         Fornecedor fornecedor = new Fornecedor(cid);
-        JdgListaFornecedor listaFornecedor = new JdgListaFornecedor(null, true,fornecedor,cid);
+        JdgListaFornecedor listaFornecedor = new JdgListaFornecedor(null, true, fornecedor, cid);
         listaFornecedor.setVisible(true);
         formaPagamentoPagas.setFornecedor(fornecedor);
         tfdFornecedorNome.setText(formaPagamentoPagas.getFornecedor().getRazaoSocial());
@@ -575,13 +649,13 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
     private void btnLocalizarFormaDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarFormaDePagamentoActionPerformed
         FormaPagamento formaPagamento = new FormaPagamento();
-        try{
-        JdgListaFormaPagamento listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
-        listaFormaPagamento.setVisible(true);
-        tfdFormaPagamentoNome.setText(formaPagamento.getDescricao());
-        formaPagamentoPagas.setFormaPagamento(formaPagamento);
-        } catch (Exception e){
-            
+        try {
+            JdgListaFormaPagamento listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
+            listaFormaPagamento.setVisible(true);
+            tfdFormaPagamentoNome.setText(formaPagamento.getDescricao());
+            formaPagamentoPagas.setFormaPagamento(formaPagamento);
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_btnLocalizarFormaDePagamentoActionPerformed
     private void pagarTitulo() {
@@ -608,16 +682,16 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             String dataFormatada = Formatacao.ajustaDataDMAJCalendar(data);
             formaPagamentoPagas.setDataPagamento(dataFormatada);
             FinanceiroPagarDAO financeiroPagamentoDAO = new FinanceiroPagarDAO();
-            if (tffValor.getText()!= "") {
+            if (tffValor.getText() != "") {
                 try {
                     formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
                 } catch (Exception e) {
                     formaPagamentoPagas.setValor(0);
                 }
-            }else{
+            } else {
                 formaPagamentoPagas.setValor(0);
             }
-            if (financeiroPagamentoDAO.salvar( formaPagamentoPagas)) {
+            if (financeiroPagamentoDAO.salvar(formaPagamentoPagas)) {
                 JOptionPane.showMessageDialog(rootPane, "Pagamento do título registrado com sucesso!");
                 tffValorAReceber.setText("");
             } else {

@@ -41,63 +41,78 @@ public class FinanceiroPagarDAO {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
 
                 //for (int i = 0; i < formasPagas.size(); i++) {
-                    String sql = "";
-                    if (formaPagamentoPagas.getDataPagamento() == null) {
+                String sql = "";
+                if (formaPagamentoPagas.getDataPagamento() == null) {
 
-                        sql = "INSERT INTO financeiro_pagar VALUES ("
-                                + "DEFAULT,"
-                                + "" + formaPagamentoPagas.getFornecedor().getId() + ","
-                                + "" + formaPagamentoPagas.getFormaPagamento().getId() + ","
-                                + "'" + formaPagamentoPagas.getNumeroTitulo() + "',"
-                                + "'" + formaPagamentoPagas.getDataEmissao() + "',"
-                                + "'" + formaPagamentoPagas.getVencimento() + "',"
-                                + "null,"
-                                + "'" + formaPagamentoPagas.getValorProvisorio() + "',"
-                                + formaPagamentoPagas.getValor() + ","
-                                + formaPagamentoPagas.getValorPago() + ","
-                                + "'" + formaPagamentoPagas.getQuitado() + "',"
-                                + "'" + formaPagamentoPagas.getAtivo() + "'"
-                                + ")";
-                    } else {
+                    sql = "INSERT INTO financeiro_pagar VALUES ("
+                            + "DEFAULT,"
+                            + "" + formaPagamentoPagas.getFornecedor().getId() + ","
+                            + "" + formaPagamentoPagas.getFormaPagamento().getId() + ","
+                            + "'" + formaPagamentoPagas.getNumeroTitulo() + "',"
+                            + "'" + formaPagamentoPagas.getDataEmissao() + "',"
+                            + "'" + formaPagamentoPagas.getVencimento() + "',"
+                            + "null,"
+                            + "'" + formaPagamentoPagas.getValorProvisorio() + "',"
+                            + formaPagamentoPagas.getValor() + ","
+                            + formaPagamentoPagas.getValorPago() + ","
+                            + "'" + formaPagamentoPagas.getQuitado() + "',"
+                            + "'" + formaPagamentoPagas.getAtivo() + "'"
+                            + ")";
+                } else {
 
-                        sql = "INSERT INTO financeiro_pagar VALUES ("
-                                + "DEFAULT,"
-                                + "" + formaPagamentoPagas.getFornecedor().getId() + ","
-                                + "" + formaPagamentoPagas.getFormaPagamento().getId() + ","
-                                + "'" + formaPagamentoPagas.getNumeroTitulo() + "',"
-                                + "'" + formaPagamentoPagas.getDataEmissao() + "',"
-                                + "'" + formaPagamentoPagas.getVencimento() + "',"
-                                + "'" + formaPagamentoPagas.getDataPagamento() + "',"
-                                + "'" + formaPagamentoPagas.getValorProvisorio() + "',"
-                                + formaPagamentoPagas.getValor() + ","
-                                + formaPagamentoPagas.getValorPago() + ","
-                                + "'" + formaPagamentoPagas.getQuitado() + "',"
-                                + "'" + formaPagamentoPagas.getAtivo() + "'"
-                                + ")";
-                    }
-                    System.out.println(sql);
-                    int resultado = st.executeUpdate(sql);
+                    sql = "INSERT INTO financeiro_pagar VALUES ("
+                            + "DEFAULT,"
+                            + "" + formaPagamentoPagas.getFornecedor().getId() + ","
+                            + "" + formaPagamentoPagas.getFormaPagamento().getId() + ","
+                            + "'" + formaPagamentoPagas.getNumeroTitulo() + "',"
+                            + "'" + formaPagamentoPagas.getDataEmissao() + "',"
+                            + "'" + formaPagamentoPagas.getVencimento() + "',"
+                            + "'" + formaPagamentoPagas.getDataPagamento() + "',"
+                            + "'" + formaPagamentoPagas.getValorProvisorio() + "',"
+                            + formaPagamentoPagas.getValor() + ","
+                            + formaPagamentoPagas.getValorPago() + ","
+                            + "'" + formaPagamentoPagas.getQuitado() + "',"
+                            + "'" + formaPagamentoPagas.getAtivo() + "'"
+                            + ")";
+                }
+                System.out.println(sql);
+                int resultado = st.executeUpdate(sql);
                 //}
 
                 return true;
             } catch (Exception e) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, e);
-            System.out.println("Erro finalizar pedido = " + e);
+                System.out.println("Erro finalizar pedido = " + e);
             }
             return true;
         } else {
             try {
-
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                String sql = "update financeiro_pagar set valor_pago = " + formaPagamentoPagas.getValorPago() + ","
-                        + " quitado ='" + formaPagamentoPagas.getQuitado() + "',"
-                        + " data_pagamento = '" + formaPagamentoPagas.getDataPagamento() + "',"
-                        + " ativo = '" + formaPagamentoPagas.getAtivo() + "'"
-                        + " where id = " + formaPagamentoPagas.getId();
+                String sql = "";
+                if (formaPagamentoPagas.getDataPagamento() != "") {
 
-                System.out.println(sql);
-                int resultado = st.executeUpdate(sql);
-                return true;
+                    sql = "update financeiro_pagar set valor_pago = " + formaPagamentoPagas.getValorPago() + ","
+                            + " quitado ='" + formaPagamentoPagas.getQuitado() + "',"
+                            + " data_pagamento = '" + formaPagamentoPagas.getDataPagamento() + "',"
+                            + " ativo = '" + formaPagamentoPagas.getAtivo() + "'"
+                            + " where id = " + formaPagamentoPagas.getId();
+
+                    System.out.println(sql);
+                    int resultado = st.executeUpdate(sql);
+                    return true;
+                } else {
+                    sql = "update financeiro_pagar set "
+                            //+ "valor_pago = " + formaPagamentoPagas.getValorPago() + ","
+                            //+ " quitado ='" + formaPagamentoPagas.getQuitado() + "',"
+                            //+ " data_pagamento = '" + formaPagamentoPagas.getDataPagamento() + "',"
+                            //+ " ativo = '" + formaPagamentoPagas.getAtivo() + "'"
+                            + "valor_titulo = " + formaPagamentoPagas.getValor()
+                            + " where id = " + formaPagamentoPagas.getId();
+                    int resultado = st.executeUpdate(sql);
+                    System.out.println(sql);
+                    return true;
+                }
+
             } catch (Exception e) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, e);
                 return false;
@@ -117,7 +132,7 @@ public class FinanceiroPagarDAO {
                     + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idfornecedor,"
                     + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativofornecedor,"
                     + "fp.descricao "
-                    + " from financeiro_pagar f, cliente c,forma_pagamento fp "
+                    + " from financeiro_pagar f, fornecedor c,forma_pagamento fp "
                     + "where c.id = f.id_fornecedor"
                     + " and fp.id = f.id_forma_pagamento "
                     + " and quitado ='" + formaPagamentoPagas.getQuitado() + "' "
@@ -176,7 +191,7 @@ public class FinanceiroPagarDAO {
                 && (formaPagamentoPagas.getQuitado() == 'A')) {
 
             sql = "select f.id idfinanceiro,f.id_fornecedor,f.numero_titulo,f.data_emissao,"
-                    + "f.data_vencimento,f.data_pagamento,f.valor_titulo,f.valor_provisorio"
+                    + "f.data_vencimento,f.data_pagamento,f.valor_titulo,f.valor_provisorio, "
                     + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idfornecedor,"
                     + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativofornecedor,"
                     + "fp.descricao "
@@ -279,4 +294,54 @@ public class FinanceiroPagarDAO {
 
         return formas;
     }
+
+    public ArrayList<FinanceiroPagar> consultar(FinanceiroPagar formaPagamentoPagas) {
+        this.formaPagamentoPagas = formaPagamentoPagas;
+        String sql = "";
+
+        sql = "select f.id idfinanceiro,f.id_fornecedor,f.numero_titulo,f.data_emissao,"
+                + "f.data_vencimento,f.data_pagamento,f.valor_titulo,f.valor_provisorio, "
+                + "f.valor_pago,f.quitado, f.ativo ativofinanceiro,c.id idfornecedor,"
+                + "c.razao_social,c.cpf_cnpj,c.endereco,c.telefone, c.ativo ativofornecedor,"
+                + "fp.descricao "
+                + " from financeiro_pagar f, fornecedor c,forma_pagamento fp "
+                + "where c.id = f.id_fornecedor"
+                + " and fp.id = f.id_forma_pagamento "
+                //+ " and quitado ='' "
+                + "and f.ativo = 'T' "
+                + "and f.numero_titulo = '" + formaPagamentoPagas.getNumeroTitulo()+ "' ";
+                
+
+        ArrayList<FinanceiroPagar> formas = new ArrayList<>();
+        //faz consulta e adiciona os valores para o array...
+        try {
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            System.out.println(sql);
+            ResultSet resultado = st.executeQuery(sql);
+            while (resultado.next()) {
+                FinanceiroPagar forma = new FinanceiroPagar();
+                //FaturamentoItem fatItem = new FaturamentoItem();
+                Cidade cid = new Cidade();
+                Fornecedor forn = new Fornecedor(cid);
+                FormaPagamento formaPagamento = new FormaPagamento();
+                formaPagamento.setDescricao(resultado.getString("descricao"));
+                forma.setFormaPagamento(formaPagamento);
+                forma.setId(resultado.getInt("idfinanceiro"));
+                forma.setNumeroTitulo(resultado.getString("numero_titulo"));
+                forma.setDataEmissao(Formatacao.ajustaDataDMAHora(resultado.getString("data_emissao")));
+                forma.setVencimento(Formatacao.ajustaDataDMA(resultado.getString("data_vencimento")));
+                forma.setValor(resultado.getDouble("valor_titulo"));
+                forma.setValorProvisorio(resultado.getDouble("valor_provisorio"));
+
+                formas.add(forma);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return formas;
+    }
+
 }

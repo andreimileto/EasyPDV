@@ -27,6 +27,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +58,7 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
      */
     FinanceiroPagar formasPagas;
     Fornecedor forn;
-    ArrayList<FinanceiroPagar> arrayFormasPagas;
+        ArrayList<FinanceiroPagar> arrayFormasPagas;
 
     public JdgListagemFinanceiroPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -400,7 +401,8 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
             tblListaTitulos.getColumnModel().getColumn(3).setPreferredWidth(60);
             tblListaTitulos.getColumnModel().getColumn(4).setPreferredWidth(20);
             tblListaTitulos.getColumnModel().getColumn(5).setPreferredWidth(40);
-            tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(40);
+            tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(0);
             tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(0);
 
         } catch (Exception ex) {
@@ -425,6 +427,7 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
         dtm.addColumn("CLIENTE");
         dtm.addColumn("DATA EMISSÃO");
         dtm.addColumn("DATA VENCIMENTO");
+        dtm.addColumn("VALOR PREVISTO");
         dtm.addColumn("VALOR TÍTULO");
         dtm.addColumn("DATA PAGAMENTO");
         dtm.addColumn("VALOR PAGO");
@@ -443,7 +446,8 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
                 String.valueOf(formas.get(i).getFornecedor().getRazaoSocial()),
                 formas.get(i).getDataEmissao(),
                 formas.get(i).getVencimento(),
-                String.valueOf(formas.get(i).getValor()),
+                String.valueOf(formas.get(i).getValorProvisorio()),
+                String.valueOf(formas.get(i).getValor()),                
                 String.valueOf(formas.get(i).getDataPagamento()),
                 String.valueOf(formas.get(i).getValorPago()),
                 fase,});
@@ -545,7 +549,11 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
     private void btnAcessarTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarTituloActionPerformed
         int row = tblListaTitulos.getSelectedRow();
         if (row >= 0) {
-            acessarVenda();
+            try {
+                acessarTitulo();
+            } catch (ParseException ex) {
+                Logger.getLogger(JdgListagemFinanceiroPagar.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro ao acessar o título: \nNenhum título selecionado");
         }
@@ -563,7 +571,11 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
 
         if (evt.getClickCount() > 1) {
             int linhaSelecionada = tblListaTitulos.getSelectedRow();
-            acessarVenda();
+            try {
+                acessarTitulo();
+            } catch (ParseException ex) {
+                Logger.getLogger(JdgListagemFinanceiroPagar.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -627,7 +639,7 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtFiltroDataActionPerformed
 
-    private void acessarVenda() {
+    private void acessarTitulo() throws ParseException {
         formasPagas.setId(0);
         arrayFormasPagas.removeAll(arrayFormasPagas);
         int row = tblListaTitulos.getSelectedRow();
@@ -647,14 +659,15 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
         Faturamento fat = new Faturamento();
         //fat.setId(arrayFormasPagas.get(row).getFaturamento().getId());
         formasPagas.setNumeroTitulo(arrayFormasPagas.get(row).getNumeroTitulo());
+        formasPagas.setValorProvisorio(arrayFormasPagas.get(row).getValorProvisorio());
         formasPagas.setValor(arrayFormasPagas.get(row).getValor());
         formasPagas.setValorPago(arrayFormasPagas.get(row).getValorPago());
         formasPagas.setFornecedor(forn);
         //JdgVendaRegistrada vendaRegistrada = new JdgVendaRegistrada(null, true, fat);
         //vendaRegistrada.setVisible(true);
 
-        JdgCadastroFinanceiroPagar financeiroReceber = new JdgCadastroFinanceiroPagar(null, true, formasPagas);
-        financeiroReceber.setVisible(true);
+        JdgCadastroFinanceiroPagar financeiroPagar = new JdgCadastroFinanceiroPagar(null, true, formasPagas);
+        financeiroPagar.setVisible(true);
 
         formasPagas.setId(0);
         listarTitulos();
