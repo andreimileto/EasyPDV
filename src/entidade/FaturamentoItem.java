@@ -19,6 +19,7 @@ public class FaturamentoItem {
     private double desconto;
     private double valorTotal;
     private double valorUnitario;
+
     public int getId() {
         return id;
     }

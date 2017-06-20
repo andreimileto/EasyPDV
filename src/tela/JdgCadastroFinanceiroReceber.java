@@ -318,6 +318,7 @@ public class JdgCadastroFinanceiroReceber extends javax.swing.JDialog {
     private void btnReceberTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceberTituloActionPerformed
         //if (Double.parseDouble(tffValorAReceber.getText().replace(",", "."))>0) {
         try {
+            formaPagamentoPagas.setAtivo('T');
             pagarTitulo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "É preciso informar um valor para pagar o título");

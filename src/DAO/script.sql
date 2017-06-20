@@ -95,6 +95,7 @@
                          valor_unitario DOUBLE PRECISION not null,
                          desconto DOUBLE PRECISION,
                          valor_total DOUBLE PRECISION not null,
+                         --indicador_cancelado CHAR(1),
                          constraint pkfaturamento_item primary key (id),
                          constraint fkid_mercadoriafaturamento foreign key (id_mercadoria)
                          references mercadoria,
@@ -169,23 +170,80 @@ INSERT INTO public.empresa(
 
 
 
+--CREATE OR REPLACE FUNCTION fatuaizaestoque()
+--RETURNS trigger
+--AS $$
+ 
+--BEGIN
+
+--	if (NEW.fase = 'e') then
+--for 
+ --   update mercadoria m set estoque = (estoque - f.quantidade  )
+ --   from faturamento_item f, faturamento fa
+   -- where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+
+    
+ --end if;
+  --  if (NEW.fase = 'c') then
+  --update mercadoria m set estoque = (estoque + f.quantidade)
+  --  from faturamento_item f, faturamento fa
+    --where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+--end if;
+--RETURN null;
+--END;
+--$$ LANGUAGE plpgsql;
+
+
+------------------
+--CREATE  TRIGGER tatuaizaestoque
+--AFTER  UPDATE ON faturamento
+--FOR EACH ROW
+--EXECUTE PROCEDURE fatuaizaestoque()
+
+
+----nova proc-----
+
+
 CREATE OR REPLACE FUNCTION fatuaizaestoque()
 RETURNS trigger
 AS $$
- 
+ declare
+idmerc integer;
+qtde DOUBLE PRECISION;
 BEGIN
 
-	if (NEW.fase = 'e') then
-    update mercadoria m set estoque = (estoque - f.quantidade  )
-    from faturamento_item f, faturamento fa
-    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+    if (NEW.fase = 'e') then
 
-    
+        for idmerc,qtde in select m.id, sum(f.quantidade)  qtde 
+        from faturamento_item f,mercadoria m 
+        where f.id_Faturamento = (select max(fa.id) 
+        from faturamento fa) 
+        and f.id_mercadoria = m.id 
+        group by f.id_mercadoria,m.id
+
+	
+   loop
+    update mercadoria m set estoque = (estoque - qtde  )
+    from faturamento_item f, faturamento fa
+    where m.id = idmerc and f.id_faturamento = fa.id and fa.id = new.id;
+
+   end loop;
+
  end if;
     if (NEW.fase = 'c') then
-  update mercadoria m set estoque = (estoque + f.quantidade)
+ for idmerc,qtde in select m.id, sum(f.quantidade)  qtde 
+        from faturamento_item f,mercadoria m 
+        where f.id_Faturamento = (select max(fa.id) 
+        from faturamento fa) 
+        and f.id_mercadoria = m.id 
+        group by f.id_mercadoria,m.id
+
+   loop
+    update mercadoria m set estoque = (estoque + qtde  )
     from faturamento_item f, faturamento fa
-    where m.id = f.id_mercadoria and f.id_faturamento = fa.id and fa.id = new.id;
+    where m.id = idmerc and f.id_faturamento = fa.id and fa.id = new.id;
+
+   end loop;
 end if;
 RETURN null;
 END;
@@ -197,5 +255,3 @@ CREATE  TRIGGER tatuaizaestoque
 AFTER  UPDATE ON faturamento
 FOR EACH ROW
 EXECUTE PROCEDURE fatuaizaestoque()
-
-

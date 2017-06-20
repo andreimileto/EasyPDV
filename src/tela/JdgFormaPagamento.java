@@ -617,6 +617,8 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
     private void tffValorPagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffValorPagoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            tffValorPago.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+            tffValorPago.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             totalPago = Double.parseDouble(lblTotalPago.getText().replace(",", ".")) + Double.parseDouble(tffValorPago.getText().replace(",", "."));
             //lblTotalPago.setText(String.valueOf(totalPago));
             //atualizarValores();
@@ -646,11 +648,13 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+            tffDesconto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             atualizarValores();
             if ((Double.parseDouble(lblTotalPago.getText()) >= (Double.parseDouble(lblTotalLiquido.getText())))) {
-            btnFinalizar.setEnabled(true);
-            finalizarVenda();
-        }
+                btnFinalizar.setEnabled(true);
+                finalizarVenda();
+            }
             tffValorPago.requestFocus();
         }
     }//GEN-LAST:event_tffDescontoKeyReleased
@@ -696,10 +700,25 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
 //            tffCodigoPagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 //            tffCodigoPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-            validarParcela();
+            //tffCodigoPagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###") {})));
+            //tffCodigoPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+            try {
 
-            tffDesconto.requestFocus();
+                FormaPagamentoDAO formaDAO = new FormaPagamentoDAO();
+                ArrayList<FormaPagamento> formas = new ArrayList<FormaPagamento>();
+                formas = formaDAO.consultar(Integer.parseInt(tffCodigoPagamento.getText()));
+                if (formas.size() > 0) {
+                    validarParcela();
 
+                    tffDesconto.requestFocus();
+
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao inserir forma de pagamento: \n Forma de pagamento não localizada.");
+
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Erro ao inserir forma de pagamento: \n Forma de pagamento não localizada.");
+            }
         }
     }//GEN-LAST:event_tffCodigoPagamentoKeyReleased
 

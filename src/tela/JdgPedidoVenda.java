@@ -577,6 +577,7 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         tfdDescricao.setText("");
         tffDesconto.setText("0,00");
         tffPrecoUnitario.setText("0,00");
+        tffValorTotal.setText("0,00");
 
     }
 
@@ -1006,18 +1007,20 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
         faturamento.setDesconto(faturamento.getDesconto() - mercs.get(row).getDesconto());
         tffTotalDesconto.setText(String.valueOf(faturamento.getDesconto()).replace(".", ","));
         tffTotalVenda.setText(String.valueOf(faturamento.getValorTotal()).replace(".", ","));
-        faturamentoItem.setDesconto(0.00);
-        faturamentoItem.setQuantidade(0.00);
-        faturamentoItem.setValorTotal(0.00);
+       // faturamentoItem.setDesconto(0.00);
+       // faturamentoItem.setQuantidade(0.00);
+        //faturamentoItem.setValorTotal(0.00);
 //        listarMercadorias();
+            
 
-        mercs.get(row).setDesconto(0.00);
-        mercs.get(row).setValorTotal(0.00);
-        mercs.get(row).setQuantidade(0.00);
-        mercs.get(row).getMercadoria().setPrecoVenda(0.00);
-        mercs.get(row).getMercadoria().setDescricao(mercs.get(row).getMercadoria().getDescricao() + " *** CANCELADO ***");
-        System.out.println("tamanho array..." + mercs.size());
-
+        mercs.remove(row);
+//        mercs.get(row).setDesconto(0.00);
+//        mercs.get(row).setValorTotal(0.00);
+//        mercs.get(row).setQuantidade(0.00);
+//        mercs.get(row).getMercadoria().setPrecoVenda(0.00);
+//        mercs.get(row).getMercadoria().setDescricao(mercs.get(row).getMercadoria().getDescricao() + " *** CANCELADO ***");
+//        System.out.println("tamanho array..." + mercs.size());
+        idFaturamentoItem--;
         listarMercadorias();
         tfdReferencia.requestFocus();
 
