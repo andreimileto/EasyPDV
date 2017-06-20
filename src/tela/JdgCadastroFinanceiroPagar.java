@@ -55,19 +55,19 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
     private void bloquearCampos() {
         try {
             if (formaPagamentoPagas.getId() > 0) {
-                tfdNumeroTitulo.setEditable(false);
+                tfdNumeroTitulo.setEnabled(false);
                 tffDataVencimento.setEnabled(false);
                 try {
                     if (Double.parseDouble(tffValor.getText()) > 0) {
-                        tffValor.setEditable(false);
+                        tffValor.setEnabled(false);
                         btnConfirmar.setEnabled(false);
                     } else {
-                        tffValor.setEditable(true);
+                        tffValor.setEnabled(true);
                         btnConfirmar.setEnabled(true);
                     }
                     
                 } catch (Exception e) {
-                    tffValor.setEditable(true);
+                    tffValor.setEnabled(true);
                     btnConfirmar.setEnabled(true);
                 }
                 
@@ -75,12 +75,12 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 btnLocalizarCliente.setEnabled(false);
                 btnLocalizarFormaDePagamento.setEnabled(false);
                 
-                tffValorPrevisto.setEditable(false);
+                tffValorPrevisto.setEnabled(false);
                 tffValorAReceber.setEditable(true);
                 
             } else {
-                tfdNumeroTitulo.setEditable(true);
-                tffValor.setEditable(true);
+                tfdNumeroTitulo.setEnabled(true);
+                tffValor.setEnabled(true);
                 tffDataVencimento.setEnabled(true);
                 
                 btnExcluir.setEnabled(false);
@@ -89,12 +89,12 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 btnConfirmar.setEnabled(true);
                 btnExcluir.setEnabled(false);
                 btnPagarTitulo.setEnabled(false);
-                tffValorPrevisto.setEditable(true);
+                tffValorPrevisto.setEnabled(true);
                 
             }
         } catch (Exception e) {
             tfdNumeroTitulo.setEditable(true);
-            tffValor.setEditable(true);
+            tffValor.setEnabled(true);
             tffDataVencimento.setEnabled(true);
             
             btnExcluir.setEnabled(true);
@@ -201,9 +201,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
         jLabel6.setText("Situação:");
 
-        tfdCodigo.setEditable(false);
-
-        tfdNumeroTitulo.setEditable(false);
+        tfdCodigo.setEnabled(false);
 
         tfdFornecedorNome.setEditable(false);
 
@@ -278,16 +276,12 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
         lblValorPrevisto.setText("Valor previsto:");
 
-        tffValorPrevisto.setEditable(false);
-
         tffDataVencimento.setToolTipText("");
         tffDataVencimento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tffDataVencimentoKeyReleased(evt);
             }
         });
-
-        tffValor.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

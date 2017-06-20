@@ -277,13 +277,10 @@
         </Component>
         <Component class="javax.swing.JTextField" name="tfdCodigo">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfdNumeroTitulo">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfdFornecedorNome">
           <Properties>
@@ -418,9 +415,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="tffValorPrevisto">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="tffDataVencimento">
           <Properties>
@@ -431,9 +425,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="tffValor">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
