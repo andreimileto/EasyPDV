@@ -204,10 +204,13 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
         tfdCodigo.setEnabled(false);
 
         tfdFornecedorNome.setEditable(false);
+        tfdFornecedorNome.setEnabled(false);
 
         tfdFormaPagamentoNome.setEditable(false);
+        tfdFormaPagamentoNome.setEnabled(false);
 
         tfdSituacao.setEditable(false);
+        tfdSituacao.setEnabled(false);
 
         lblDataEmissao.setText("Data Emissao:");
 
@@ -216,8 +219,10 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
         lblDataPagamento.setText("Data pagamento:");
 
         tfdDataEmissao.setEditable(false);
+        tfdDataEmissao.setEnabled(false);
 
         tfdDataPagamento.setEditable(false);
+        tfdDataPagamento.setEnabled(false);
 
         btnPagarTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icon_money.png"))); // NOI18N
         btnPagarTitulo.setText("Pagar Título");
@@ -237,12 +242,13 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
         lblValorAReceber.setText("Valor a receber:");
 
-        tffValorAReceber.setEditable(false);
         tffValorAReceber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tffValorAReceber.setEnabled(false);
 
         lblValorPago.setText("Valor pago:");
 
         tfdValorPago.setEditable(false);
+        tfdValorPago.setEnabled(false);
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_button_cancel.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -456,12 +462,12 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
                 pagarTitulo();
             } else {
-                JOptionPane.showMessageDialog(rootPane, "1 Erro ao efetuar o pagamento do título: \n é preciso que o título tenha um valor maior que zero.");
+                JOptionPane.showMessageDialog(rootPane, " Erro ao efetuar o pagamento do título: \n É preciso que o título tenha um valor maior que zero.");
             }
             
         } catch (Exception e) {
             //   JOptionPane.showMessageDialog(rootPane, "É preciso informar um valor para pagar o título");
-            JOptionPane.showMessageDialog(rootPane, " Erro ao efetuar o pagamento do título: \n é preciso que o título tenha um valor maior que zero.");
+            JOptionPane.showMessageDialog(rootPane, " Erro ao efetuar o pagamento do título: \n É preciso que o título tenha um valor maior que zero.");
         }
         
         try {

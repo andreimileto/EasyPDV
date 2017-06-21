@@ -9,6 +9,7 @@ import DAO.ClienteDAO;
 import DAO.FaturamentoDAO;
 import DAO.FinanceiroReceberDAO;
 import DAO.FormaPagamentoDAO;
+import apoio.DocumentoLimitado;
 import apoio.Formatacao;
 import entidade.Faturamento;
 import entidade.FaturamentoItem;
@@ -58,9 +59,17 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         this.fatItem = fatItem;
         ArrayFormasPagas = new ArrayList<>();
         listarFormasPagamento();
+        DocumentoLimitado dl = new DocumentoLimitado(3);
+        DocumentoLimitado prazo = new DocumentoLimitado(2);
+        tffCodigoPagamento.setDocument(dl);
+        tffParcelas.setDocument(prazo);
+        
         valoresDefault();
         atualizarValores();
         listarFormasPagamentoPagas();
+        
+        
+        
     }
 
     private void inserirFormaPagamento() {
@@ -648,14 +657,17 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+            if (!tffDesconto.getText().equals("0,00") && !tffDesconto.getText().equals("0.00") && !tffDesconto.getText().endsWith("0")) {               
+           tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
             tffDesconto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+            }
             atualizarValores();
             if ((Double.parseDouble(lblTotalPago.getText()) >= (Double.parseDouble(lblTotalLiquido.getText())))) {
                 btnFinalizar.setEnabled(true);
                 finalizarVenda();
             }
             tffValorPago.requestFocus();
+            
         }
     }//GEN-LAST:event_tffDescontoKeyReleased
 
