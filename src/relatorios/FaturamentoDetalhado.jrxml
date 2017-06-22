@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FaturamentoDetalhado" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fafffb81-1bfa-4ac9-980f-3537855bf8f1">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="0.8264462809917354"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Mileto\\Documents\\NetBeansProjects\\EasyPDV\\src\\relatorios\\"]]></defaultValueExpression>
 	</parameter>
@@ -71,6 +71,15 @@ order by f.id]]>
 	<field name="cnpj_formatado" class="java.lang.String"/>
 	<field name="cativo" class="java.lang.String"/>
 	<field name="case" class="java.lang.String"/>
+	<variable name="sum_total_liquido" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_total_liquido}]]></variableExpression>
+	</variable>
+	<variable name="sum_total_Bruto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_total}]]></variableExpression>
+	</variable>
+	<variable name="sum_total_desconto" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{desconto}]]></variableExpression>
+	</variable>
 	<group name="teste">
 		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
@@ -264,7 +273,7 @@ order by f.id]]>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="129" splitType="Stretch">
+		<band height="130" splitType="Stretch">
 			<textField evaluationTime="Report">
 				<reportElement x="530" y="108" width="100" height="20" uuid="07d58a0f-d2e3-4fe5-9ef0-2899dd0d6dc5"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
@@ -277,9 +286,44 @@ order by f.id]]>
 				<reportElement x="511" y="108" width="100" height="20" uuid="f2b8bdf7-5c19-4546-9b30-1db503c34d26"/>
 				<text><![CDATA[de]]></text>
 			</staticText>
+			<elementGroup/>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="47" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="56" y="22" width="100" height="20" uuid="62c4b6c7-b296-43c5-ac44-7f7fdad9b41c"/>
+				<textFieldExpression><![CDATA[$V{sum_total_liquido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="56" y="2" width="100" height="20" uuid="2344c1fe-0743-4141-ae76-0ed486f1bc44"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Líquido]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="168" y="24" width="100" height="20" uuid="1f96d55f-4280-40b8-be5c-cea544c89739"/>
+				<textFieldExpression><![CDATA[$V{sum_total_Bruto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="168" y="2" width="100" height="20" uuid="842ca317-ff69-4f1c-8a51-3947223c381b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Bruto:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="290" y="24" width="100" height="20" uuid="184d8ecc-ed04-4604-92dc-0f60af0934fc"/>
+				<textFieldExpression><![CDATA[$V{sum_total_desconto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="4" width="100" height="20" uuid="e04f8e9c-3381-4986-87ad-788dc53f7270"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Desconto:]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

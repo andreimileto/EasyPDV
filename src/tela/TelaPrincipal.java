@@ -55,8 +55,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         imnTitulosReceber = new javax.swing.JMenuItem();
-        imnCadastroTituloPagar = new javax.swing.JMenuItem();
         imnTitulosPagar = new javax.swing.JMenuItem();
+        imnCadastroTituloPagar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         imnLFormasPagamentos = new javax.swing.JMenuItem();
         imnLMercadorias = new javax.swing.JMenuItem();
@@ -117,6 +117,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(imnFormaPagamento);
 
+        imnFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/fornecedor42.png"))); // NOI18N
         imnFornecedores.setText("Fornecedores");
         imnFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,7 +154,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Financeiro");
 
-        imnTitulosReceber.setText("Lista Títulos a receber");
+        imnTitulosReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dollar_green.png"))); // NOI18N
+        imnTitulosReceber.setText("Listagem Títulos a receber");
         imnTitulosReceber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 imnTitulosReceberActionPerformed(evt);
@@ -161,14 +163,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu3.add(imnTitulosReceber);
 
-        imnCadastroTituloPagar.setText("Cadatro Títulos a pagar");
-        imnCadastroTituloPagar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imnCadastroTituloPagarActionPerformed(evt);
-            }
-        });
-        jMenu3.add(imnCadastroTituloPagar);
-
+        imnTitulosPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dollar_red.png"))); // NOI18N
         imnTitulosPagar.setText("Listagem Títulos a pagar");
         imnTitulosPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +171,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(imnTitulosPagar);
+
+        imnCadastroTituloPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/more_red.png"))); // NOI18N
+        imnCadastroTituloPagar.setText("Cadastro Títulos a pagar");
+        imnCadastroTituloPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imnCadastroTituloPagarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(imnCadastroTituloPagar);
 
         jMenuBar1.add(jMenu3);
 
@@ -203,7 +207,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Configurações");
 
-        imnAlterarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/preferences_desktop_user_password (2).png"))); // NOI18N
+        imnAlterarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/preferences_desktop_user_password.png"))); // NOI18N
         imnAlterarSenha.setText("Alterar senha");
         imnAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,7 +265,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_imnClientesActionPerformed
 
     private void imnPDVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imnPDVActionPerformed
-        JdgPedidoVenda pedido = new JdgPedidoVenda(this, true);
+        JdgPedidoVenda pedido = new JdgPedidoVenda(this, false);
         pedido.setVisible(true);
     }//GEN-LAST:event_imnPDVActionPerformed
 

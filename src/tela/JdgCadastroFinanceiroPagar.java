@@ -58,7 +58,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 tfdNumeroTitulo.setEnabled(false);
                 tffDataVencimento.setEnabled(false);
                 try {
-                    if (Double.parseDouble(tffValor.getText()) > 0) {
+                    if (Double.parseDouble(tffValor.getText()) > 0 || formaPagamentoPagas.getQuitado() == 'T') {
                         tffValor.setEnabled(false);
                         btnConfirmar.setEnabled(false);
                     } else {
@@ -186,6 +186,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
         jLabel11.setText("jLabel11");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("EasyPDV - Cadastro título a pagar");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro Título a pagar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 51, 255))); // NOI18N
 
@@ -461,6 +462,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             if (Double.parseDouble(tffValor.getText()) > 0) {
                 formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
                 pagarTitulo();
+                bloquearCampos();
             } else {
                 JOptionPane.showMessageDialog(rootPane, " Erro ao efetuar o pagamento do título: \n É preciso que o título tenha um valor maior que zero.");
             }

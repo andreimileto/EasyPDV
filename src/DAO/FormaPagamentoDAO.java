@@ -31,7 +31,7 @@ public class FormaPagamentoDAO {
                         + "'" + fp.getFormaAvista() + "',"
                         + "'" + fp.getAtivo() + "'"
                         + ")";
-                System.out.println(sql);
+              //  System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
             } else {
                 String sql = "UPDATE forma_pagamento set descricao='" + fp.getDescricao()

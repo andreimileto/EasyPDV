@@ -9,6 +9,7 @@ import DAO.ClienteDAO;
 import DAO.FaturamentoDAO;
 import DAO.FinanceiroReceberDAO;
 import DAO.FormaPagamentoDAO;
+import apoio.ConexaoBD;
 import apoio.DocumentoLimitado;
 import apoio.Formatacao;
 import entidade.Faturamento;
@@ -20,10 +21,17 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -53,6 +61,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     public JdgFormaPagamento(java.awt.Frame parent, boolean modal, ArrayList<FaturamentoItem> mercs, Faturamento fat, FaturamentoItem fatItem) {
         super(parent, modal);
         initComponents();
+        
         fp = new FormaPagamento();
         this.mercs = mercs;
         this.fat = fat;
@@ -63,13 +72,57 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         DocumentoLimitado prazo = new DocumentoLimitado(2);
         tffCodigoPagamento.setDocument(dl);
         tffParcelas.setDocument(prazo);
-        
+
         valoresDefault();
         atualizarValores();
         listarFormasPagamentoPagas();
-        
-        
-        
+
+    }
+
+    private void gerarRelatorio() {
+        try {
+            // JasperReport relatorio = null;
+            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/RegistroDeVenda.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+//            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//            Date data = formato.parse(fat.getDataEmissaoInicio());
+//
+//            Date dataFim = formato.parse(fat.getDataEmissaoFim());
+//            dataFim.setDate(dataFim.getDate() + 1);
+            Map parametros = new HashMap();
+            //parametros.put("Data_emissao_inicial", data);
+            // parametros.put("Data_emissao_final", dataFim);
+//            if (fat.getFase() == 't') {
+//                parametros.put("Fase", "");
+//
+//            } else {
+//
+//                parametros.put("Fase", fat.getFase());
+//            }
+
+            // Executa relatoio
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            System.out.println(e);
+
+        }
+
+//        try {
+//            // Compila o relatorio//
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+//            System.out.println(e);
+//        }
     }
 
     private void inserirFormaPagamento() {
@@ -657,9 +710,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
     private void tffDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffDescontoKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            if (!tffDesconto.getText().equals("0,00") && !tffDesconto.getText().equals("0.00") && !tffDesconto.getText().endsWith("0")) {               
-           tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
-            tffDesconto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+            if (!tffDesconto.getText().equals("0,00") && !tffDesconto.getText().equals("0.00") && !tffDesconto.getText().endsWith("0")) {
+                tffDesconto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
+                tffDesconto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             }
             atualizarValores();
             if ((Double.parseDouble(lblTotalPago.getText()) >= (Double.parseDouble(lblTotalLiquido.getText())))) {
@@ -667,7 +720,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 finalizarVenda();
             }
             tffValorPago.requestFocus();
-            
+
         }
     }//GEN-LAST:event_tffDescontoKeyReleased
 
@@ -701,8 +754,11 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
 
             financeiroReceber.salvar(ArrayFormasPagas, ultimaVenda, formasPagas);
-            JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
+           // JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
+            
+
             dispose();
+            //gerarRelatorio();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro retornado pelo sistema: \nFalha ao finalizar a venda");
         }

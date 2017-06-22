@@ -39,7 +39,7 @@ public class FornecedorDAO {
                         + "'" + fornecedor.getTelefone() + "',"
                         + "'" + fornecedor.getAtivo() + "'"
                         + ")";
-                System.out.println(sql);
+               // System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
             } else {
                 String sql = "UPDATE fornecedor set id_cidade='" + fornecedor.getCidade().getId()
@@ -74,7 +74,7 @@ public class FornecedorDAO {
                         + "where (cpf_cnpj ilike '" + fornecedor.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + fornecedor.getRazaoSocial() + "%')"
                         + " and cid.id = f.id_cidade and f.ativo ='" + fornecedor.getAtivo() + "' order by f.razao_social";
-                System.out.println("consulta T ou F..."+sql);
+              //  System.out.println("consulta T ou F..."+sql);
 
                 //consulta cadastrado
             } else if (fornecedor.getRazaoSocial().equals("") && fornecedor.getCpfCnpj() != "" && fornecedor.getAtivo() == ' ') {
@@ -84,15 +84,8 @@ public class FornecedorDAO {
                         + "where cpf_cnpj = '" + fornecedor.getCpfCnpj() + "'"
                         + " and cid.id = f.id_cidade"
                         + " order by f.razao_social";
-                System.out.println("consulta cadastrado..."+sql);
+              //  System.out.println("consulta cadastrado..."+sql);
 
-//            }else if (fornecedor.getRazaoSocial().equals("") && fornecedor.getCpfCnpj() != "" && fornecedor.getAtivo()== 'V') {
-//                sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
-//                        + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
-//                        + "from cliente c, cidade cid "
-//                        + "where cpf_cnpj = '" + cli.getCpfCnpj() + "'"
-//                        + " and cid.id = c.id_cidade"
-//                        + " and c.id > 1 and c.ativo = 'T'  order by c.razao_social";
             }else {
                 sql = "select f.id id_fornecedor,f.id_cidade,f.razao_social,f.cpf_cnpj,c.endereco, f.telefone,f.ativo,f.tipo_cadastro,"
                         + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
@@ -100,14 +93,14 @@ public class FornecedorDAO {
                         + "where (cpf_cnpj ilike '" + fornecedor.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + fornecedor.getRazaoSocial() + "%')"
                         + " and cid.id = f.id_cidade order by f.razao_social";
-                System.out.println(sql);
+             //   System.out.println(sql);
             }
             
             
 
             // id cliente for > 0
         } else {
-            System.out.println("entrou no else");
+           
 
             sql = "select f.id id_fornecedor,f.id_cidade,f.razao_social,f.cpf_cnpj,f.endereco, f.telefone,f.ativo,f.tipo_cadastro,"
                     + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "
@@ -115,14 +108,13 @@ public class FornecedorDAO {
                     + "where (cpf_cnpj ilike '" + fornecedor.getCpfCnpj() + "%' or"
                     + " razao_social ilike '" + fornecedor.getRazaoSocial() + "%') "
                     + "and cid.id = f.id_cidade and f.id =" + fornecedor.getId() + " order by f.razao_social";
-            System.out.println(sql);
-            System.out.println("ativo..."+fornecedor.getAtivo());
+          //  System.out.println(sql);
         }
 
         //faz consulta e adiciona os valores para o array...
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-            System.out.println(sql);
+            //System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
                 Cidade cids = new Cidade();
@@ -151,7 +143,7 @@ public class FornecedorDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar Cliente " + e);
+            System.out.println("Erro ao consultar Fornecedor " + e);
         }
 
         return fornecedores;

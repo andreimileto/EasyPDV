@@ -55,6 +55,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="imnFornecedores">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/fornecedor42.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Fornecedores"/>
               </Properties>
               <Events>
@@ -101,26 +104,35 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="imnTitulosReceber">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Lista T&#xed;tulos a receber"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/dollar_green.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Listagem T&#xed;tulos a receber"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imnTitulosReceberActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="imnCadastroTituloPagar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cadatro T&#xed;tulos a pagar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imnCadastroTituloPagarActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="imnTitulosPagar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/dollar_red.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Listagem T&#xed;tulos a pagar"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imnTitulosPagarActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="imnCadastroTituloPagar">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/more_red.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cadastro T&#xed;tulos a pagar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imnCadastroTituloPagarActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -162,7 +174,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="imnAlterarSenha">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/preferences_desktop_user_password (2).png"/>
+                  <Image iconType="3" name="/imagens/preferences_desktop_user_password.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Alterar senha"/>
               </Properties>

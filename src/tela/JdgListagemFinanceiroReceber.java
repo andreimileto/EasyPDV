@@ -101,7 +101,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         tblListaTitulos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("EasyPDV - Listagem de vendas");
+        setTitle("EasyPDV - Listagem de títulos a receber");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de Títulos a receber", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 204))); // NOI18N
         jPanel1.setToolTipText("");
@@ -331,7 +331,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 

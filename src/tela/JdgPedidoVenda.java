@@ -8,6 +8,7 @@ package tela;
 import DAO.ClienteDAO;
 import DAO.FaturamentoItemDAO;
 import DAO.MercadoriaDAO;
+import apoio.ConexaoBD;
 import apoio.Formatacao;
 import entidade.Cidade;
 import entidade.Cliente;
@@ -25,12 +26,19 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -959,11 +967,62 @@ public class JdgPedidoVenda extends javax.swing.JDialog {
 
         System.out.println("id cliente = " + faturamento.getCliente().getId());
         JdgFormaPagamento forPag = new JdgFormaPagamento(null, true, mercs, faturamento, faturamentoItem);
+        //forPag.setLocationRelativeTo(this);
         forPag.setVisible(true);
+        
+        
 
         novaVenda();
+        
+        gerarRelatorio();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void gerarRelatorio() {
+        try {
+            // JasperReport relatorio = null;
+            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
+//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/RegistroDeVenda.jrxml"));
+
+            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+//            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//            Date data = formato.parse(fat.getDataEmissaoInicio());
+//
+//            Date dataFim = formato.parse(fat.getDataEmissaoFim());
+//            dataFim.setDate(dataFim.getDate() + 1);
+            Map parametros = new HashMap();
+            //parametros.put("Data_emissao_inicial", data);
+            // parametros.put("Data_emissao_final", dataFim);
+//            if (fat.getFase() == 't') {
+//                parametros.put("Fase", "");
+//
+//            } else {
+//
+//                parametros.put("Fase", fat.getFase());
+//            }
+
+            // Executa relatoio
+            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+            // Exibe resultado em video
+            JasperViewer.viewReport(impressao, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+            System.out.println(e);
+
+        }
+
+//        try {
+//            // Compila o relatorio//
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+//            System.out.println(e);
+//        }
+    }
+    
     private void novaVenda() {
         mercadoria = new Mercadoria();
         faturamentoItem = new FaturamentoItem();

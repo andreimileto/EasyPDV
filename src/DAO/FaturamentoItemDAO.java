@@ -30,7 +30,7 @@ public class FaturamentoItemDAO {
 
                 String sql = "select id from  mercadoria  where referencia = '"
                         + mercs.get(i).getMercadoria().getReferencia() + "'";
-                System.out.println("sql");
+               // System.out.println("sql");
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     mercs.get(i).getMercadoria().setId(Integer.parseInt(resultado.getString("id")));
@@ -38,7 +38,7 @@ public class FaturamentoItemDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Erro ao consultar mercadorias " + e);
+            System.out.println("Erro ao consultar faturamento item " + e);
         }
         return mercs;
     }
@@ -54,7 +54,7 @@ public class FaturamentoItemDAO {
         //faz consulta e adiciona os valores para o array...
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-            System.out.println(sql);
+           // System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
                 Mercadoria merc = new Mercadoria();
@@ -66,12 +66,11 @@ public class FaturamentoItemDAO {
                 fatItem.setValorTotal(resultado.getDouble("valor_total"));
                 fatItem.setDesconto(resultado.getDouble("desconto"));
                 fatItem.setMercadoria(merc);
-//                cliente.getCidade().getDescricao();
                 mercs.add(fatItem);
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar mercadotias " + e);
+            System.out.println("Erro ao consultar faturamento item " + e);
         }
 
         return mercs;

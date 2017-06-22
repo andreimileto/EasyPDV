@@ -38,7 +38,7 @@ public class ClienteDAO {
                         + "'" + cli.getTelefone() + "',"
                         + "'" + cli.getAtivo() + "'"
                         + ")";
-                System.out.println(sql);
+                //System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
             } else {
                 String sql = "UPDATE cliente set id_cidade='" + cli.getCidade().getId()
@@ -54,7 +54,7 @@ public class ClienteDAO {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("Erro salvar Mercadoria = " + e);
+            System.out.println("Erro salvar Cliente = " + e);
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class ClienteDAO {
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
                         + " and cid.id = c.id_cidade and c.ativo ='" + cli.getAtivo() + "' order by c.razao_social";
-                System.out.println("consulta T ou F..."+sql);
+              //  System.out.println("consulta T ou F..."+sql);
 
                 //consulta cadastrado
             } else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "" && cli.getAtivo() == ' ') {
@@ -83,7 +83,7 @@ public class ClienteDAO {
                         + "where cpf_cnpj = '" + cli.getCpfCnpj() + "'"
                         + " and cid.id = c.id_cidade"
                         + " and c.id > 1   order by c.razao_social";
-                System.out.println("consulta cadastrado..."+sql);
+             //   System.out.println("consulta cadastrado..."+sql);
 
             }else if (cli.getRazaoSocial().equals("") && cli.getCpfCnpj() != "" && cli.getAtivo()== 'V') {
                 sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
@@ -99,7 +99,7 @@ public class ClienteDAO {
                         + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                         + " razao_social ilike '" + cli.getRazaoSocial() + "%')"
                         + " and cid.id = c.id_cidade order by c.razao_social";
-                System.out.println(sql);
+             //   System.out.println(sql);
             }
             
             
@@ -114,14 +114,14 @@ public class ClienteDAO {
                     + "where (cpf_cnpj ilike '" + cli.getCpfCnpj() + "%' or"
                     + " razao_social ilike '" + cli.getRazaoSocial() + "%') "
                     + "and cid.id = c.id_cidade and c.id =" + cli.getId() + " order by c.razao_social";
-            System.out.println(sql);
-            System.out.println("ativo..."+cli.getAtivo());
+         //   System.out.println(sql);
+          
         }
 
         //faz consulta e adiciona os valores para o array...
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-            System.out.println(sql);
+           // System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
                 Cidade cids = new Cidade();

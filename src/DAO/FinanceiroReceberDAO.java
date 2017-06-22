@@ -37,11 +37,7 @@ public class FinanceiroReceberDAO {
             try {
 
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                //executeupdate = insert,update, delete
-                //query = select
 
-                //      if (fat.getId() == 0) {
-                // System.out.println("entrou no if == 0 id cliente = " + fat.getCliente().getId() + "...");
                 for (int i = 0; i < formasPagas.size(); i++) {
                     String sql = "";
                     if (formasPagas.get(i).getDataPagamento() == null) {
@@ -75,14 +71,14 @@ public class FinanceiroReceberDAO {
                                 + "'" + formasPagas.get(i).getAtivo() + "'"
                                 + ")";
                     }
-                    System.out.println(sql);
+                  //  System.out.println(sql);
                     int resultado = st.executeUpdate(sql);
                 }
 
                 return true;
             } catch (Exception e) {
                 Logger.getLogger(JdgPedidoVenda.class.getName()).log(Level.SEVERE, null, e);
-//            System.out.println("Erro finalizar pedido = " + e);
+
             }
             return true;
         } else {
@@ -95,7 +91,7 @@ public class FinanceiroReceberDAO {
                         + " ativo = '" + formaPagamentoPagas.getAtivo()+"'"
                         + " where id = " + formaPagamentoPagas.getId();
 
-                System.out.println(sql);
+                //System.out.println(sql);
                 int resultado = st.executeUpdate(sql);
                 return true;
             } catch (Exception e) {
@@ -238,11 +234,10 @@ public class FinanceiroReceberDAO {
         //faz consulta e adiciona os valores para o array...
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-            System.out.println(sql);
+           // System.out.println(sql);
             ResultSet resultado = st.executeQuery(sql);
             while (resultado.next()) {
                 FinanceiroReceber forma = new FinanceiroReceber();
-                //FaturamentoItem fatItem = new FaturamentoItem();
                 Cidade cid = new Cidade();
                 Cliente cli = new Cliente(cid);
                 FormaPagamento formaPagamento = new FormaPagamento();
@@ -268,20 +263,11 @@ public class FinanceiroReceberDAO {
                 cli.setEndereco(resultado.getString("endereco"));
                 forma.setCliente(cli);
 
-//                merc.setReferencia(resultado.getString("referencia"));
-//                merc.setDescricao(resultado.getString("descricao"));
-//                fatItem.setQuantidade(resultado.getDouble("quantidade"));
-//                fatItem.setValorUnitario(resultado.getDouble("valor_unitario"));
-//                fatItem.setValorTotal(resultado.getDouble("valor_total"));
-//                fatItem.setDesconto(resultado.getDouble("desconto"));
-//                fatItem.setMercadoria(merc);
-//                cliente.getCidade().getDescricao();
-                //mercs.add(fatItem);
                 formas.add(forma);
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar mercadotias " + e);
+            System.out.println("Erro ao consultar título " + e);
         }
 
         return formas;
