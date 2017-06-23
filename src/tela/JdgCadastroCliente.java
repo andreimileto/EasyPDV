@@ -136,7 +136,7 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
                 cbxTipoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cbxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 113, -1));
+        jPanel1.add(cbxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 30, 130, -1));
 
         rbtAtivo.setSelected(true);
         rbtAtivo.setText("Ativo");
@@ -270,16 +270,20 @@ public class JdgCadastroCliente extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int auxIdCidade = cliente.getCidade().getId();
-        System.out.println(cliente.getCidade().getId() + "Id antes...");
+        String auxDescricaoCidade = cliente.getCidade().getDescricao();
+        //System.out.println(cliente.getCidade().getId() + "Id antes...");
         cidade.setAtivo('T');
         JdgListaCidade listaCidade = new JdgListaCidade(null, true, cidade);
         listaCidade.setVisible(true);
         cliente.setCidade(cidade);
-        if (cliente.getCidade().getId() > 0) {
-            System.out.println("entrou no if do id > 0");
+        if (cliente.getCidade().getId() > 0 && cliente.getCidade().getDescricao().length()>0) {
+            //System.out.println("entrou no if do id > 0");
             tfdCidade.setText(cliente.getCidade().getDescricao());
         } else {
             cidade.setId(auxIdCidade);
+            cidade.setDescricao(auxDescricaoCidade);
+            cliente.setCidade(cidade);
+            tfdCidade.setText(cliente.getCidade().getDescricao());
         }
         
 

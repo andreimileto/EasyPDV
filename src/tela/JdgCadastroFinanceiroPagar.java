@@ -192,13 +192,13 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
         lblCodigo.setText("Código:");
 
-        lblNumeroTitulo.setText("N° Título:");
+        lblNumeroTitulo.setText("N° Título:*");
 
-        lblFornecedor.setText("Fornecedor:");
+        lblFornecedor.setText("Fornecedor:*");
 
         lblValor.setText("Valor:");
 
-        lblFormaDePagamento.setText("Forma de pagamento:");
+        lblFormaDePagamento.setText("Forma de pagamento:*");
 
         jLabel6.setText("Situação:");
 
@@ -215,7 +215,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
 
         lblDataEmissao.setText("Data Emissao:");
 
-        lblDataVencimento.setText("Data Vencimento:");
+        lblDataVencimento.setText("Data Vencimento:*");
 
         lblDataPagamento.setText("Data pagamento:");
 
@@ -281,7 +281,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
             }
         });
 
-        lblValorPrevisto.setText("Valor previsto:");
+        lblValorPrevisto.setText("Valor previsto:*");
 
         tffDataVencimento.setToolTipText("");
         tffDataVencimento.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -298,7 +298,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -354,14 +354,16 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                                             .addComponent(jLabel6))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfdDataPagamento)
                                             .addComponent(tfdSituacao)
-                                            .addComponent(tffDataVencimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(tffDataVencimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(tfdDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(lblDataEmissao)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(tfdDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -480,17 +482,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPagarTituloActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-//        tfdNumeroTitulo.setEditable(true);
-//            tfdValorPago.setEditable(true);
-//            tfdDataVencimento.setEditable(true);
-//            tfdDataEmissao.setEditable(true);
-//            tfdValor.setEditable(true);
-//            btnLocalizarCliente.setEnabled(true);
-//            btnLocalizarFormaDePagamento.setEnabled(true);
-//            btnPagarTitulo.setEnabled(false);
-//            btnExcluir.setEnabled(false);
-//            btnIncluir.setText("Confirmar");
-//            btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+
         formaPagamentoPagas.setAtivo('T');
         if (formaPagamentoPagas.getId() == 0) {
             formaPagamentoPagas.setNumeroTitulo(tfdNumeroTitulo.getText());
@@ -645,6 +637,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
     private void btnLocalizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarClienteActionPerformed
         Cidade cid = new Cidade();
         Fornecedor fornecedor = new Fornecedor(cid);
+        fornecedor.setAtivo('T');
         JdgListaFornecedor listaFornecedor = new JdgListaFornecedor(null, true, fornecedor, cid);
         listaFornecedor.setVisible(true);
         formaPagamentoPagas.setFornecedor(fornecedor);
@@ -654,6 +647,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
     private void btnLocalizarFormaDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarFormaDePagamentoActionPerformed
         FormaPagamento formaPagamento = new FormaPagamento();
         try {
+            formaPagamento.setAtivo('T');
             JdgListaFormaPagamento listaFormaPagamento = new JdgListaFormaPagamento(null, true, formaPagamento);
             listaFormaPagamento.setVisible(true);
             tfdFormaPagamentoNome.setText(formaPagamento.getDescricao());

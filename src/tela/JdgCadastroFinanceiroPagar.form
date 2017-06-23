@@ -68,7 +68,7 @@
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btnConfirmar" max="32767" attributes="0"/>
+                          <Component id="btnConfirmar" pref="116" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnExcluir" min="-2" pref="94" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -139,20 +139,23 @@
                                           </Group>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="tfdDataPagamento" max="32767" attributes="0"/>
                                               <Component id="tfdSituacao" alignment="0" max="32767" attributes="0"/>
                                               <Component id="tffDataVencimento" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="tfdDataPagamento" min="-2" pref="118" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lblDataEmissao" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Component id="tfdDataEmissao" min="-2" pref="133" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -253,12 +256,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblNumeroTitulo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#xb0; T&#xed;tulo:"/>
+            <Property name="text" type="java.lang.String" value="N&#xb0; T&#xed;tulo:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblFornecedor">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fornecedor:"/>
+            <Property name="text" type="java.lang.String" value="Fornecedor:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblValor">
@@ -268,7 +271,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblFormaDePagamento">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Forma de pagamento:"/>
+            <Property name="text" type="java.lang.String" value="Forma de pagamento:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
@@ -308,7 +311,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblDataVencimento">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Data Vencimento:"/>
+            <Property name="text" type="java.lang.String" value="Data Vencimento:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDataPagamento">
@@ -418,7 +421,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblValorPrevisto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valor previsto:"/>
+            <Property name="text" type="java.lang.String" value="Valor previsto:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="tffValorPrevisto">

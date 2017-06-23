@@ -27,6 +27,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.fp = fp;
+        verificarTipoChamada();
         popularComboBox();
         listarFormasPagamento();
 
@@ -37,6 +38,20 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
         initComponents();
 
     }
+    
+     private void verificarTipoChamada() {
+        //System.out.println("ativo cliente na lista" + fornecedor.getAtivo());
+        if (fp.getAtivo() == 'T') {
+            cbxStatus.setEnabled(false);
+            //System.out.println("ativo cliente na lista" + fornecedor.getAtivo());
+            btnConfirmar.setText("Selecionar");
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+        } else {
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png")));
+            cbxStatus.setEditable(true);
+        }
+    }
+    
 
     private void popularComboBox() {
 
@@ -313,7 +328,7 @@ public class JdgListaFormaPagamento extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))

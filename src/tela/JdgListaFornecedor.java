@@ -47,27 +47,28 @@ public class JdgListaFornecedor extends javax.swing.JDialog {
         initComponents();
         this.fornecedor = fornecedor;
         this.cid = cid;
-        System.out.println("ativo cliente na listaaaa" + fornecedor.getAtivo());
-        //verificarTipoChamada();
+        //System.out.println("ativo cliente na listaaaa" + fornecedor.getAtivo());
+        verificarTipoChamada();
         popularComboBox();
-        System.out.println("ativo cliente na listaaaa depois do popular" + fornecedor.getAtivo());
+        //System.out.println("ativo cliente na listaaaa depois do popular" + fornecedor.getAtivo());
         
         listarFornecedores();
 
     }
-//
-//    private void verificarTipoChamada() {
-//        System.out.println("ativo cliente na lista" + cliente.getAtivo());
-//        if (cliente.getAtivo() == 'T') {
-//            cbxStatus.setEnabled(false);
-//            System.out.println("ativo cliente na lista" + cliente.getAtivo());
-//            btnConfirmar.setText("Selecionar");
-//            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-//        } else {
-//            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png")));
-//            cbxStatus.setEditable(true);
-//        }
-//    }
+
+    
+    private void verificarTipoChamada() {
+        //System.out.println("ativo cliente na lista" + fornecedor.getAtivo());
+        if (fornecedor.getAtivo() == 'T') {
+            cbxStatus.setEnabled(false);
+            //System.out.println("ativo cliente na lista" + fornecedor.getAtivo());
+            btnConfirmar.setText("Selecionar");
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
+        } else {
+            btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png")));
+            cbxStatus.setEditable(true);
+        }
+    }
 
     private void popularComboBox() {
         //System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
@@ -155,7 +156,7 @@ public class JdgListaFornecedor extends javax.swing.JDialog {
         fornecedor.setTipoCadastro(fornecedores.get(0).getTipoCadastro());
         fornecedor.setTelefone(fornecedores.get(0).getTelefone());
 
-        System.out.println("cidade id..." + fornecedor.getCidade().getId());
+        //System.out.println("cidade id..." + fornecedor.getCidade().getId());
 
         if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
             this.fornecedor.setAtivo('T');

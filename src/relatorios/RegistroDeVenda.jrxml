@@ -2,12 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RegistroDeVenda" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8cd4d3b2-99fc-44ab-91df-9c7861de9d3d">
 	<property name="ireport.zoom" value="1.948717100000003"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="304"/>
+	<property name="ireport.y" value="163"/>
 	<queryString>
-		<![CDATA[
-
-select  e.razao_social razao_empresa,e.telefone telefone_empresa,
-e.endereco endereco_empresa,c.razao_social razao_cliente,*,fa.desconto descontoped,fa.valor_total fitemvalor_total,fi.numero_titulo,fo.descricao,fi.valor_titulo,fi.data_vencimento ,
+		<![CDATA[select  e.razao_social razao_empresa,e.telefone telefone_empresa,
+e.endereco endereco_empresa,c.razao_social razao_cliente,*,
+ fa.desconto descontoped,fa.valor_total
+ fitemvalor_total,
+-- fi.numero_titulo,fo.descricao,fi.valor_titulo,fi.data_vencimento ,
 substr(cnpj, 1, 2) || '.' || SUBSTR(cnpj, 3, 3) || '.' ||
         substr(cnpj, 6, 3) || '/' || SUBSTR(cnpj, 9, 4) || '-' ||
         substr(cnpj, 13) AS cnpj_formatado,
@@ -31,14 +32,16 @@ substr(cpf_cnpj, 1, 3) || '.' ||
        else ''
        end
 
-from faturamento f, empresa e, cliente c,faturamento_item fa,mercadoria m,forma_pagamento fo, financeiro_receber fi
+from faturamento f, empresa e, cliente c,faturamento_item fa,mercadoria m
+-- forma_pagamento fo, financeiro_receber fi
 where c.id = f.id_cliente
  and e.id = f.id_empresa
  and fa.id_faturamento = f.id
 and fa.id_mercadoria = m.id
-and fi.id_forma_pagamento = fo.id
+-- and fi.id_forma_pagamento = fo.id
 and f.id = (select max(id) from faturamento)
-and fi.id_faturamento = (select max(id) from faturamento)]]>
+-- and fi.id_faturamento = (select max(id) from faturamento)
+ order by fa.id]]>
 	</queryString>
 	<field name="razao_empresa" class="java.lang.String"/>
 	<field name="telefone_empresa" class="java.lang.String"/>
@@ -71,14 +74,6 @@ and fi.id_faturamento = (select max(id) from faturamento)]]>
 	<field name="estoque" class="java.lang.Double"/>
 	<field name="preco_custo" class="java.lang.Double"/>
 	<field name="preco_venda" class="java.lang.Double"/>
-	<field name="forma_avista" class="java.lang.String"/>
-	<field name="id_forma_pagamento" class="java.lang.Integer"/>
-	<field name="numero_titulo" class="java.lang.String"/>
-	<field name="data_vencimento" class="java.sql.Date"/>
-	<field name="data_pagamento" class="java.sql.Date"/>
-	<field name="valor_titulo" class="java.lang.Double"/>
-	<field name="valor_pago" class="java.lang.Double"/>
-	<field name="quitado" class="java.lang.String"/>
 	<field name="descontoped" class="java.lang.Double"/>
 	<field name="fitemvalor_total" class="java.lang.Double"/>
 	<field name="cnpj_formatado" class="java.lang.String"/>

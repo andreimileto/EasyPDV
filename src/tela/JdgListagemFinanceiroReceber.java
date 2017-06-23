@@ -91,7 +91,6 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         rbtAbertos = new javax.swing.JRadioButton();
         rbtFinalizadas = new javax.swing.JRadioButton();
-        btnRelatorios = new javax.swing.JButton();
         btnAcessarTitulo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         tfdBuscar = new javax.swing.JTextField();
@@ -217,14 +216,6 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
-        btnRelatorios.setText("Relatórios");
-        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatoriosActionPerformed(evt);
-            }
-        });
-
         btnAcessarTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Edit File-16.png"))); // NOI18N
         btnAcessarTitulo.setText("Acessar Título");
         btnAcessarTitulo.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +255,6 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAcessarTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfdBuscar)
@@ -284,9 +274,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAcessarTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRelatorios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addComponent(btnSair)
                 .addContainerGap())
         );
@@ -391,13 +379,14 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         try {
             //setar para tabela modelo de dados
             tblListaTitulos.setModel(this.obterDadosParaTabelaCompleto());
-            tblListaTitulos.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblListaTitulos.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tblListaTitulos.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tblListaTitulos.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tblListaTitulos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            tblListaTitulos.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblListaTitulos.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblListaTitulos.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tblListaTitulos.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblListaTitulos.getColumnModel().getColumn(4).setPreferredWidth(50);
             tblListaTitulos.getColumnModel().getColumn(5).setPreferredWidth(40);
-            tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblListaTitulos.getColumnModel().getColumn(6).setPreferredWidth(20);
+            tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(10);
             tblListaTitulos.getColumnModel().getColumn(7).setPreferredWidth(0);
 
         } catch (Exception ex) {
@@ -582,40 +571,6 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-//        try {
-//            if (Validacao.validadeFiltroDeData(tffDataInicio, tffDataFim)) {
-//                if (rbtAbertos.isSelected() || rbtFinalizadas.isSelected()) {
-//                    
-//                    buscar();
-//
-//
-//                    JdgRelatoriosVendas relatorioVendas = new JdgRelatoriosVendas(null, false, fat);
-//                    
-//                    relatorioVendas.setVisible(true);
-//                    
-//                } else {
-//                    JOptionPane.showMessageDialog(rootPane, "Nenhuma fase do pedido selecionada!\n para gerar o relatório precisa selecionar\numa fase ou mais");                    
-//                }
-//                
-//            } else {
-//                JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(rootPane, "Filtro de data Incorreta!\n para gerar relatório precisa informar um período");
-//        }
-//        
-//        try {
-//            // Compila o relatorio//
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-//            System.out.println(e);
-//        }
-//        
-
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
-
     private void rbtAbertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAbertosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtAbertosActionPerformed
@@ -726,7 +681,6 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcessarTitulo;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cbxTipoFiltro;
     private javax.swing.JLabel jLabel1;
