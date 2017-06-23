@@ -531,7 +531,8 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
     private void btnAcessarTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarTituloActionPerformed
         int row = tblListaTitulos.getSelectedRow();
         if (row >= 0) {
-            acessarVenda();
+            acessarTitulo();
+            
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro ao acessar o título: \nNenhum título selecionado");
         }
@@ -549,7 +550,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         if (evt.getClickCount() > 1) {
             int linhaSelecionada = tblListaTitulos.getSelectedRow();
-            acessarVenda();
+            acessarTitulo();
 
         }
 
@@ -579,7 +580,7 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtFiltroDataActionPerformed
 
-    private void acessarVenda() {
+    private void acessarTitulo() {
         formasPagas.setId(0);
         arrayFormasPagas.removeAll(arrayFormasPagas);
         int row = tblListaTitulos.getSelectedRow();
@@ -607,8 +608,11 @@ public class JdgListagemFinanceiroReceber extends javax.swing.JDialog {
 
         JdgCadastroFinanceiroReceber financeiroReceber = new JdgCadastroFinanceiroReceber(null, true, formasPagas);
         financeiroReceber.setVisible(true);
-
+        
         formasPagas.setId(0);
+        cli.setRazaoSocial("");
+        formasPagas.setNumeroTitulo("");
+        formasPagas.setCliente(cli);
         listarTitulos();
     }
 

@@ -624,6 +624,9 @@ public class JdgListagemFinanceiroPagar extends javax.swing.JDialog {
         financeiroPagar.setVisible(true);
 
         formasPagas.setId(0);
+        forn.setRazaoSocial("");
+        formasPagas.setNumeroTitulo("");
+        formasPagas.setFornecedor(forn);
         listarTitulos();
     }
 

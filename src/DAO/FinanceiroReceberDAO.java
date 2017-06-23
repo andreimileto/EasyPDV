@@ -228,7 +228,7 @@ public class FinanceiroReceberDAO {
                         + "and (c.razao_social ilike '" + formaPagamentoPagas.getCliente().getRazaoSocial() + "%' "
                         + "or f.numero_titulo ilike '" + formaPagamentoPagas.getNumeroTitulo() + "%')";
             }
-
+            
         }
         ArrayList<FinanceiroReceber> formas = new ArrayList<>();
         //faz consulta e adiciona os valores para o array...
