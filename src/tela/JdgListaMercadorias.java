@@ -72,7 +72,7 @@ public class JdgListaMercadorias extends javax.swing.JDialog {
             //setar para tabela modelo de dados
             tblMercadorias.setModel(this.obterDadosParaTabelaCompleto());
             tblMercadorias.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblMercadorias.getColumnModel().getColumn(1).setPreferredWidth(20);
             tblMercadorias.getColumnModel().getColumn(2).setPreferredWidth(170);
             tblMercadorias.getColumnModel().getColumn(3).setPreferredWidth(0);
             tblMercadorias.getColumnModel().getColumn(4).setPreferredWidth(0);

@@ -46,7 +46,7 @@ public class JdgListaCidade extends javax.swing.JDialog {
             tblCidades.setModel(this.obterDadosParaJTable());
             tblCidades.getColumnModel().getColumn(0).setPreferredWidth(0);
             tblCidades.getColumnModel().getColumn(1).setPreferredWidth(270);
-            tblCidades.getColumnModel().getColumn(2).setPreferredWidth(1);
+            tblCidades.getColumnModel().getColumn(2).setPreferredWidth(40);
 
         } catch (Exception ex) {
             Logger.getLogger(JdgListaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);

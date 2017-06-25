@@ -95,7 +95,6 @@
                          valor_unitario DOUBLE PRECISION not null,
                          desconto DOUBLE PRECISION,
                          valor_total DOUBLE PRECISION not null,
-                         --indicador_cancelado CHAR(1),
                          constraint pkfaturamento_item primary key (id),
                          constraint fkid_mercadoriafaturamento foreign key (id_mercadoria)
                          references mercadoria,
