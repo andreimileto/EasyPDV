@@ -156,15 +156,81 @@ insert into usuario values(default,'usuario','e10adc3949ba59abbe56e057f20f883e')
 
 INSERT INTO public.cidade(
 	id, descricao, ativo)
-	VALUES (1, 'Lajeado', 'T');
+	VALUES (default, 'Lajeado', 'T');
+
+INSERT INTO public.cidade(
+	id, descricao, ativo)
+	VALUES (default, 'Porto Alegre', 'T');
+
 
 INSERT INTO public.cliente(
 	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
 	VALUES (default, null, 'Cliente Balcão', 'F', '', '','', 'T');
 
+INSERT INTO public.cliente(
+	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+	VALUES (default, 2, 'Gabriel da Silva', 'F', '89682357080', 'Rua João Cardoso,23','5199899079', 'T');  
+
+INSERT INTO public.cliente(
+	id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+	VALUES (default, 1, 'Jorge Alves', 'F', '27156648268', 'Av. Castelo Branco','5199876379', 'T');  
+
+
+
 INSERT INTO public.empresa(
 	id, id_cidade, razao_social, cnpj, inscricao_estadual, endereco, telefone, ativo)
 	VALUES (1, 1, 'Atacado de Doces LTDA', '77157937000108', '2058042772', 'Rua Alberto Silva, 222', '5199898998', 'T');
+
+
+INSERT INTO public.mercadoria(
+            id, referencia, descricao, estoque, preco_custo, preco_venda,ativo)
+    VALUES (default, '01', 'Mercadoria 01', 10, 5, 10, 'T');
+
+INSERT INTO public.mercadoria(
+            id, referencia, descricao, estoque, preco_custo, preco_venda,ativo)
+    VALUES (default, '02', 'Mercadoria 02', 10, 10, 20, 'T');
+
+INSERT INTO public.mercadoria(
+            id, referencia, descricao, estoque, preco_custo, preco_venda,ativo)
+    VALUES (default, '03', 'Mercadoria 03', 10, 15, 20, 'T');
+
+INSERT INTO public.mercadoria(
+            id, referencia, descricao, estoque, preco_custo, preco_venda,ativo)
+    VALUES (default, '04', 'Mercadoria 04', 10, 50, 100, 'T');
+
+INSERT INTO public.mercadoria(
+            id, referencia, descricao, estoque, preco_custo, preco_venda,ativo)
+    VALUES (default, '05', 'Mercadoria 05', 10, 55, 90, 'T');
+
+
+INSERT INTO public.fornecedor(
+            id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+    VALUES (default, 1, 'Fornecedor 1', 'J', '43756326000156', 'Rua do cascalho', '5198679817', 'T');
+
+INSERT INTO public.fornecedor(
+            id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+    VALUES (default, 1, 'Fornecedor 2', 'J', '76548845000188', 'Rua da pedra', '5198768796', 'T');
+
+INSERT INTO public.fornecedor(
+            id, id_cidade, razao_social, tipo_cadastro, cpf_cnpj, endereco, telefone, ativo)
+    VALUES (default, 1, 'Fornecedor 3', 'J', '36838313000160', 'Rua XYZ', '5198761524', 'T');
+
+INSERT INTO public.forma_pagamento(
+            id, descricao, forma_avista, ativo)
+    VALUES (default, 'Dinheiro', 'T', 'T');
+
+INSERT INTO public.forma_pagamento(
+            id, descricao, forma_avista, ativo)
+    VALUES (default, 'Cartão', 'T', 'T');
+
+INSERT INTO public.forma_pagamento(
+            id, descricao, forma_avista, ativo)
+    VALUES (default, 'Boleto', 'F', 'T');
+
+
+
+
+
 
 --------procedure e triggers---------------
 
