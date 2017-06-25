@@ -68,7 +68,6 @@ and f.id = (select max(id) from faturamento)
 	<field name="id_mercadoria" class="java.lang.Integer"/>
 	<field name="quantidade" class="java.lang.Double"/>
 	<field name="valor_unitario" class="java.lang.Double"/>
-	<field name="indicador_cancelado" class="java.lang.String"/>
 	<field name="referencia" class="java.lang.String"/>
 	<field name="descricao" class="java.lang.String"/>
 	<field name="estoque" class="java.lang.Double"/>
