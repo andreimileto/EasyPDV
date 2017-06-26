@@ -183,10 +183,10 @@ public class JdgCadastroCidade extends javax.swing.JDialog {
             if (cidades.size() > 0) {
 
                 if (tfdDescricao.getText().equalsIgnoreCase(cidades.get(0).getDescricao())) {
-                    System.out.println("false");
+                   // System.out.println("false");
                     return false;
                 } else {
-                    System.out.println("true");
+                  //  System.out.println("true");
                     return true;
                 }
             }

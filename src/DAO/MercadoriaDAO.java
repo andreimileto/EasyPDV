@@ -62,12 +62,12 @@ public class MercadoriaDAO {
         //validação de quais dados consultar
 
         if (mercadoria.getAtivo() == 'T' || mercadoria.getAtivo() == 'F') {
-            System.out.println("entrou no if da consulta do T ou F");
+            
             sql = "select * from  mercadoria where ativo='" + mercadoria.getAtivo()
                     + "' and referencia like '" + mercadoria.getReferencia() + "%'" + "order by id";
             //validação de quais dados consultar
         } else if (mercadoria.getReferencia() != "" && mercadoria.getId() == 0 && mercadoria.getAtivo()=='V') {
-            System.out.println("entrou no if da consulta do cliente cadastrado");
+            
             sql = "select * from mercadoria where referencia ='" + mercadoria.getReferencia() + "' and ativo = 'T'";
            // System.out.println(sql);
             //validação de quais dados consultar
@@ -91,7 +91,7 @@ public class MercadoriaDAO {
                 merc.setPrecoVenda(resultado.getDouble("preco_venda"));
                 merc.setAtivo(resultado.getString("ativo").charAt(0));
                 mercadorias.add(merc);
-                System.out.println("while DAO = "+merc.getReferencia());
+               // System.out.println("while DAO = "+merc.getReferencia());
             }
         } catch (Exception e) {
             System.out.println("Erro ao consultar Mercadoria " + e);

@@ -46,15 +46,15 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
 
             tfdCodigo.setText(String.valueOf(formaPagamento.getId()));
             tfdDescricao.setText(formaPagamento.getDescricao());
-            System.out.println(formaPagamento.getAtivo());
-            System.out.println(formaPagamento.getFormaAvista()+".. prazo");
+           // System.out.println(formaPagamento.getAtivo());
+           // System.out.println(formaPagamento.getFormaAvista()+".. prazo");
             if (formaPagamento.getAtivo() == 'T') {
                 rbtAtivo.setSelected(true);
 
             } else {
                 rbtAtivo.setSelected(false);
             }
-            System.out.println("ativo"+ formaPagamento.getAtivo());
+          //  System.out.println("ativo"+ formaPagamento.getAtivo());
             if (formaPagamento.getFormaAvista() == 'T') {
                 rbtAvista.setSelected(true);
 
@@ -221,12 +221,12 @@ public class JdgCadastroFormaPagamento extends javax.swing.JDialog {
             if (formas.size() > 0) {
 
                 if (tfdDescricao.getText().equalsIgnoreCase(formas.get(0).getDescricao())) {
-                    System.out.println("false");
-                    System.out.println(formaPagamento.getDescricao());
+                    //System.out.println("false");
+                    //System.out.println(formaPagamento.getDescricao());
                     return false;
                 } else {
-                    System.out.println("true");
-                    System.out.println(formaPagamento.getDescricao());
+                  //  System.out.println("true");
+                  //  System.out.println(formaPagamento.getDescricao());
                     return true;
                 }
 

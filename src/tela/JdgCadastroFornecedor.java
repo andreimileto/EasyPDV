@@ -279,7 +279,7 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
         listaCidade.setVisible(true);
         fornecedor.setCidade(cidade);
         if (fornecedor.getCidade().getId() > 0 && fornecedor.getCidade().getDescricao().length()>0) {
-            System.out.println("entrou no if do id > 0");
+           // System.out.println("entrou no if do id > 0");
             tfdCidade.setText(fornecedor.getCidade().getDescricao());
         } else {
             cidade.setId(auxIdCidade);
@@ -364,7 +364,7 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
     }//GEN-LAST:event_tffTelefoneActionPerformed
 
     private void tffTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffTelefoneFocusLost
-        System.out.println(tffTelefone.getText().length());
+       // System.out.println(tffTelefone.getText().length());
         String a = "";
         if (tffTelefone.getText().replace(" ", "").length() == 13) {
             a = "" + tffTelefone.getText().charAt(1) + tffTelefone.getText().charAt(2)
@@ -372,7 +372,7 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
                     + tffTelefone.getText().charAt(6) + tffTelefone.getText().charAt(7)
                     + tffTelefone.getText().charAt(8) + tffTelefone.getText().charAt(10)
                     + tffTelefone.getText().charAt(11) + tffTelefone.getText().charAt(12);
-            System.out.println(tffTelefone.getText().replace(" ", "").length());
+           // System.out.println(tffTelefone.getText().replace(" ", "").length());
             tffTelefone.setFormatterFactory(new DefaultFormatterFactory(mascaraTelefone8Digitos));
             tffTelefone.setText(a);
 
@@ -404,10 +404,10 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
             }
         } else {
             if (Validacao.validarCPF(Formatacao.removerFormatacao(tffCpfCnpj.getText()))) {
-                System.out.println("ok");
+                //System.out.println("ok");
                 lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
             } else {
-                System.out.println("false");
+                //System.out.println("false");
                 lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_button_cancel.png")));
             }
         }
@@ -438,12 +438,12 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
         }
 
         if (cbxTipo.getSelectedIndex() == 0) {
-            System.out.println("antes do if..."+tffCpfCnpj.getText());
+           // System.out.println("antes do if..."+tffCpfCnpj.getText());
             try {
                 
             
             if (!Validacao.validarCPF(Formatacao.removerFormatacao(tffCpfCnpj.getText()))){
-                System.out.println("entrou no if do cpf como certo");
+               // System.out.println("entrou no if do cpf como certo");
                 ok = false;
                 lblCpfCnpj.setForeground(Color.red);
 
@@ -467,7 +467,7 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
             
 
             }
-            System.out.println("ok..."+ok);
+           // System.out.println("ok..."+ok);
         }
         if (tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() < 10
                 && tffTelefone.getText().replace(" ", "").replace("(", "").replace(")", "").replace("-", "").length() > 1) {
@@ -499,10 +499,10 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
             if (fornecedores.size() > 0) {
 
                 if (fornecedor.getCpfCnpj().equals(fornecedores.get(0).getCpfCnpj())) {
-                    System.out.println("false");
+                   // System.out.println("false");
                     return false;
                 } else {
-                    System.out.println("true");
+                   // System.out.println("true");
                     return true;
                 }
             }
@@ -516,8 +516,8 @@ public class JdgCadastroFornecedor extends javax.swing.JDialog {
             if (fornecedor.getTipoCadastro() == 'F') {
                 cbxTipo.setSelectedIndex(0);
             } else {
-                System.out.println("entrou no else");
-                System.out.println(fornecedor.getTipoCadastro() + "....");
+               // System.out.println("entrou no else");
+               // System.out.println(fornecedor.getTipoCadastro() + "....");
                 cbxTipo.setSelectedIndex(1);
             }
             tfdId.setText(String.valueOf(fornecedor.getId()));

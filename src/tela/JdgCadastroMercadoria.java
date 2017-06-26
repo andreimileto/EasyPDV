@@ -358,10 +358,10 @@ public class JdgCadastroMercadoria extends javax.swing.JDialog {
             if (mercadorias.size() > 0) {
 
                 if (mercadoria.getReferencia().equals(mercadorias.get(0).getReferencia())) {
-                    System.out.println("false");
+                   // System.out.println("false");
                     return false;
                 } else {
-                    System.out.println("true");
+                   // System.out.println("true");
                     return true;
                 }
             }

@@ -184,7 +184,7 @@ public class Senha extends javax.swing.JFrame {
         BigInteger hash = new BigInteger(1, md.digest(pfSenha.getText().getBytes()));
         sen = hash.toString(16);
         
-        System.out.println(sen);
+       // System.out.println(sen);
             
             
             if (tfUsuario.getText().equals(user.getUsuario())

@@ -44,7 +44,7 @@ public class UsuarioDAO {
         try {
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             String sql = "update usuario set senha ='" + user.getSenha()+"'";
-            System.out.println(sql);
+            //System.out.println(sql);
             int resultado = st.executeUpdate(sql);
             
             return true;

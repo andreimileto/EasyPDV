@@ -40,20 +40,20 @@ public class JdgListaCliente extends javax.swing.JDialog {
         initComponents();
         this.cliente = cliente;
         this.cid = cid;
-        System.out.println("ativo cliente na listaaaa" + cliente.getAtivo());
+       // System.out.println("ativo cliente na listaaaa" + cliente.getAtivo());
         verificarTipoChamada();
         popularComboBox();
-        System.out.println("ativo cliente na listaaaa depois do popular" + cliente.getAtivo());
+       // System.out.println("ativo cliente na listaaaa depois do popular" + cliente.getAtivo());
         
         listarClientes();
 
     }
 
     private void verificarTipoChamada() {
-        System.out.println("ativo cliente na lista" + cliente.getAtivo());
+        //System.out.println("ativo cliente na lista" + cliente.getAtivo());
         if (cliente.getAtivo() == 'T') {
             cbxStatus.setEnabled(false);
-            System.out.println("ativo cliente na lista" + cliente.getAtivo());
+          //  System.out.println("ativo cliente na lista" + cliente.getAtivo());
             btnConfirmar.setText("Selecionar");
             btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
         } else {
@@ -63,11 +63,11 @@ public class JdgListaCliente extends javax.swing.JDialog {
     }
 
     private void popularComboBox() {
-        System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
+       // System.out.println("ativo cliente na listaaaa popular inicio" + cliente.getAtivo());
         cbxStatus.addItem("Ativos");
         cbxStatus.addItem("Inativos");
         cbxStatus.addItem("Todos");
-        System.out.println("ativo cliente na listaaaa popular fim" + cliente.getAtivo());
+       // System.out.println("ativo cliente na listaaaa popular fim" + cliente.getAtivo());
     }
 
     private void listarClientes() {
@@ -105,7 +105,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         dtm.addColumn("NOME");
         dtm.addColumn("CPF/CNPJ");
         dtm.addColumn("CIDADE");
-        dtm.addColumn("ENDERECO");
+        dtm.addColumn("ENDEREÇO");
         dtm.addColumn("TELEFONE");
         dtm.addColumn("SITUAÇÃO");
 
@@ -148,7 +148,7 @@ public class JdgListaCliente extends javax.swing.JDialog {
         cliente.setTipoCadastro(clientes.get(0).getTipoCadastro());
         cliente.setTelefone(clientes.get(0).getTelefone());
 
-        System.out.println("cidade id..." + cliente.getCidade().getId());
+       // System.out.println("cidade id..." + cliente.getCidade().getId());
 
         if (tblListaClientes.getValueAt(row, 6).toString().equals("Ativo")) {
             this.cliente.setAtivo('T');
@@ -236,19 +236,6 @@ public class JdgListaCliente extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(tfdFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(481, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,13 +245,25 @@ public class JdgListaCliente extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(434, 434, 434)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tfdFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfdFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)

@@ -106,7 +106,7 @@ public class ClienteDAO {
 
             // id cliente for > 0
         } else {
-            System.out.println("entrou no else");
+           
 
             sql = "select c.id id_cliente,c.id_cidade,c.razao_social,c.cpf_cnpj,c.endereco, c.telefone,c.ativo,c.tipo_cadastro,"
                     + "cid.id id_cid, cid.descricao,cid.ativo ativo_cid "

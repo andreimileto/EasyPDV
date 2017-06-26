@@ -45,7 +45,7 @@ public class FaturamentoDAO {
                 //query = select
 
                 if (fat.getId() == 0) {
-                    System.out.println("entrou no if == 0 id cliente = " + fat.getCliente().getId() + "...");
+                  //  System.out.println("entrou no if == 0 id cliente = " + fat.getCliente().getId() + "...");
                     String sql = "INSERT INTO faturamento VALUES ("
                             + "DEFAULT," + "" + fat.getCliente().getId() + ","
                             + "1,"
@@ -55,7 +55,7 @@ public class FaturamentoDAO {
                             + "" + fat.getValorTotal() + ","
                             + "" + fat.getValorTotalLiquido()
                             + ")";
-                    System.out.println(sql);
+                   // System.out.println(sql);
                     int resultado = st.executeUpdate(sql);
 
                     sql = "select max(id) from faturamento ";
@@ -64,8 +64,7 @@ public class FaturamentoDAO {
                     resulSelect.next();
 
                     fatItem.setIdFaturamento(Integer.parseInt(resulSelect.getString("max")));
-//                fatItem.setIdFaturamento(fatItem.getIdFaturamento()+1);
-//                mercs.add(fatItem);
+
 
                     for (int i = 0; i < mercs.size(); i++) {
 
@@ -76,8 +75,8 @@ public class FaturamentoDAO {
                                 + mercs.get(i).getMercadoria().getPrecoVenda() + ","
                                 + mercs.get(i).getDesconto() + ","
                                 + mercs.get(i).getValorTotal() + ")";
-                        System.out.println(mercs.get(i).getMercadoria().getReferencia() + "...referencia insert");
-                        System.out.println("insert faturamento item..... \n" + sql);
+                        //System.out.println(mercs.get(i).getMercadoria().getReferencia() + "...referencia insert");
+                        //System.out.println("insert faturamento item..... \n" + sql);
                         resultado = st.executeUpdate(sql);
 
                     }
@@ -165,7 +164,7 @@ public class FaturamentoDAO {
             }
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                System.out.println(sql);
+//                System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Faturamento fats = new Faturamento();
@@ -200,7 +199,7 @@ public class FaturamentoDAO {
 
             try {
                 Statement st = ConexaoBD.getInstance().getConnection().createStatement();
-                System.out.println(sql);
+  //              System.out.println(sql);
                 ResultSet resultado = st.executeQuery(sql);
                 while (resultado.next()) {
                     Faturamento fats = new Faturamento();

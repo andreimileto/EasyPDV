@@ -168,9 +168,9 @@ public class JdgAlteracaoSenha extends javax.swing.JDialog {
 //                JOptionPane.showMessageDialog(rootPane, "Todas senhas válidas");
 
                
-                System.out.println(senha);
+                //System.out.println(senha);
                 senha = md5(pfdRepetirNovaSenha.getText());
-                System.out.println(senha);
+              //  System.out.println(senha);
                 user.setSenha(senha);
                 if (usuarioDAO.salvar(user)) {
                     JOptionPane.showMessageDialog(rootPane, "Alteração de senha feita com sucesso!");

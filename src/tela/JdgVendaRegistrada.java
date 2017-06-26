@@ -319,23 +319,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void tffCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tffCpfCnpjFocusLost
-//        if (tffCpfCnpj.getText().length() > 14) {
-//            if (Validacao.validarCNPJ(Formatacao.removerFormatacao(tffCpfCnpj.getText()))) {
-//                System.out.println("ok");
-//                lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-//            } else {
-//                System.out.println("false");
-//                lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_button_cancel.png")));
-//            }
-//        } else {
-//            if (Validacao.validarCPF(Formatacao.removerFormatacao(tffCpfCnpj.getText()))) {
-//                System.out.println("ok");
-//                lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/confirmar.png")));
-//            } else {
-//                System.out.println("false");
-//                lblSituacaoCPFCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon_button_cancel.png")));
-//            }
-//        }
+
     }//GEN-LAST:event_tffCpfCnpjFocusLost
 
     private void tffCpfCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffCpfCnpjActionPerformed
@@ -419,10 +403,7 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
                 return false;
             }
         };
-//adiciona titulo para as colunas
-//        MercadoriaDAO mercDAO = new MercadoriaDAO();
 
-//        dtm.addColumn("SEQUÊNCIA");
         dtm.addColumn("REFERÊNCIA");
         dtm.addColumn("DESCRIÇÃO");
         dtm.addColumn("QNT");
@@ -444,12 +425,12 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         tfdDesconto.setText(String.valueOf(faturamento.get(0).getDesconto()).replace(".", ","));
         if (faturamento.get(0).getCliente().getCpfCnpj().length() > 11) {
 
-//            tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCnpj));
+
             Formatacao.reformatarCnpj(tffCpfCnpj);
             tffCpfCnpj.setText(faturamento.get(0).getCliente().getCpfCnpj());
         } else if (faturamento.get(0).getCliente().getCpfCnpj().length() <= 11) {
             tffCpfCnpj.setText(faturamento.get(0).getCliente().getCpfCnpj());
-//            tffCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCpf));
+
 
             Formatacao.reformatarCpf(tffCpfCnpj);
             tffCpfCnpj.setText(faturamento.get(0).getCliente().getCpfCnpj());
@@ -468,9 +449,6 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
          FaturamentoItemDAO fatItemDAO = new FaturamentoItemDAO();
          fatItem.setIdFaturamento(fat.getId());
         ArrayList<FaturamentoItem> itensVendidos = fatItemDAO.consultar(fatItem);
-//
-//        ClienteDAO cliDAO = new ClienteDAO();
-//        ArrayList<Cliente> clientes = cliDAO.consultar(cliente);
 
         
 
@@ -491,26 +469,6 @@ public class JdgVendaRegistrada extends javax.swing.JDialog {
         return dtm;
     }
         
-//        for (int i = 0; i < mercs.size(); i++) {
-//            //popular tabela
-//
-//            System.out.println(mercs.get(i).getValorTotal());
-//            dtm.addRow(new String[]{String.valueOf(mercs.get(i).getId()),
-//                mercs.get(i).getMercadoria().getReferencia(),
-//                mercs.get(i).getMercadoria().getDescricao(),
-//                String.valueOf(mercs.get(i).getQuantidade()),
-//                String.valueOf(mercs.get(i).getMercadoria().getPrecoVenda()),
-//                String.valueOf(mercs.get(i).getDesconto()),
-//                String.valueOf(mercs.get(i).getValorTotal())});
-//
-//        }
-//
-////        idFaturamentoItem++;
-////        mercadoria = new Mercadoria();
-////        faturamentoItem = new FaturamentoItem();
-////retorna o modelo
-//        return dtm;
-//    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

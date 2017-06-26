@@ -268,7 +268,6 @@ INSERT INTO public.forma_pagamento(
 
 ----nova proc-----
 
-
 CREATE OR REPLACE FUNCTION fatuaizaestoque()
 RETURNS trigger
 AS $$
@@ -298,8 +297,9 @@ BEGIN
     if (NEW.fase = 'c') then
  for idmerc,qtde in select m.id, sum(f.quantidade)  qtde 
         from faturamento_item f,mercadoria m 
-        where f.id_Faturamento = (select max(fa.id) 
-        from faturamento fa) 
+        where f.id_Faturamento = old.id
+        -- (select max(fa.id) 
+         -- from faturamento fa) 
         and f.id_mercadoria = m.id 
         group by f.id_mercadoria,m.id
 

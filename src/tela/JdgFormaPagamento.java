@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -79,51 +80,9 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
     }
 
-    private void gerarRelatorio() {
-        try {
-            // JasperReport relatorio = null;
-            //C:\Users\Mileto\Documents\NetBeansProjects\EasyPDV\libs\Relatórios
-//            JOptionPane.showMessageDialog(rootPane,Thread.currentThread().getContextClassLoader().getResourceAsStream("/relatorios/Faturamento.jrxml"));
+    
 
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/RegistroDeVenda.jrxml"));
-
-            // Mapeia campos de parametros para o relatorio, mesmo que nao existam
-//            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-//            Date data = formato.parse(fat.getDataEmissaoInicio());
-//
-//            Date dataFim = formato.parse(fat.getDataEmissaoFim());
-//            dataFim.setDate(dataFim.getDate() + 1);
-            Map parametros = new HashMap();
-            //parametros.put("Data_emissao_inicial", data);
-            // parametros.put("Data_emissao_final", dataFim);
-//            if (fat.getFase() == 't') {
-//                parametros.put("Fase", "");
-//
-//            } else {
-//
-//                parametros.put("Fase", fat.getFase());
-//            }
-
-            // Executa relatoio
-            JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
-
-            // Exibe resultado em video
-            JasperViewer.viewReport(impressao, false);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-            System.out.println(e);
-
-        }
-
-//        try {
-//            // Compila o relatorio//
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-//            System.out.println(e);
-//        }
-    }
+//   
 
     private void inserirFormaPagamento() {
         formasPagas = new FinanceiroReceber();
@@ -183,19 +142,12 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                         formasPagas.setFormaPagamento(fp);
                     }
                 }
-                //            if (formas.get(i).getId() == Integer.parseInt(tffCodigoPagamento.getText())) {
-                //              formasPagas.setDescricao(formas.get(i).getDescricao());
-//                }
-//                formasPagas.setDescricao(fp.getDescricao());
-
+             
                 ArrayFormasPagas.add(formasPagas);
                 formasPagas = new FinanceiroReceber();
             }
 
-            //----
-            //formasPagas.setParcelas(Integer.parseInt(tffParcelas.getText()));
-            //formasPagas.setValor(Double.parseDouble(tffValorPago.getText().replace(",", ".")));
-            //ArrayFormasPagas.add(formasPagas);
+            
             listarFormasPagamentoPagas();
         } else {
 
@@ -212,7 +164,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             formasPagas.setDataPagamento(dataFormatada);
             double valor = Double.parseDouble(tffValorPago.getText().replace(",", "."));
             formasPagas.setValor(Double.parseDouble(tffValorPago.getText().replace(",", ".")));
-            JOptionPane.showMessageDialog(rootPane, tffValorPago.getText().replace(",", "."));
+          //  JOptionPane.showMessageDialog(rootPane, tffValorPago.getText().replace(",", "."));
             formasPagas.setId(fp.getId());
             formasPagas.setNumeroTitulo(ultimaVenda + "-" + numeroParcela);
             formasPagas.setFormaPagamento(fp);
@@ -682,8 +634,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
             tffValorPago.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.00"))));
             tffValorPago.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
             totalPago = Double.parseDouble(lblTotalPago.getText().replace(",", ".")) + Double.parseDouble(tffValorPago.getText().replace(",", "."));
-            //lblTotalPago.setText(String.valueOf(totalPago));
-            //atualizarValores();
+            
             if (validarParcela()) {
                 tffParcelas.requestFocus();
 
@@ -692,6 +643,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
                 atualizarValores();
                 if ((Double.parseDouble(lblTotalPago.getText()) >= (Double.parseDouble(lblTotalLiquido.getText())))) {
                     btnFinalizar.setEnabled(true);
+                    
                     finalizarVenda();
                 }
                 tffCodigoPagamento.requestFocus();
@@ -733,6 +685,19 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
 
             inserirFormaPagamento();
             atualizarValores();
+            
+            if ((Double.parseDouble(lblTotalPago.getText()) >= (Double.parseDouble(lblTotalLiquido.getText())))) {
+                    btnFinalizar.setEnabled(true);
+                    try {
+                    //Thread.sleep(4000);
+                   // TimeUnit.SECONDS.sleep(4);
+                } catch (Exception e) {
+                }
+                    
+                    
+                    finalizarVenda();
+                }
+            
             tffCodigoPagamento.requestFocus();
         }
     }//GEN-LAST:event_tffParcelasKeyReleased
@@ -741,6 +706,8 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         finalizarVenda();
     }//GEN-LAST:event_btnFinalizarActionPerformed
     private void finalizarVenda() {
+        
+        
         FaturamentoDAO faturamentoDAO = new FaturamentoDAO();
         FormaPagamento formaPagamento = new FormaPagamento();
 
@@ -754,11 +721,15 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
         if (faturamentoDAO.salvar(fat, mercs, fatItem)) {
 
             financeiroReceber.salvar(ArrayFormasPagas, ultimaVenda, formasPagas);
-           // JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
-            
+//            try {
+//                Thread.sleep(3000);
+//            } catch (Exception e) {
+//            }
+                        
 
+            JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso!");
             dispose();
-            //gerarRelatorio();
+            
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro retornado pelo sistema: \nFalha ao finalizar a venda");
         }
@@ -766,10 +737,7 @@ public class JdgFormaPagamento extends javax.swing.JDialog {
     private void tffCodigoPagamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tffCodigoPagamentoKeyReleased
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-//            tffCodigoPagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-//            tffCodigoPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-            //tffCodigoPagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###") {})));
-            //tffCodigoPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
             try {
 
                 FormaPagamentoDAO formaDAO = new FormaPagamentoDAO();
