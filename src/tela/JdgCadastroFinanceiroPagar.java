@@ -539,7 +539,7 @@ public class JdgCadastroFinanceiroPagar extends javax.swing.JDialog {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "id maior que zero");
+           
             try {
                 formaPagamentoPagas.setValor(Double.parseDouble(tffValor.getText()));
                 FinanceiroPagarDAO financeiroPagarDAO = new FinanceiroPagarDAO();
